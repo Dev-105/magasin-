@@ -1,0 +1,42 @@
+├──store
+│   ├──public
+│   ├──src
+│   │   ├──assets
+│   │   ├──components
+│   │   │   └──Navbar.jsx
+│   │   ├──pages
+│   │   │   ├──AdminDashboard.jsx
+│   │   │   ├──AdminOrders.jsx
+│   │   │   ├──AdminProducts.jsx
+│   │   │   ├──AdminPromoCodes.jsx
+│   │   │   ├──AdminTags.jsx
+│   │   │   ├──CartPage.jsx
+│   │   │   ├──LandingPage.jsx
+│   │   │   ├──LoginPage.jsx
+│   │   │   ├──OrderDetailsPage.jsx
+│   │   │   ├──OrdersPage.jsx
+│   │   │   ├──ProductDetailsPage.jsx
+│   │   │   ├──ProductsPage.jsx
+│   │   │   ├──ProfilePage.jsx
+│   │   │   └──RegisterPage.jsx
+│   │   ├──services
+│   │   │   └──api.js
+│   │   ├──App.jsx
+│   │   ├──index.css
+│   │   └──main.jsx
+│   ├──API_INTEGRATION_GUIDE.md
+│   ├──DEVELOPER_CHECKLIST.md
+│   ├──eslint.config.js
+│   ├──FRONTEND_README.md
+│   ├──IMPLEMENTATION_SUMMARY.md
+│   ├──index.html
+│   ├──package-lock.json
+│   ├──package.json
+│   ├──PROJECT_STRUCTURE.md
+│   ├──QUICK_START.md
+│   ├──README.md
+│   ├──START_HERE.md
+│   ├──vite.config.js
+│   └──.gitignore
+└──.txt
+```
