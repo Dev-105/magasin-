@@ -2,48 +2,88 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable;
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
+    use HasApiTokens, HasFactory, Notifiable;
+    
     protected $fillable = [
-        'name',
-        'email',
+        'username',
+        'email', 
+        'phone',
         'password',
+        'city',
+        'address',
+        'profile_image',
+        'role',
+        'fidelity_points'
     ];
-
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
+    
     protected $hidden = [
         'password',
         'remember_token',
     ];
-
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
+    
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'fidelity_points' => 'integer',
+    ];
+    
+    // Relationships
+    public function products()
     {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
+        return $this->hasMany(Product::class);
+    }
+    
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
+    }
+    
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+    
+    public function commands()
+    {
+        return $this->hasMany(Command::class);
+    }
+    
+    public function cartItems()
+    {
+        return $this->hasMany(CartItem::class);
+    }
+    
+    public function promoCodeUsages()
+    {
+        return $this->belongsToMany(PromoCode::class, 'promo_code_usages')
+                    ->withTimestamps();
+    }
+    
+    // Helper methods
+    public function isAdmin()
+    {
+        return $this->role === 'admin';
+    }
+    
+    public function addFidelityPoints($points)
+    {
+        $this->fidelity_points += $points;
+        $this->save();
+    }
+    
+    public function redeemFidelityPoints($points)
+    {
+        if ($this->fidelity_points >= $points) {
+            $this->fidelity_points -= $points;
+            $this->save();
+            return true;
+        }
+        return false;
     }
 }
