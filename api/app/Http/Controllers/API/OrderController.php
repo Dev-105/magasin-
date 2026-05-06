@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Command;
 use App\Models\LigneCommande;
 use App\Models\CartItem;
+use App\Models\Product;
 use App\Models\PromoCode;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
