@@ -15,6 +15,7 @@ import ProductDetail from './pages/ProductDetail';
 import Cart from './pages/Cart';
 import Profile from './pages/Profile';
 import Orders from './pages/Orders';
+import Favorites from './pages/Favorites';
 
 // Admin Pages
 import AdminDashboard from './pages/admin/Dashboard';
@@ -50,6 +51,11 @@ function App() {
             <Route path="/profile" element={
               <ProtectedRoute>
                 <Profile />
+              </ProtectedRoute>
+            } />
+            <Route path="/favorites" element={
+              <ProtectedRoute>
+                <Favorites />
               </ProtectedRoute>
             } />
             <Route path="/orders" element={
