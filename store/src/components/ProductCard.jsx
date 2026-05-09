@@ -7,6 +7,7 @@ const ProductCard = ({ product, onLikeToggle }) => {
   const { user } = useAuth();
   const [isLiked, setIsLiked] = useState(product.is_liked || false);
   const [likesCount, setLikesCount] = useState(product.likes_count || 0);
+  const [likeAnimating, setLikeAnimating] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
 
@@ -19,17 +20,24 @@ const ProductCard = ({ product, onLikeToggle }) => {
 
     const originalLiked = isLiked;
     const originalCount = likesCount;
-    
+    // optimistic UI: toggle locally
     setIsLiked(!originalLiked);
     setLikesCount(prev => originalLiked ? prev - 1 : prev + 1);
+    setLikeAnimating(true);
+    setTimeout(() => setLikeAnimating(false), 300);
 
     try {
       const response = await productsAPI.toggleLike(product.id);
       if (!response.data.success) {
         setIsLiked(originalLiked);
         setLikesCount(originalCount);
-      } else if (onLikeToggle) {
-        onLikeToggle();
+      } else {
+        const liked = response.data.liked ?? !originalLiked;
+        const count = response.data.likes_count ?? (liked ? originalCount + 1 : originalCount - 1);
+        setIsLiked(liked);
+        setLikesCount(count);
+        try { window.dispatchEvent(new CustomEvent('product-liked', { detail: { id: product.id, likes_count: count, is_liked: liked } })); } catch (e) {}
+        if (onLikeToggle) onLikeToggle();
       }
     } catch (error) {
       console.error('Error toggling like:', error);
@@ -52,8 +60,8 @@ const ProductCard = ({ product, onLikeToggle }) => {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {/* Image Container */}
-      <Link to={`/products/${product.id}`} className="block overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200">
+      {/* Image Container (no link) */}
+      <div className="block overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200">
         {!imageLoaded && (
           <div className="absolute inset-0 flex items-center justify-center">
             <i className="bi bi-image text-gray-400 text-4xl animate-pulse"></i>
@@ -71,29 +79,20 @@ const ProductCard = ({ product, onLikeToggle }) => {
             <i className="bi bi-image text-gray-400 text-5xl"></i>
           </div>
         )}
-        
+
         {/* Discount Badge */}
         {product.discount_percentage && (
           <div className="absolute top-3 left-3 bg-red-500 text-white px-2 py-1 rounded-lg text-xs font-bold shadow-md">
             -{product.discount_percentage}%
           </div>
         )}
-        
-        {/* Quick View Overlay */}
-        <div className={`absolute inset-0 bg-black/40 flex items-center justify-center transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-0'}`}>
-          <span className="bg-white/90 backdrop-blur-sm text-gray-900 px-4 py-2 rounded-xl text-sm font-medium transform transition-transform duration-300 hover:scale-105">
-            Quick View
-          </span>
-        </div>
-      </Link>
+      </div>
       
       {/* Content */}
       <div className="p-5">
-        <Link to={`/products/${product.id}`}>
-          <h3 className="text-lg font-semibold text-gray-900 hover:text-gray-600 transition-colors line-clamp-1">
-            {product.title}
-          </h3>
-        </Link>
+        <h3 className="text-lg font-semibold text-gray-900 transition-colors line-clamp-1">
+          {product.title}
+        </h3>
         
         <p className="text-gray-500 text-sm mt-2 line-clamp-2">
           {product.description}
@@ -123,8 +122,8 @@ const ProductCard = ({ product, onLikeToggle }) => {
             onClick={handleLike}
             className="flex items-center gap-2 px-3 py-2 rounded-xl transition-all duration-200 hover:bg-red-50 group"
           >
-            <i className={`bi ${isLiked ? 'bi-heart-fill text-red-500' : 'bi-heart text-gray-500 group-hover:text-red-500'} text-lg transition-colors`}></i>
-            <span className={`text-sm font-medium ${isLiked ? 'text-red-500' : 'text-gray-600'}`}>
+            <i className={`bi ${isLiked ? 'bi-heart-fill text-red-500' : 'bi-heart text-gray-500 group-hover:text-red-500'} text-lg transition-transform duration-200 ${likeAnimating ? 'scale-125' : ''}`}></i>
+            <span className={`text-sm font-medium ${isLiked ? 'text-current' : 'text-gray-600'}`}>
               {likesCount}
             </span>
           </button>

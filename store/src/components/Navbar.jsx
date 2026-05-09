@@ -44,7 +44,7 @@ const Navbar = () => {
                 <i className="bi bi-bag-fill text-white text-sm"></i>
               </div>
               <span className="text-xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">
-                LuxStore
+                RFIFISA
               </span>
             </Link>
 
