@@ -17,7 +17,7 @@ class UserController extends Controller
         $user = $request->user();
         
         // Load relationships
-        $user->load(['likes', 'reviews', 'commands']);
+        $user->load(['likes.product.images', 'reviews', 'commands']);
         
         // Add computed attributes
         $user->total_orders = $user->commands->count();

@@ -190,7 +190,7 @@ class OrderController extends Controller
             ], 403);
         }
         
-        $orders = Command::with(['user', 'lignes.product', 'promoCode'])
+        $orders = Command::with(['user', 'lignes.product.images', 'promoCode'])
                         ->orderBy('created_at', 'desc')
                         ->paginate(20);
         
@@ -222,6 +222,32 @@ class OrderController extends Controller
             'success' => true,
             'message' => 'Order status updated',
             'order' => $order
+        ]);
+    }
+
+    // Admin: Get dashboard stats
+    public function getStats(Request $request)
+    {
+        if (!$request->user()->isAdmin()) {
+            return response()->json(['success' => false, 'message' => 'Unauthorized'], 403);
+        }
+
+        $totalRevenue = Command::where('status', 'completed')->sum('total');
+        $totalOrders = Command::count();
+        $totalUsers = \App\Models\User::count();
+        $totalProducts = \App\Models\Product::count();
+        
+        $recentOrders = Command::with('user')->orderBy('created_at', 'desc')->take(5)->get();
+
+        return response()->json([
+            'success' => true,
+            'data' => [
+                'total_revenue' => (float)$totalRevenue,
+                'total_orders' => $totalOrders,
+                'total_users' => $totalUsers,
+                'total_products' => $totalProducts,
+                'recent_orders' => $recentOrders
+            ]
         ]);
     }
 }

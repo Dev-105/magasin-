@@ -75,7 +75,7 @@ class ProductController extends Controller
                 'tags' => 'nullable|array',
                 'tags.*' => 'string|exists:tags,name',
                 'images' => 'nullable|array',
-                'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048'
+                'images.*' => 'file|image|mimes:jpeg,png,jpg,gif|max:2048'
             ]);
             
             // Create product

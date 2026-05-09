@@ -55,6 +55,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/orders', [OrderController::class, 'store']);
     Route::get('/orders/{id}', [OrderController::class, 'show']);
     Route::post('/orders/{id}/cancel', [OrderController::class, 'cancel']);
+
+    // Review routes
+    Route::post('/products/{productId}/reviews', [\App\Http\Controllers\API\ReviewController::class, 'store']);
+    Route::delete('/reviews/{id}', [\App\Http\Controllers\API\ReviewController::class, 'destroy']);
     
     // Product management (admin only)
     Route::middleware('admin')->group(function () {
@@ -67,6 +71,7 @@ Route::middleware('auth:sanctum')->group(function () {
         // Order management
         Route::get('/admin/orders', [OrderController::class, 'adminIndex']);
         Route::put('/admin/orders/{id}/status', [OrderController::class, 'updateStatus']);
+        Route::get('/admin/stats', [OrderController::class, 'getStats']);
         
         // User management
         Route::get('/admin/users', [UserController::class, 'adminIndex']);
@@ -77,5 +82,12 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/admin/promo-codes', [PromoCodeController::class, 'index']);
         Route::post('/admin/promo-codes', [PromoCodeController::class, 'store']);
         Route::delete('/admin/promo-codes/{id}', [PromoCodeController::class, 'destroy']);
+
+        // Tag management
+        Route::post('/admin/tags', [\App\Http\Controllers\API\TagController::class, 'store']);
+        Route::delete('/admin/tags/{id}', [\App\Http\Controllers\API\TagController::class, 'destroy']);
     });
+    
+    // Generic tags list (publicly available but within auth for consistency with your structure if needed, or move out)
+    Route::get('/tags', [\App\Http\Controllers\API\TagController::class, 'index']);
 });
