@@ -1,6 +1,9 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
+import { MusicProvider } from './contexts/MusicContext';
 import ProtectedRoute from './components/ProtectedRoute';
+import MusicPrompt from './components/MusicPrompt';
+import MusicControl from './components/MusicControl';
 
 // Layouts
 import PublicLayout from './layouts/PublicLayout';
@@ -8,6 +11,7 @@ import UserLayout from './layouts/UserLayout';
 import AdminLayout from './layouts/AdminLayout';
 
 // Pages
+import LandingPage from './pages/LandingPage';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Products from './pages/Products';
@@ -29,56 +33,62 @@ function App() {
   return (
     <Router>
       <AuthProvider>
-        <Routes>
-          {/* Public Routes */}
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+        <MusicProvider>
+          {/* Music Components - Global */}
+          <MusicPrompt />
+          <MusicControl />
           
-          {/* User Routes */}
-          <Route element={<PublicLayout />}>
-            <Route path="/" element={<Products />} />
-            <Route path="/products" element={<Products />} />
-            <Route path="/products/:id" element={<ProductDetail />} />
-          </Route>
-          
-          {/* Protected User Routes */}
-          <Route element={<UserLayout />}>
-            <Route path="/cart" element={
-              <ProtectedRoute>
-                <Cart />
+          <Routes>
+            {/* Public Routes */}
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/" element={<LandingPage />} />
+            
+            {/* User Routes */}
+            <Route element={<PublicLayout />}>
+              <Route path="/products" element={<Products />} />
+              <Route path="/products/:id" element={<ProductDetail />} />
+            </Route>
+            
+            {/* Protected User Routes */}
+            <Route element={<UserLayout />}>
+              <Route path="/cart" element={
+                <ProtectedRoute>
+                  <Cart />
+                </ProtectedRoute>
+              } />
+              <Route path="/profile" element={
+                <ProtectedRoute>
+                  <Profile />
+                </ProtectedRoute>
+              } />
+              <Route path="/favorites" element={
+                <ProtectedRoute>
+                  <Favorites />
+                </ProtectedRoute>
+              } />
+              <Route path="/orders" element={
+                <ProtectedRoute>
+                  <Orders />
+                </ProtectedRoute>
+              } />
+            </Route>
+            
+            {/* Admin Routes */}
+            <Route path="/admin" element={
+              <ProtectedRoute requireAdmin>
+                <AdminLayout />
               </ProtectedRoute>
-            } />
-            <Route path="/profile" element={
-              <ProtectedRoute>
-                <Profile />
-              </ProtectedRoute>
-            } />
-            <Route path="/favorites" element={
-              <ProtectedRoute>
-                <Favorites />
-              </ProtectedRoute>
-            } />
-            <Route path="/orders" element={
-              <ProtectedRoute>
-                <Orders />
-              </ProtectedRoute>
-            } />
-          </Route>
-          
-          {/* Admin Routes */}
-          <Route path="/admin" element={
-            <ProtectedRoute requireAdmin>
-              <AdminLayout />
-            </ProtectedRoute>
-          }>
-            <Route index element={<AdminDashboard />} />
-            <Route path="users" element={<AdminUsersList />} />
-            <Route path="orders" element={<AdminOrdersList />} />
-            <Route path="products" element={<AdminProductsList />} />
-            <Route path="tags" element={<AdminTags />} />
-            <Route path="promo-codes" element={<AdminPromoCodes />} />
-          </Route>
-        </Routes>
+            }>
+              <Route index element={<AdminDashboard />} />
+              <Route path="users" element={<AdminUsersList />} />
+              <Route path="orders" element={<AdminOrdersList />} />
+              <Route path="products" element={<AdminProductsList />} />
+              <Route path="tags" element={<AdminTags />} />
+              <Route path="promo-codes" element={<AdminPromoCodes />} />
+            </Route>
+          </Routes>
+        </MusicProvider>
       </AuthProvider>
     </Router>
   );
