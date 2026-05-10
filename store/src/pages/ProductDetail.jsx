@@ -348,19 +348,19 @@ const ProductDetail = () => {
                   <>
                     <div className="flex items-baseline gap-3">
                       <span className={`text-5xl font-black ${theme.text}`}>
-                        ${Number(discountPrice).toFixed(2)}
+                        {`MAD ${Number(discountPrice).toFixed(2)}`}
                       </span>
                       <span className="text-xl line-through text-gray-400">
-                        ${Number(product.price).toFixed(2)}
+                        {`MAD ${Number(product.price).toFixed(2)}`}
                       </span>
                     </div>
                     <p className="text-green-600 text-sm font-medium">
-                      You save ${(product.price - discountPrice).toFixed(2)}!
+                      You save {`MAD ${(product.price - discountPrice).toFixed(2)}`}!
                     </p>
                   </>
                 ) : (
                   <span className={`text-5xl font-black ${theme.text}`}>
-                    ${Number(product.price).toFixed(2)}
+                    {`MAD ${Number(product.price).toFixed(2)}`}
                   </span>
                 )}
               </div>
@@ -416,7 +416,7 @@ const ProductDetail = () => {
                   </button>
                   
                   <p className="text-center text-sm text-gray-500">
-                    Free shipping on orders over $50
+                    Free shipping on orders over MAD 50
                   </p>
                 </div>
               )}

@@ -202,7 +202,7 @@ const AdminOrdersList = () => {
 
                     {/* Amount */}
                     <div className="text-right">
-                      <p className="text-2xl font-bold text-gray-900">${Number(order.total).toFixed(2)}</p>
+                      <p className="text-2xl font-bold text-gray-900">{`MAD ${Number(order.total).toFixed(2)}`}</p>
                       <p className="text-xs text-gray-500">{new Date(order.created_at).toLocaleDateString()}</p>
                     </div>
 
@@ -343,10 +343,10 @@ const AdminOrdersList = () => {
                               </div>
                               <div className="text-right">
                                 <p className="text-sm text-gray-500">
-                                  ${Number(item.unit_price).toFixed(2)} × {item.quantity}
+                                  {`MAD ${Number(item.unit_price).toFixed(2)}`} × {item.quantity}
                                 </p>
                                 <p className="text-lg font-bold text-gray-900">
-                                  ${(Number(item.unit_price) * item.quantity).toFixed(2)}
+                                  {`MAD ${(Number(item.unit_price) * item.quantity).toFixed(2)}`}
                                 </p>
                               </div>
                             </div>
@@ -379,7 +379,7 @@ const AdminOrdersList = () => {
                       <div className="bg-white rounded-xl p-4 min-w-[200px] shadow-sm">
                         <div className="flex justify-between text-sm mb-2">
                           <span className="text-gray-500">Subtotal:</span>
-                          <span className="text-gray-700">${Number(order.total).toFixed(2)}</span>
+                          <span className="text-gray-700">{`MAD ${Number(order.total).toFixed(2)}`}</span>
                         </div>
                         {order.promo_code && (
                           <div className="flex justify-between text-sm mb-2">
@@ -389,7 +389,7 @@ const AdminOrdersList = () => {
                         )}
                         <div className="flex justify-between text-lg font-bold pt-2 border-t border-gray-100">
                           <span>Total:</span>
-                          <span className="text-gray-900">${Number(order.total).toFixed(2)}</span>
+                          <span className="text-gray-900">{`MAD ${Number(order.total).toFixed(2)}`}</span>
                         </div>
                       </div>
                     </div>

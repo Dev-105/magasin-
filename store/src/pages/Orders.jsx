@@ -188,7 +188,7 @@ const Orders = () => {
                     </div>
                     <div className="text-right">
                       <p className="text-sm text-gray-500">Total Amount</p>
-                      <p className="text-2xl font-bold text-gray-900">${Number(order.total).toFixed(2)}</p>
+                      <p className="text-2xl font-bold text-gray-900">{`MAD ${Number(order.total).toFixed(2)}`}</p>
                     </div>
                   </div>
                 </div>
@@ -261,13 +261,13 @@ const Orders = () => {
                           <div className="flex items-center gap-3 mt-1">
                             <p className="text-sm text-gray-500">Qty: {item.quantity}</p>
                             <p className="text-sm text-gray-500">×</p>
-                            <p className="text-sm font-medium text-gray-900">${Number(item.unit_price).toFixed(2)}</p>
+                            <p className="text-sm font-medium text-gray-900">{`MAD ${Number(item.unit_price).toFixed(2)}`}</p>
                           </div>
                         </div>
                       </div>
                       <div className="text-right">
                         <p className="font-semibold text-gray-900">
-                          ${(Number(item.unit_price) * item.quantity).toFixed(2)}
+                          {`MAD ${(Number(item.unit_price) * item.quantity).toFixed(2)}`}
                         </p>
                       </div>
                     </div>
@@ -353,7 +353,7 @@ const Orders = () => {
                           <p className="text-sm text-gray-500">Qty: {item.quantity}</p>
                         </div>
                       </div>
-                      <p className="font-medium">${(Number(item.unit_price) * item.quantity).toFixed(2)}</p>
+                      <p className="font-medium">{`MAD ${(Number(item.unit_price) * item.quantity).toFixed(2)}`}</p>
                     </div>
                   ))}
                 </div>
@@ -364,7 +364,7 @@ const Orders = () => {
                 <div className="space-y-2">
                   <div className="flex justify-between text-sm">
                     <span className="text-gray-600">Subtotal</span>
-                    <span className="text-gray-900">${Number(selectedOrder.total).toFixed(2)}</span>
+                    <span className="text-gray-900">{`MAD ${Number(selectedOrder.total).toFixed(2)}`}</span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-gray-600">Shipping</span>
@@ -379,7 +379,7 @@ const Orders = () => {
                   <div className="border-t border-gray-200 pt-2 mt-2">
                     <div className="flex justify-between font-semibold">
                       <span className="text-gray-900">Total</span>
-                      <span className="text-gray-900">${Number(selectedOrder.total).toFixed(2)}</span>
+                      <span className="text-gray-900">{`MAD ${Number(selectedOrder.total).toFixed(2)}`}</span>
                     </div>
                   </div>
                 </div>

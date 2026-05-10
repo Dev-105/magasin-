@@ -59,7 +59,7 @@ const Favorites = () => {
               </div>
             )}
             <p className="mt-2 text-sm font-medium text-gray-900 truncate">{like.product?.title}</p>
-            <p className="text-sm text-gray-600">${Number(like.product?.price || 0).toFixed(2)}</p>
+            <p className="text-sm text-gray-600">{`MAD ${Number(like.product?.price || 0).toFixed(2)}`}</p>
           </div>
         ))}
       </div>

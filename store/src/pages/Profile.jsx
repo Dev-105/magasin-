@@ -466,7 +466,7 @@ const Profile = () => {
                   </div>
                   <div className="bg-gradient-to-br from-emerald-50 to-emerald-100 rounded-2xl p-4 text-center">
                     <i className="bi bi-currency-dollar text-3xl text-emerald-600 mb-2 block"></i>
-                    <p className="text-2xl font-bold text-gray-900">${profile?.total_spent || 0}</p>
+                    <p className="text-2xl font-bold text-gray-900">{`MAD ${profile?.total_spent || 0}`}</p>
                     <p className="text-sm text-gray-600">Total Spent</p>
                   </div>
                   <div className="bg-gradient-to-br from-rose-50 to-rose-100 rounded-2xl p-4 text-center">

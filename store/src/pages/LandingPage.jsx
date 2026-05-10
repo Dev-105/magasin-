@@ -180,30 +180,30 @@ const LandingPage = () => {
             {[
               { 
                 name: 'RFIFISA S', 
-                price: '$89,990', 
+                price: 'MAD 89,990', 
                 range: '405 mi', 
                 speed: '200 mph', 
                 icon: 'bi-car-front',
                 badge: 'Luxury Sedan',
-                financing: '$1,299/mo'
+                financing: 'MAD 1,299/mo'
               },
               { 
                 name: 'RFIFISA X', 
-                price: '$99,990', 
+                price: 'MAD 99,990', 
                 range: '348 mi', 
                 speed: '155 mph', 
                 icon: 'bi-car-front',
                 badge: 'Premium SUV',
-                financing: '$1,449/mo'
+                financing: 'MAD 1,449/mo'
               },
               { 
                 name: 'RFIFISA 3', 
-                price: '$54,990', 
+                price: 'MAD 54,990', 
                 range: '358 mi', 
                 speed: '162 mph', 
                 icon: 'bi-car-front',
                 badge: 'Sport Edition',
-                financing: '$799/mo'
+                financing: 'MAD 799/mo'
               },
             ].map((model, index) => (
               <div key={index} className="group bg-white rounded-2xl p-6 hover:shadow-xl transition-all duration-300 border border-gray-100 text-center">
@@ -245,7 +245,7 @@ const LandingPage = () => {
               Drive Your Dream Car Today
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto mb-6">
-              0% APR financing for 60 months + $2,000 bonus trade-in credit
+              0% APR financing for 60 months + MAD 2,000 bonus trade-in credit
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link

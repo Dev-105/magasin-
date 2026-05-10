@@ -12,6 +12,7 @@ export const MusicProvider = ({ children }) => {
   const [sourceType, setSourceType] = useState('default'); // 'default', 'file', 'youtube'
   const audioRef = useRef(null);
   const playerRef = useRef(null);
+  const objectUrlRef = useRef(null);
   const [ytApiReady, setYtApiReady] = useState(false);
 
   // Save source to localStorage
@@ -211,12 +212,6 @@ export const MusicProvider = ({ children }) => {
         const url = URL.createObjectURL(blob);
         src = url;
         saveMusicSource('file');
-      } else {
-        const storedDataUrl = localStorage.getItem('musicDataUrl');
-        if (storedDataUrl) {
-          src = storedDataUrl;
-          saveMusicSource('file');
-        }
       }
 
       if (!audioRef.current) {
@@ -275,76 +270,75 @@ export const MusicProvider = ({ children }) => {
 
   const setCustomMusic = async (file) => {
     if (!file) throw new Error('No file provided');
-    
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = async () => {
-        try {
-          const dataUrl = reader.result;
-          
-          // Store blob in IndexedDB
-          const req = indexedDB.open('music-store', 1);
-          req.onupgradeneeded = () => {
-            const db = req.result;
-            if (!db.objectStoreNames.contains('files')) db.createObjectStore('files');
-          };
-          req.onsuccess = () => {
-            const db = req.result;
-            const tx = db.transaction('files', 'readwrite');
-            tx.objectStore('files').put(file, 'custom-music');
-            tx.oncomplete = () => db.close();
-          };
-          
-          // Store data URL as fallback
-          localStorage.setItem('musicDataUrl', dataUrl);
-          localStorage.setItem('musicFileName', file.name || 'custom');
 
-          // Clear YouTube if playing
-          if (playerRef.current) {
-            clearYouTubeUrl();
-          }
+    // Revoke previous object URL if present
+    if (objectUrlRef.current) {
+      try { URL.revokeObjectURL(objectUrlRef.current); } catch (e) { /* ignore */ }
+      objectUrlRef.current = null;
+    }
 
-          if (!audioRef.current) {
-            audioRef.current = new Audio(dataUrl);
-            audioRef.current.loop = true;
-            audioRef.current.volume = 0.3;
-          } else {
-            audioRef.current.src = dataUrl;
-          }
+    // Store file in IndexedDB for persistence
+    const req = indexedDB.open('music-store', 1);
+    req.onupgradeneeded = () => {
+      const db = req.result;
+      if (!db.objectStoreNames.contains('files')) db.createObjectStore('files');
+    };
+    req.onsuccess = () => {
+      const db = req.result;
+      const tx = db.transaction('files', 'readwrite');
+      tx.objectStore('files').put(file, 'custom-music');
+      tx.oncomplete = () => db.close();
+    };
 
-          saveMusicSource('file');
-          setIsMusicEnabled(true);
-          localStorage.setItem('musicEnabled', 'true');
-          
-          // Auto-play
-          audioRef.current.play().then(() => {
-            setIsPlaying(true);
-          }).catch(console.warn);
-          
-          resolve();
-        } catch (err) {
-          reject(err);
-        }
-      };
-      reader.onerror = (err) => reject(err);
-      reader.readAsDataURL(file);
-    });
-  };
+    // Create an object URL for playback (avoids large localStorage usage)
+    const objectUrl = URL.createObjectURL(file);
+    objectUrlRef.current = objectUrl;
 
-  const clearCustomMusic = () => {
-    localStorage.removeItem('musicDataUrl');
-    localStorage.removeItem('musicFileName');
-    
+    // Clear YouTube if playing
     if (playerRef.current) {
       clearYouTubeUrl();
     }
-    
+
+    if (!audioRef.current) {
+      audioRef.current = new Audio(objectUrl);
+      audioRef.current.loop = true;
+      audioRef.current.volume = 0.3;
+    } else {
+      audioRef.current.src = objectUrl;
+      audioRef.current.load();
+    }
+
+    localStorage.setItem('musicFileName', file.name || 'custom');
+    saveMusicSource('file');
+    setIsMusicEnabled(true);
+    localStorage.setItem('musicEnabled', 'true');
+
+    try {
+      await audioRef.current.play();
+      setIsPlaying(true);
+    } catch (e) {
+      console.warn('Auto-play failed for custom music:', e);
+    }
+  };
+
+  const clearCustomMusic = () => {
+    localStorage.removeItem('musicFileName');
+
+    if (playerRef.current) {
+      clearYouTubeUrl();
+    }
+
     if (audioRef.current) {
       audioRef.current.pause();
+      // revoke object URL if used
+      if (objectUrlRef.current) {
+        try { URL.revokeObjectURL(objectUrlRef.current); } catch (e) { /* ignore */ }
+        objectUrlRef.current = null;
+      }
       audioRef.current.src = '/car.mp3';
       audioRef.current.load();
     }
-    
+
     saveMusicSource('default');
     setIsMusicEnabled(false);
     setIsPlaying(false);

@@ -80,7 +80,7 @@ const AdminDashboard = () => {
     },
     {
       title: 'Total Revenue',
-      value: `$${stats.totalRevenue.toFixed(2)}`,
+      value: `MAD ${stats.totalRevenue.toFixed(2)}`,
       icon: 'bi-currency-dollar',
       color: 'from-amber-500 to-amber-600',
       bgGradient: 'from-amber-50 to-amber-100',
@@ -192,7 +192,7 @@ const AdminDashboard = () => {
                     style={{ width: `${height}%` }}
                   >
                     <div className="h-full flex items-center justify-end px-3">
-                      <span className="text-white text-xs font-medium">${(height * 45).toFixed(0)}</span>
+                      <span className="text-white text-xs font-medium">{`MAD ${(height * 45).toFixed(0)}`}</span>
                     </div>
                   </div>
                 </div>
@@ -312,7 +312,7 @@ const AdminDashboard = () => {
                       </td>
                       <td className="px-6 py-4">
                         <span className="text-sm font-semibold text-gray-900">
-                          ${Number(order.total).toFixed(2)}
+                          {`MAD ${Number(order.total).toFixed(2)}`}
                         </span>
                       </td>
                       <td className="px-6 py-4">

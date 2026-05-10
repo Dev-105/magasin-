@@ -391,7 +391,7 @@ const AdminProductsList = () => {
                     
                     {/* Price */}
                     <div>
-                      <label className="block text-sm font-semibold text-gray-700 mb-2">Price ($) *</label>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">Price (MAD) *</label>
                       <div className="relative">
                         <i className="bi bi-currency-dollar absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
                         <input
@@ -626,14 +626,14 @@ const AdminProductsList = () => {
                         {product.discount_percentage > 0 ? (
                           <>
                             <span className="font-bold text-gray-900">
-                              ${(product.price - (product.price * product.discount_percentage / 100)).toFixed(2)}
+                              {`MAD ${(product.price - (product.price * product.discount_percentage / 100)).toFixed(2)}`}
                             </span>
                             <span className="text-xs text-gray-400 line-through ml-2">
-                              ${Number(product.price).toFixed(2)}
+                              {`MAD ${Number(product.price).toFixed(2)}`}
                             </span>
                           </>
                         ) : (
-                          <span className="font-bold text-gray-900">${Number(product.price).toFixed(2)}</span>
+                          <span className="font-bold text-gray-900">{`MAD ${Number(product.price).toFixed(2)}`}</span>
                         )}
                       </div>
                     </td>

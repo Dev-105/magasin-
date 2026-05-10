@@ -207,14 +207,14 @@ const Cart = () => {
                     {/* Unit Price */}
                     <div className="col-span-2 w-full text-right">
                       <span className="text-gray-600 font-medium">
-                        ${Number(item.product.final_price).toFixed(2)}
+                        {`MAD ${Number(item.product.final_price).toFixed(2)}`}
                       </span>
                     </div>
                     
                     {/* Total & Actions */}
                     <div className="col-span-2 w-full flex items-center justify-between md:justify-end gap-4">
                       <span className="font-bold text-gray-900 text-lg">
-                        ${(Number(item.product.final_price) * item.quantity).toFixed(2)}
+                        {`MAD ${(Number(item.product.final_price) * item.quantity).toFixed(2)}`}
                       </span>
                       <button
                         onClick={() => handleRemoveItem(item.product_id)}
@@ -263,9 +263,9 @@ const Cart = () => {
               </h2>
               
               <div className="space-y-4 mb-6">
-                <div className="flex justify-between text-gray-600">
+                  <div className="flex justify-between text-gray-600">
                   <span>Subtotal</span>
-                  <span className="font-medium">${Number(subtotal).toFixed(2)}</span>
+                  <span className="font-medium">{`MAD ${Number(subtotal).toFixed(2)}`}</span>
                 </div>
                 
                 <div className="flex justify-between text-gray-600">
@@ -279,14 +279,14 @@ const Cart = () => {
                       <i className="bi bi-gift"></i>
                       Discount ({promoDiscount.discount_percentage}%)
                     </span>
-                    <span className="font-semibold">-${Number(discountAmount).toFixed(2)}</span>
+                    <span className="font-semibold">-{`MAD ${Number(discountAmount).toFixed(2)}`}</span>
                   </div>
                 )}
                 
                 <div className="border-t border-gray-200 pt-4">
-                  <div className="flex justify-between text-lg font-bold text-gray-900">
+                    <div className="flex justify-between text-lg font-bold text-gray-900">
                     <span>Total</span>
-                    <span className="text-2xl">${Number(total).toFixed(2)}</span>
+                    <span className="text-2xl">{`MAD ${Number(total).toFixed(2)}`}</span>
                   </div>
                   <p className="text-xs text-gray-500 mt-1">Including all taxes</p>
                 </div>

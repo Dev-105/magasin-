@@ -103,15 +103,15 @@ const ProductCard = ({ product, onLikeToggle }) => {
           {discountPrice ? (
             <>
               <span className="text-2xl font-bold text-gray-900">
-                ${Number(discountPrice).toFixed(2)}
+                {`MAD ${Number(discountPrice).toFixed(2)}`}
               </span>
               <span className="text-sm text-gray-400 line-through">
-                ${Number(product.price).toFixed(2)}
+                {`MAD ${Number(product.price).toFixed(2)}`}
               </span>
             </>
           ) : (
             <span className="text-2xl font-bold text-gray-900">
-              ${Number(product.price).toFixed(2)}
+              {`MAD ${Number(product.price).toFixed(2)}`}
             </span>
           )}
         </div>
