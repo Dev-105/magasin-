@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { cartAPI } from '../api/cart';
 import { ordersAPI } from '../api/orders';
+import PayPalButton from '../components/PayPalButton';
 
 const Cart = () => {
   const [cart, setCart] = useState({ items: [], total: 0 });
@@ -11,6 +12,7 @@ const Cart = () => {
   const [promoError, setPromoError] = useState('');
   const [checkoutLoading, setCheckoutLoading] = useState(false);
   const [removingItem, setRemovingItem] = useState(null);
+  const [showPayPalModal, setShowPayPalModal] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -76,16 +78,8 @@ const Cart = () => {
   };
 
   const handleCheckout = async () => {
-    setCheckoutLoading(true);
-    try {
-      const response = await ordersAPI.create(promoDiscount ? promoCode : null);
-      if (response.data.success) {
-        navigate('/orders');
-      }
-    } catch (error) {
-      alert(error.response?.data?.message || 'Failed to place order');
-    }
-    setCheckoutLoading(false);
+    // Open the PayPal modal to force payment before creating the order.
+    setShowPayPalModal(true);
   };
 
   const subtotal = cart.total;
@@ -329,35 +323,112 @@ const Cart = () => {
               </div>
               
               {/* Checkout Button */}
-              <button
-                onClick={handleCheckout}
-                disabled={checkoutLoading}
-                className="w-full bg-gray-900 text-white py-4 rounded-2xl font-semibold hover:bg-gray-800 transform hover:scale-[1.02] transition-all duration-200 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-              >
-                {checkoutLoading ? (
-                  <>
-                    <i className="bi bi-arrow-repeat animate-spin"></i>
-                    Processing...
-                  </>
-                ) : (
-                  <>
-                    <i className="bi bi-lock"></i>
-                    Proceed to Checkout
-                  </>
-                )}
-              </button>
+              <div className="space-y-4">
+                {/* The PayPal modal will render the PayPalButton when opened. */}
+                <button
+                  onClick={() => setShowPayPalModal(true)}
+                  disabled={checkoutLoading}
+                  className="w-full bg-gray-900 text-white py-4 rounded-2xl font-semibold hover:bg-gray-800 transform hover:scale-[1.02] transition-all duration-200 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                >
+                  {checkoutLoading ? (
+                    <>
+                      <i className="bi bi-arrow-repeat animate-spin"></i>
+                      Processing...
+                    </>
+                  ) : (
+                    <>
+                      <i className="bi bi-lock"></i>
+                      Proceed to Checkout
+                    </>
+                  )}
+                </button>
+              </div>
               
               {/* Payment Methods */}
               <div className="mt-6 pt-6 border-t border-gray-100">
                 <p className="text-xs text-gray-500 text-center mb-3">Secure payment methods</p>
-                <div className="flex justify-center gap-3 text-gray-500">
-                  <i className="bi bi-credit-card text-xl"></i>
-                  <i className="bi bi-paypal text-xl"></i>
-                  <i className="bi bi-apple text-xl"></i>
-                  <i className="bi bi-google-play text-xl"></i>
+                <div className="flex flex-col items-center gap-3">
+                  <div className="w-full flex flex-col items-center">
+                    <p className="text-sm text-gray-600 mb-2">Pay quickly with PayPal (sandbox)</p>
+                    <div className="w-full flex justify-center">
+                      <PayPalButton amount={Number(total).toFixed(2)} promoCode={promoCode || null} />
+                    </div>
+                  </div>
+
+                  <div className="text-gray-500 text-sm">Or use the classic checkout button below to place the order without online payment.</div>
                 </div>
               </div>
             </div>
+{showPayPalModal && (
+  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
+    <div className="bg-white rounded-2xl shadow-xl p-6 w-full max-w-lg">
+      <div className="flex justify-between items-center mb-4">
+        <h3 className="text-lg font-semibold">Complete Your Payment</h3>
+        <button 
+          onClick={() => setShowPayPalModal(false)} 
+          className="text-gray-400 hover:text-gray-600 transition-colors"
+        >
+          <i className="bi bi-x-lg"></i>
+        </button>
+      </div>
+      <div className="mb-4 pb-4 border-b border-gray-100">
+        <div className="flex justify-between text-gray-600 mb-2">
+          <span>Total Amount:</span>
+          <span className="font-bold text-gray-900 text-xl">{`MAD ${Number(total).toFixed(2)}`}</span>
+        </div>
+        {promoDiscount && (
+          <div className="text-sm text-green-600">
+            <i className="bi bi-gift-fill"></i> {promoDiscount.discount_percentage}% discount applied
+          </div>
+        )}
+      </div>
+      <div>
+        <PayPalButton
+          amount={Number(total).toFixed(2)}
+          promoCode={promoCode || null}
+          onSuccess={async (captureData) => {
+            try {
+              console.log('Payment successful:', captureData);
+              
+              // Create the order with 'pending' status (NOT completed)
+              const orderResponse = await ordersAPI.create(promoDiscount ? promoCode : null);
+              
+              if (orderResponse.data.success) {
+                // Clear the cart
+                await cartAPI.clearCart();
+                
+                // Close modal
+                setShowPayPalModal(false);
+                
+                // Show success message
+                alert('Payment successful! Your order has been placed and is pending admin approval.');
+                
+                // Navigate to orders page
+                navigate('/orders');
+              } else {
+                throw new Error(orderResponse.data.message || 'Failed to create order');
+              }
+            } catch (err) {
+              console.error('Error creating order after payment:', err);
+              const errorMsg = err.response?.data?.message || err.message || 'Payment succeeded but order creation failed. Please contact support.';
+              alert(errorMsg);
+              navigate('/orders');
+            }
+          }}
+          onError={(errMsg) => {
+            console.error('PayPal error:', errMsg);
+            const message = typeof errMsg === 'string' ? errMsg : 'Payment failed. Please try again.';
+            alert(message);
+            setShowPayPalModal(false);
+          }}
+        />
+      </div>
+      <div className="mt-4 pt-4 text-center text-xs text-gray-400">
+        <i className="bi bi-shield-check"></i> Secure payment powered by PayPal
+      </div>
+    </div>
+  </div>
+)}
           </div>
         </div>
       </div>
