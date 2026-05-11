@@ -198,8 +198,8 @@ const Cart = () => {
                     </div>
                     
                     {/* Unit Price */}
-                    <div className="col-span-2 w-full text-right">
-                      <span className="text-[#D4AF37] font-medium">
+                    <div className="col-span-2 w-full">
+                      <span className="text-[#D4AF37] font-medium text-[12px]">
                         {`MAD ${Number(item.product.final_price).toFixed(2)}`}
                       </span>
                     </div>
@@ -393,7 +393,7 @@ const Cart = () => {
                           if (orderResponse.data.success) {
                             await cartAPI.clearCart();
                             setShowPayPalModal(false);
-                            alert('Payment successful! Your order has been placed and is pending admin approval.');
+                            // alert('Payment successful! Your order has been placed and is pending admin approval.');
                             navigate('/orders');
                           } else {
                             throw new Error(orderResponse.data.message || 'Failed to create order');

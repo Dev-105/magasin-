@@ -51,7 +51,7 @@ const ProductDetail = () => {
         fetchProduct();
       }
     } catch (error) {
-      alert(error.response?.data?.message || 'Failed to submit review');
+      // alert(error.response?.data?.message || 'Failed to submit review');
     }
     setSubmittingReview(false);
   };
@@ -64,10 +64,10 @@ const ProductDetail = () => {
     setAddingToCart(true);
     try {
       await cartAPI.addItem(product.id, quantity);
-      alert('Product added to cart!');
+      // alert('Product added to cart!');
     } catch (error) {
       console.error('Error adding to cart:', error);
-      alert('Failed to add to cart');
+      // alert('Failed to add to cart');
     }
     setAddingToCart(false);
   };

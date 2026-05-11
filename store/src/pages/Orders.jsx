@@ -30,7 +30,7 @@ const Orders = () => {
         await ordersAPI.cancel(orderId);
         fetchOrders();
       } catch (error) {
-        alert('Failed to cancel order');
+        // alert('Failed to cancel order');
       }
     }
   };

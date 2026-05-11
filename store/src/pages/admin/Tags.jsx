@@ -56,7 +56,7 @@ const AdminTags = () => {
         document.body.appendChild(successMsg);
         setTimeout(() => successMsg.remove(), 3000);
       } catch (error) {
-        alert('Failed to delete tag');
+        // alert('Failed to delete tag');
       }
     }
   };
