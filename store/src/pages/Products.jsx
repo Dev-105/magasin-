@@ -26,12 +26,10 @@ const Products = () => {
   const [availableTags, setAvailableTags] = useState([]);
 
   useEffect(() => {
-    // Fetch all products and tags once on mount
     fetchProducts();
     fetchTags();
   }, []);
 
-  // Recompute filtered & paginated products when filters, allProducts or current page change
   useEffect(() => {
     applyLocalFiltersAndPaginate();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -40,7 +38,6 @@ const Products = () => {
   const fetchProducts = async () => {
     setLoading(true);
     try {
-      // Request a large per_page so we can filter client-side
       const response = await productsAPI.getAll({ per_page: 1000 });
       if (response.data.success) {
         const payload = response.data.data;
@@ -50,8 +47,6 @@ const Products = () => {
         else fetched = payload || [];
 
         setAllProducts(fetched);
-
-        // initialize pagination
         const totalItems = fetched.length;
         const lastPage = Math.max(1, Math.ceil(totalItems / pagination.per_page));
         setPagination(prev => ({ ...prev, last_page: lastPage, total: totalItems, current_page: 1 }));
@@ -77,13 +72,11 @@ const Products = () => {
   const applyLocalFiltersAndPaginate = () => {
     let filtered = allProducts.slice();
 
-    // Search
     if (filters.search) {
       const q = String(filters.search).toLowerCase();
       filtered = filtered.filter(p => (p.title || '').toLowerCase().includes(q) || (p.description || '').toLowerCase().includes(q));
     }
 
-    // Tag
     if (filters.tag) {
       filtered = filtered.filter(p => {
         if (!p.tags) return false;
@@ -91,7 +84,6 @@ const Products = () => {
       });
     }
 
-    // Price
     if (filters.min_price) {
       const min = Number(filters.min_price) || 0;
       filtered = filtered.filter(p => Number(p.price) >= min);
@@ -101,7 +93,6 @@ const Products = () => {
       filtered = filtered.filter(p => Number(p.price) <= max);
     }
 
-    // Sorting
     if (filters.sort_by) {
       const dir = filters.sort_order === 'asc' ? 1 : -1;
       filtered.sort((a, b) => {
@@ -111,7 +102,6 @@ const Products = () => {
       });
     }
 
-    // Update pagination
     const totalItems = filtered.length;
     const lastPage = Math.max(1, Math.ceil(totalItems / pagination.per_page));
     const currentPage = Math.min(pagination.current_page, lastPage);
@@ -150,48 +140,52 @@ const Products = () => {
 
   return (
     <div className="min-h-screen">
-      {/* Hero Section */}
-      <div className="relative bg-gradient-to-r from-gray-900 to-gray-800 rounded-3xl overflow-hidden mb-8 md:mb-12">
-        <div className="absolute inset-0 bg-black/20"></div>
-        <div className="relative px-6 py-12 md:py-16 text-center">
-          <h1 className="text-3xl md:text-5xl font-bold text-white mb-3 animate-fade-in-up">Our Collection</h1>
-          <p className="text-gray-200 text-sm md:text-base max-w-2xl mx-auto animate-fade-in-up animation-delay-200">Discover premium products crafted with excellence. From everyday essentials to luxury items.</p>
+      {/* Hero Section - Royal Gold */}
+      <div className="relative bg-gradient-to-r from-black via-[#0a0a0a] to-black rounded-2xl overflow-hidden mb-6 md:mb-10 border border-[#D4AF37]/20 shadow-2xl">
+        <div className="absolute inset-0 bg-gradient-to-r from-[#D4AF37]/5 via-transparent to-[#D4AF37]/5"></div>
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-[#D4AF37]/10 rounded-full blur-3xl"></div>
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-[#D4AF37]/10 rounded-full blur-3xl"></div>
+        <div className="relative px-4 py-10 md:py-14 text-center">
+          <h1 className="text-3xl md:text-5xl font-bold mb-3 animate-fade-in-up">
+            <span className="bg-gradient-to-r from-[#D4AF37] to-[#FFD700] bg-clip-text text-transparent">Royal Collection</span>
+          </h1>
+          <p className="text-gray-300 text-sm md:text-base max-w-2xl mx-auto animate-fade-in-up">Discover premium craftsmanship curated for the discerning connoisseur.</p>
         </div>
       </div>
 
       {/* Filter Bar - Mobile Toggle */}
       <div className="lg:hidden mb-4">
-        <button onClick={() => setShowFilters(!showFilters)} className="w-full bg-white/80 backdrop-blur-sm rounded-2xl px-6 py-4 shadow-md flex items-center justify-between transition-all duration-200">
+        <button onClick={() => setShowFilters(!showFilters)} className="w-full bg-black/60 backdrop-blur-md rounded-xl px-6 py-4 shadow-xl border border-[#D4AF37]/20 flex items-center justify-between transition-all duration-300">
           <div className="flex items-center space-x-3">
-            <i className="bi bi-funnel text-gray-700 text-xl"></i>
-            <span className="font-medium text-gray-800">Filters</span>
-            {getActiveFilterCount() > 0 && <span className="bg-gray-900 text-white text-xs px-2 py-1 rounded-full">{getActiveFilterCount()}</span>}
+            <i className="bi bi-funnel text-[#D4AF37] text-xl"></i>
+            <span className="font-medium text-white">Refine Collection</span>
+            {getActiveFilterCount() > 0 && <span className="bg-gradient-to-r from-[#D4AF37] to-[#FFD700] text-black text-xs px-2 py-1 rounded-full font-bold">{getActiveFilterCount()}</span>}
           </div>
-          <i className={`bi bi-chevron-${showFilters ? 'up' : 'down'} text-gray-600 transition-transform`}></i>
+          <i className={`bi bi-chevron-${showFilters ? 'up' : 'down'} text-[#D4AF37] transition-transform`}></i>
         </button>
       </div>
 
       <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">
-        {/* Sidebar Filters */}
-        <aside className={`lg:block lg:w-80 lg:sticky lg:top-24 lg:h-screen lg:overflow-y-auto ${showFilters ? 'block' : 'hidden'} fixed inset-0 z-50 lg:relative lg:z-auto bg-white lg:bg-transparent lg:rounded-none rounded-3xl shadow-2xl lg:shadow-none p-6 lg:p-0`}>
-          <div className="lg:hidden flex justify-between items-center mb-6">
-            <h3 className="text-xl font-bold text-gray-900">Filters</h3>
-            <button onClick={() => setShowFilters(false)} className="p-2 rounded-full hover:bg-gray-100"><i className="bi bi-x-lg text-gray-600"></i></button>
+        {/* Sidebar Filters - Glassmorphism Dark */}
+        <aside className={`lg:block lg:w-80 lg:sticky lg:top-24 lg:h-screen lg:overflow-y-auto ${showFilters ? 'block' : 'hidden'} fixed inset-0 z-50 lg:relative lg:z-auto bg-black lg:bg-transparent rounded-2xl shadow-2xl lg:shadow-none p-5 lg:p-0`}>
+          <div className="lg:hidden flex justify-between items-center mb-5">
+            <h3 className="text-xl font-bold text-[#D4AF37]">Refine Collection</h3>
+            <button onClick={() => setShowFilters(false)} className="p-2 rounded-full hover:bg-white/5 transition-all"><i className="bi bi-x-lg text-[#D4AF37] text-xl"></i></button>
           </div>
 
-          <div className="space-y-6">
+          <div className="space-y-5">
             {/* Search */}
-            <div className="bg-white/50 backdrop-blur-sm rounded-2xl p-5 shadow-sm border border-gray-100">
-              <label className="text-sm font-semibold text-gray-900 uppercase tracking-wide mb-3 block"><i className="bi bi-search mr-2"></i> Search</label>
-              <input type="text" name="search" value={filters.search} onChange={handleFilterChange} placeholder="Search by title or description" className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-800 focus:border-transparent bg-white/60" />
+            <div className="bg-black/60 backdrop-blur-md rounded-xl p-5 border border-[#D4AF37]/20">
+              <label className="text-sm font-bold text-[#D4AF37] uppercase tracking-wide mb-3 block"><i className="bi bi-search mr-2"></i> Search Treasury</label>
+              <input type="text" name="search" value={filters.search} onChange={handleFilterChange} placeholder="Search by title or description" className="w-full px-4 py-3 bg-black/60 border border-[#D4AF37]/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent text-white placeholder:text-gray-500 transition-all" />
             </div>
 
             {/* Tag Filter */}
-            <div className="bg-white/50 backdrop-blur-sm rounded-2xl p-5 shadow-sm border border-gray-100">
-              <label className="text-sm font-semibold text-gray-900 uppercase tracking-wide mb-3 block"><i className="bi bi-bookmark mr-2"></i> Tags</label>
+            <div className="bg-black/60 backdrop-blur-md rounded-xl p-5 border border-[#D4AF37]/20">
+              <label className="text-sm font-bold text-[#D4AF37] uppercase tracking-wide mb-3 block"><i className="bi bi-bookmark mr-2"></i> Categories</label>
               <div className="flex flex-wrap gap-2">
                 {tags.map(tag => (
-                  <button key={tag} onClick={() => handleFilterChange({ target: { name: 'tag', value: filters.tag === tag ? '' : tag } })} className={`px-3 py-1.5 rounded-xl text-sm capitalize transition-all duration-200 ${filters.tag === tag ? 'bg-gray-900 text-white shadow-md' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}>
+                  <button key={tag} onClick={() => handleFilterChange({ target: { name: 'tag', value: filters.tag === tag ? '' : tag } })} className={`px-3 py-1.5 rounded-lg text-sm capitalize transition-all duration-300 ${filters.tag === tag ? 'bg-gradient-to-r from-[#D4AF37] to-[#FFD700] text-black font-bold shadow-lg' : 'bg-black/60 text-gray-300 hover:bg-[#D4AF37]/20 border border-[#D4AF37]/30'}`}>
                     {tag}
                   </button>
                 ))}
@@ -199,49 +193,95 @@ const Products = () => {
             </div>
 
             {/* Price Range */}
-            <div className="bg-white/50 backdrop-blur-sm rounded-2xl p-5 shadow-sm border border-gray-100">
-              <label className="text-sm font-semibold text-gray-900 uppercase tracking-wide mb-3 block"><i className="bi bi-currency-dollar mr-2"></i> Price Range</label>
+            <div className="bg-black/60 backdrop-blur-md rounded-xl p-5 border border-[#D4AF37]/20">
+              <label className="text-sm font-bold text-[#D4AF37] uppercase tracking-wide mb-3 block"><i className="bi bi-currency-dollar mr-2"></i> Price Range (MAD)</label>
               <div className="space-y-3">
-                <input type="number" name="min_price" placeholder="Min Price" value={filters.min_price} onChange={handleFilterChange} className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-800 bg-white/60" />
-                <input type="number" name="max_price" placeholder="Max Price" value={filters.max_price} onChange={handleFilterChange} className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-800 bg-white/60" />
+                <input type="number" name="min_price" placeholder="Minimum Price" value={filters.min_price} onChange={handleFilterChange} className="w-full px-4 py-3 bg-black/60 border border-[#D4AF37]/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#D4AF37] text-white placeholder:text-gray-500" />
+                <input type="number" name="max_price" placeholder="Maximum Price" value={filters.max_price} onChange={handleFilterChange} className="w-full px-4 py-3 bg-black/60 border border-[#D4AF37]/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#D4AF37] text-white placeholder:text-gray-500" />
               </div>
             </div>
 
-            <button onClick={clearAllFilters} className="w-full bg-gray-100 text-gray-800 py-3 rounded-xl font-medium hover:bg-gray-200 transition-all duration-200 flex items-center justify-center space-x-2"><i className="bi bi-eraser"></i><span>Clear All Filters</span></button>
+            <button onClick={clearAllFilters} className="w-full bg-gradient-to-r from-[#D4AF37]/20 to-[#FFD700]/20 text-[#D4AF37] py-3 rounded-xl font-bold hover:from-[#D4AF37]/30 hover:to-[#FFD700]/30 transition-all duration-300 flex items-center justify-center space-x-2 border border-[#D4AF37]/40 min-h-[44px]">
+              <i className="bi bi-eraser"></i>
+              <span>Clear All Filters</span>
+            </button>
           </div>
         </aside>
 
         {/* Products Grid */}
         <div className="flex-1">
-          <div className="bg-white/50 backdrop-blur-sm rounded-2xl p-4 mb-6 shadow-sm border border-gray-100">
+          <div className="bg-black/40 backdrop-blur-md rounded-xl p-4 mb-6 border border-[#D4AF37]/20">
             <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-              <p className="text-gray-600 text-sm"><span className="font-semibold text-gray-900">{pagination.total}</span> premium products</p>
+              <p className="text-gray-300 text-sm"><span className="font-bold text-[#D4AF37]">{pagination.total}</span> royal pieces</p>
               <div className="flex gap-2">
-                <button onClick={() => handleSort('price')} className={`px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 flex items-center gap-2 ${activeSort === 'price' ? 'bg-gray-900 text-white shadow-md' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}><i className="bi bi-currency-dollar"></i>Price{activeSort === 'price' && <i className={`bi bi-chevron-${filters.sort_order === 'asc' ? 'up' : 'down'} text-xs`}></i>}</button>
-                <button onClick={() => handleSort('title')} className={`px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 flex items-center gap-2 ${activeSort === 'title' ? 'bg-gray-900 text-white shadow-md' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}><i className="bi bi-sort-alpha-down"></i>Name{activeSort === 'title' && <i className={`bi bi-chevron-${filters.sort_order === 'asc' ? 'up' : 'down'} text-xs`}></i>}</button>
+                <button onClick={() => handleSort('price')} className={`px-4 py-2 rounded-lg text-sm font-bold transition-all duration-300 flex items-center gap-2 min-h-[44px] ${activeSort === 'price' ? 'bg-gradient-to-r from-[#D4AF37] to-[#FFD700] text-black shadow-lg' : 'bg-black/60 text-gray-300 hover:bg-[#D4AF37]/20 border border-[#D4AF37]/30'}`}>
+                  <i className="bi bi-currency-dollar"></i>Price
+                  {activeSort === 'price' && <i className={`bi bi-chevron-${filters.sort_order === 'asc' ? 'up' : 'down'} text-xs`}></i>}
+                </button>
+                <button onClick={() => handleSort('title')} className={`px-4 py-2 rounded-lg text-sm font-bold transition-all duration-300 flex items-center gap-2 min-h-[44px] ${activeSort === 'title' ? 'bg-gradient-to-r from-[#D4AF37] to-[#FFD700] text-black shadow-lg' : 'bg-black/60 text-gray-300 hover:bg-[#D4AF37]/20 border border-[#D4AF37]/30'}`}>
+                  <i className="bi bi-sort-alpha-down"></i>Name
+                  {activeSort === 'title' && <i className={`bi bi-chevron-${filters.sort_order === 'asc' ? 'up' : 'down'} text-xs`}></i>}
+                </button>
               </div>
             </div>
           </div>
 
           {loading ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">{[1,2,3,4,5,6].map(i=> <div key={i} className="bg-white rounded-2xl shadow-md overflow-hidden animate-pulse"><div className="h-64 bg-gray-200"></div><div className="p-5 space-y-3"><div className="h-4 bg-gray-200 rounded w-3/4"></div><div className="h-3 bg-gray-200 rounded w-full"></div><div className="h-3 bg-gray-200 rounded w-2/3"></div><div className="h-6 bg-gray-200 rounded w-1/3"></div></div></div>)}</div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[1,2,3,4,5,6].map(i => (
+                <div key={i} className="bg-black/40 rounded-xl border border-[#D4AF37]/10 overflow-hidden animate-pulse">
+                  <div className="h-64 bg-gradient-to-br from-gray-800 to-gray-900"></div>
+                  <div className="p-5 space-y-3">
+                    <div className="h-4 bg-[#D4AF37]/20 rounded w-3/4"></div>
+                    <div className="h-3 bg-[#D4AF37]/10 rounded w-full"></div>
+                    <div className="h-3 bg-[#D4AF37]/10 rounded w-2/3"></div>
+                    <div className="h-6 bg-[#D4AF37]/20 rounded w-1/3"></div>
+                  </div>
+                </div>
+              ))}
+            </div>
           ) : products.length === 0 ? (
-            <div className="bg-white/50 backdrop-blur-sm rounded-3xl p-12 text-center"><i className="bi bi-emoji-frown text-6xl text-gray-400 mb-4 block"></i><h3 className="text-xl font-semibold text-gray-800 mb-2">No products found</h3><p className="text-gray-500">Try adjusting your filters or clear them to see all products.</p><button onClick={clearAllFilters} className="mt-4 bg-gray-900 text-white px-6 py-2 rounded-xl hover:bg-gray-800 transition-all duration-200">Clear Filters</button></div>
+            <div className="bg-black/40 backdrop-blur-md rounded-xl p-12 text-center border border-[#D4AF37]/20">
+              <i className="bi bi-emoji-frown text-6xl text-[#D4AF37]/40 mb-4 block"></i>
+              <h3 className="text-xl font-bold text-white mb-2">No royal pieces found</h3>
+              <p className="text-gray-400">Adjust your filters to discover more treasures.</p>
+              <button onClick={clearAllFilters} className="mt-4 bg-gradient-to-r from-[#D4AF37] to-[#FFD700] text-black px-6 py-2.5 rounded-lg font-bold hover:shadow-lg hover:shadow-[#D4AF37]/30 transition-all duration-300 min-h-[44px]">Clear Filters</button>
+            </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">{products.map(product => <ProductCard key={product.id} product={product} />)}</div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {products.map(product => <ProductCard key={product.id} product={product} />)}
+            </div>
           )}
 
           {pagination.last_page > 1 && (
             <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mt-10">
-              <button onClick={() => setPagination(prev => ({ ...prev, current_page: Math.max(1, prev.current_page - 1) }))} disabled={pagination.current_page === 1} className="px-6 py-2 rounded-xl border border-gray-200 bg-white/50 backdrop-blur-sm text-gray-700 hover:bg-gray-100 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"><i className="bi bi-chevron-left"></i>Previous</button>
-              <div className="flex items-center gap-2">{[...Array(Math.min(5, pagination.last_page))].map((_, i) => {let pageNum; if (pagination.last_page <= 5) pageNum = i+1; else if (pagination.current_page <= 3) pageNum = i+1; else if (pagination.current_page >= pagination.last_page - 2) pageNum = pagination.last_page - 4 + i; else pageNum = pagination.current_page - 2 + i; return (<button key={pageNum} onClick={() => setPagination(prev => ({ ...prev, current_page: pageNum }))} className={`w-10 h-10 rounded-xl font-medium transition-all duration-200 ${pagination.current_page === pageNum ? 'bg-gray-900 text-white shadow-md' : 'bg-white/50 backdrop-blur-sm text-gray-700 hover:bg-gray-100'}`}>{pageNum}</button>);})}</div>
-              <button onClick={() => setPagination(prev => ({ ...prev, current_page: Math.min(prev.last_page, prev.current_page + 1) }))} disabled={pagination.current_page === pagination.last_page} className="px-6 py-2 rounded-xl border border-gray-200 bg-white/50 backdrop-blur-sm text-gray-700 hover:bg-gray-100 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2">Next<i className="bi bi-chevron-right"></i></button>
+              <button onClick={() => setPagination(prev => ({ ...prev, current_page: Math.max(1, prev.current_page - 1) }))} disabled={pagination.current_page === 1} className="px-6 py-2.5 rounded-lg border border-[#D4AF37]/30 bg-black/60 text-[#D4AF37] hover:bg-[#D4AF37]/20 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 min-h-[44px]">
+                <i className="bi bi-chevron-left"></i>Previous
+              </button>
+              <div className="flex items-center gap-2">
+                {[...Array(Math.min(5, pagination.last_page))].map((_, i) => {
+                  let pageNum;
+                  if (pagination.last_page <= 5) pageNum = i+1;
+                  else if (pagination.current_page <= 3) pageNum = i+1;
+                  else if (pagination.current_page >= pagination.last_page - 2) pageNum = pagination.last_page - 4 + i;
+                  else pageNum = pagination.current_page - 2 + i;
+                  return (
+                    <button key={pageNum} onClick={() => setPagination(prev => ({ ...prev, current_page: pageNum }))} className={`w-10 h-10 rounded-lg font-bold transition-all duration-300 ${pagination.current_page === pageNum ? 'bg-gradient-to-r from-[#D4AF37] to-[#FFD700] text-black shadow-lg' : 'bg-black/60 text-gray-300 hover:bg-[#D4AF37]/20 border border-[#D4AF37]/30'}`}>
+                      {pageNum}
+                    </button>
+                  );
+                })}
+              </div>
+              <button onClick={() => setPagination(prev => ({ ...prev, current_page: Math.min(prev.last_page, prev.current_page + 1) }))} disabled={pagination.current_page === pagination.last_page} className="px-6 py-2.5 rounded-lg border border-[#D4AF37]/30 bg-black/60 text-[#D4AF37] hover:bg-[#D4AF37]/20 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 min-h-[44px]">
+                Next<i className="bi bi-chevron-right"></i>
+              </button>
             </div>
           )}
         </div>
       </div>
 
-      {showFilters && (<div className="lg:hidden fixed inset-0 bg-black/50 z-40" onClick={() => setShowFilters(false)}></div>)}
+      {/* Backdrop for mobile filters */}
+      {showFilters && (<div className="lg:hidden fixed inset-0 bg-black/80 z-40" onClick={() => setShowFilters(false)}></div>)}
     </div>
   );
 };

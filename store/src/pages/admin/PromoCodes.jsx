@@ -65,9 +65,9 @@ const AdminPromoCodes = () => {
 
   const showNotification = (message, type) => {
     const notification = document.createElement('div');
-    notification.className = `fixed top-4 right-4 z-50 px-4 py-3 rounded-xl shadow-lg animate-fade-in ${
-      type === 'success' ? 'bg-emerald-500' : 'bg-red-500'
-    } text-white`;
+    notification.className = `fixed top-4 right-4 z-50 px-4 py-3 rounded-xl shadow-2xl animate-fade-in ${
+      type === 'success' ? 'bg-gradient-to-r from-[#D4AF37] to-[#FFD700] text-black' : 'bg-red-600 text-white'
+    } font-bold`;
     notification.innerHTML = `<i class="bi ${type === 'success' ? 'bi-check-circle' : 'bi-exclamation-triangle'} mr-2"></i>${message}`;
     document.body.appendChild(notification);
     setTimeout(() => notification.remove(), 3000);
@@ -79,7 +79,7 @@ const AdminPromoCodes = () => {
     for (let i = 0; i < 8; i++) {
       code += chars.charAt(Math.floor(Math.random() * chars.length));
     }
-    setFormData({ ...formData, code: `PROMO${code}` });
+    setFormData({ ...formData, code: `ROYAL${code}` });
   };
 
   const isExpired = (expiresAt) => {
@@ -92,10 +92,10 @@ const AdminPromoCodes = () => {
   };
 
   const getDiscountColor = (percentage) => {
-    if (percentage >= 50) return 'from-rose-500 to-rose-600';
-    if (percentage >= 30) return 'from-amber-500 to-amber-600';
-    if (percentage >= 15) return 'from-emerald-500 to-emerald-600';
-    return 'from-blue-500 to-blue-600';
+    if (percentage >= 50) return 'from-rose-600 to-rose-700';
+    if (percentage >= 30) return 'from-[#D4AF37] to-[#FFD700]';
+    if (percentage >= 15) return 'from-emerald-600 to-teal-600';
+    return 'from-blue-600 to-blue-700';
   };
 
   const filteredPromoCodes = promoCodes.filter(promo => {
@@ -109,21 +109,21 @@ const AdminPromoCodes = () => {
 
   const filters = [
     { id: 'all', label: 'All Codes', icon: 'bi-grid-3x3-gap-fill' },
-    { id: 'active', label: 'Active', icon: 'bi-check-circle', color: 'emerald' },
-    { id: 'expired', label: 'Expired', icon: 'bi-clock-history', color: 'red' },
-    { id: 'full', label: 'Max Usage', icon: 'bi-exclamation-triangle', color: 'amber' },
+    { id: 'active', label: 'Active', icon: 'bi-check-circle' },
+    { id: 'expired', label: 'Expired', icon: 'bi-clock-history' },
+    { id: 'full', label: 'Max Usage', icon: 'bi-exclamation-triangle' },
   ];
 
   if (loading) {
     return (
       <div className="min-h-[60vh] flex flex-col items-center justify-center">
         <div className="relative">
-          <div className="w-16 h-16 border-4 border-gray-200 border-t-gray-900 rounded-full animate-spin"></div>
+          <div className="w-16 h-16 border-4 border-[#D4AF37]/20 border-t-[#D4AF37] rounded-full animate-spin shadow-lg shadow-[#D4AF37]/30"></div>
           <div className="absolute inset-0 flex items-center justify-center">
-            <i className="bi bi-ticket-perforated text-gray-900 text-xl animate-pulse"></i>
+            <i className="bi bi-crown-fill text-[#D4AF37] text-xl animate-pulse"></i>
           </div>
         </div>
-        <p className="mt-4 text-gray-600 font-medium">Loading promo codes...</p>
+        <p className="mt-4 text-[#D4AF37] font-medium">Loading royal promo codes...</p>
       </div>
     );
   }
@@ -133,65 +133,70 @@ const AdminPromoCodes = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">
-            Promo Codes
-          </h1>
-          <p className="text-gray-500 mt-1">Manage discounts and promotions</p>
+          <div className="flex items-center gap-3 mb-1">
+            <div className="w-10 h-10 bg-gradient-to-br from-[#D4AF37] to-[#FFD700] rounded-xl flex items-center justify-center shadow-lg shadow-[#D4AF37]/30">
+              <i className="bi bi-ticket-perforated-fill text-black text-lg"></i>
+            </div>
+            <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-[#D4AF37] to-[#FFD700] bg-clip-text text-transparent">
+              Royal Promo Codes
+            </h1>
+          </div>
+          <p className="text-gray-400 mt-1 ml-13">Manage exclusive discounts and royal promotions</p>
         </div>
         
         <div className="flex gap-3">
-          <div className="bg-white/50 backdrop-blur-sm rounded-2xl px-4 py-2 shadow-sm border border-gray-100 flex items-center gap-2">
-            <i className="bi bi-ticket-perforated text-gray-600"></i>
-            <span className="text-sm text-gray-600">Total:</span>
-            <span className="text-lg font-bold text-gray-900">{promoCodes.length}</span>
+          <div className="bg-black/40 backdrop-blur-md rounded-xl px-5 py-2.5 border border-[#D4AF37]/20 flex items-center gap-2">
+            <i className="bi bi-ticket-perforated text-[#D4AF37]"></i>
+            <span className="text-sm text-gray-400">Total:</span>
+            <span className="text-lg font-bold text-[#D4AF37]">{promoCodes.length}</span>
           </div>
           <button
             onClick={() => setShowForm(!showForm)}
-            className="bg-gray-900 text-white px-6 py-2 rounded-xl font-medium hover:bg-gray-800 transform hover:scale-105 transition-all duration-200 shadow-md flex items-center gap-2"
+            className="bg-gradient-to-r from-[#D4AF37] to-[#FFD700] text-black px-6 py-2.5 rounded-xl font-bold hover:shadow-xl hover:shadow-[#D4AF37]/30 transform hover:scale-105 transition-all duration-300 flex items-center gap-2 min-h-[44px]"
           >
             <i className="bi bi-plus-lg"></i>
-            <span>Add Code</span>
+            <span>Add Royal Code</span>
           </button>
         </div>
       </div>
 
-      {/* Create Form */}
+      {/* Create Form - Royal Gold */}
       {showForm && (
-        <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 animate-fade-in">
-          <div className="bg-gradient-to-r from-gray-50 to-white px-6 py-4 border-b border-gray-100">
-            <h2 className="text-lg font-bold text-gray-900 flex items-center gap-2">
-              <i className="bi bi-ticket-perforated text-gray-700"></i>
-              <span>Create New Promo Code</span>
+        <div className="bg-black/40 backdrop-blur-md rounded-2xl shadow-2xl overflow-hidden border-2 border-[#D4AF37]/30 animate-fade-in">
+          <div className="bg-gradient-to-r from-[#D4AF37]/20 to-[#FFD700]/20 px-6 py-4 border-b border-[#D4AF37]/20">
+            <h2 className="text-lg font-bold text-[#D4AF37] flex items-center gap-2">
+              <i className="bi bi-ticket-perforated"></i>
+              <span>Create New Royal Promo Code</span>
             </h2>
           </div>
           
           <form onSubmit={handleCreate} className="p-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Code *</label>
+                <label className="block text-sm font-bold text-[#D4AF37] mb-2">Code *</label>
                 <div className="relative">
-                  <i className="bi bi-tag absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                  <i className="bi bi-tag absolute left-4 top-1/2 transform -translate-y-1/2 text-[#D4AF37]/50"></i>
                   <input
                     type="text"
-                    placeholder="SUMMER2024"
+                    placeholder="ROYAL2024"
                     value={formData.code}
                     onChange={(e) => setFormData({ ...formData, code: e.target.value.toUpperCase() })}
-                    className="w-full pl-11 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-800 focus:border-transparent transition-all duration-200 bg-gray-50/50 uppercase"
+                    className="w-full pl-11 pr-4 py-3 bg-black/60 border-2 border-[#D4AF37]/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent transition-all text-white placeholder:text-gray-500 uppercase"
                     required
                   />
                 </div>
               </div>
               
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Discount Percentage *</label>
+                <label className="block text-sm font-bold text-[#D4AF37] mb-2">Discount Percentage *</label>
                 <div className="relative">
-                  <i className="bi bi-percent absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                  <i className="bi bi-percent absolute left-4 top-1/2 transform -translate-y-1/2 text-[#D4AF37]/50"></i>
                   <input
                     type="number"
                     placeholder="15"
                     value={formData.discount_percentage}
                     onChange={(e) => setFormData({ ...formData, discount_percentage: e.target.value })}
-                    className="w-full pl-11 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-800 focus:border-transparent transition-all duration-200 bg-gray-50/50"
+                    className="w-full pl-11 pr-4 py-3 bg-black/60 border-2 border-[#D4AF37]/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent transition-all text-white placeholder:text-gray-500"
                     min="1"
                     max="100"
                     required
@@ -200,15 +205,15 @@ const AdminPromoCodes = () => {
               </div>
               
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Max Usage (Optional)</label>
+                <label className="block text-sm font-bold text-[#D4AF37] mb-2">Max Usage (Optional)</label>
                 <div className="relative">
-                  <i className="bi bi-people absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                  <i className="bi bi-people absolute left-4 top-1/2 transform -translate-y-1/2 text-[#D4AF37]/50"></i>
                   <input
                     type="number"
                     placeholder="100"
                     value={formData.max_usage}
                     onChange={(e) => setFormData({ ...formData, max_usage: e.target.value })}
-                    className="w-full pl-11 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-800 focus:border-transparent transition-all duration-200 bg-gray-50/50"
+                    className="w-full pl-11 pr-4 py-3 bg-black/60 border-2 border-[#D4AF37]/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent transition-all text-white placeholder:text-gray-500"
                     min="1"
                   />
                 </div>
@@ -216,14 +221,14 @@ const AdminPromoCodes = () => {
               </div>
               
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Expiration Date (Optional)</label>
+                <label className="block text-sm font-bold text-[#D4AF37] mb-2">Expiration Date (Optional)</label>
                 <div className="relative">
-                  <i className="bi bi-calendar-event absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                  <i className="bi bi-calendar-event absolute left-4 top-1/2 transform -translate-y-1/2 text-[#D4AF37]/50"></i>
                   <input
                     type="datetime-local"
                     value={formData.expires_at}
                     onChange={(e) => setFormData({ ...formData, expires_at: e.target.value })}
-                    className="w-full pl-11 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-800 focus:border-transparent transition-all duration-200 bg-gray-50/50"
+                    className="w-full pl-11 pr-4 py-3 bg-black/60 border-2 border-[#D4AF37]/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent transition-all text-white"
                   />
                 </div>
                 <p className="text-xs text-gray-500 mt-1">Leave empty for no expiration</p>
@@ -234,24 +239,24 @@ const AdminPromoCodes = () => {
               <button
                 type="button"
                 onClick={generateRandomCode}
-                className="text-sm text-gray-600 hover:text-gray-900 transition-colors flex items-center gap-1"
+                className="text-sm text-[#D4AF37] hover:text-[#FFD700] transition-colors flex items-center gap-1"
               >
                 <i className="bi bi-shuffle"></i>
-                <span>Generate random code</span>
+                <span>Generate random royal code</span>
               </button>
             </div>
             
-            <div className="flex gap-3 mt-6 pt-4 border-t border-gray-100">
+            <div className="flex gap-3 mt-6 pt-4 border-t border-[#D4AF37]/20">
               <button
                 type="submit"
-                className="bg-gray-900 text-white px-6 py-3 rounded-xl font-medium hover:bg-gray-800 transform hover:scale-105 transition-all duration-200 shadow-md"
+                className="bg-gradient-to-r from-[#D4AF37] to-[#FFD700] text-black px-6 py-3 rounded-xl font-bold hover:shadow-xl hover:shadow-[#D4AF37]/30 transform hover:scale-105 transition-all duration-300 min-h-[48px]"
               >
-                Create Promo Code
+                Create Royal Code
               </button>
               <button
                 type="button"
                 onClick={() => setShowForm(false)}
-                className="bg-gray-100 text-gray-700 px-6 py-3 rounded-xl font-medium hover:bg-gray-200 transition-all duration-200"
+                className="border-2 border-[#D4AF37]/30 text-[#D4AF37] px-6 py-3 rounded-xl font-bold hover:bg-[#D4AF37]/10 transition-all duration-300 min-h-[48px]"
               >
                 Cancel
               </button>
@@ -263,13 +268,13 @@ const AdminPromoCodes = () => {
       {/* Search & Filter Bar */}
       <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
         <div className="relative flex-1 max-w-md w-full">
-          <i className="bi bi-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+          <i className="bi bi-search absolute left-4 top-1/2 transform -translate-y-1/2 text-[#D4AF37]/50"></i>
           <input
             type="text"
             placeholder="Search promo codes..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-11 pr-4 py-2 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-800 focus:border-transparent bg-white/50 backdrop-blur-sm"
+            className="w-full pl-11 pr-4 py-2.5 bg-black/40 backdrop-blur-md border-2 border-[#D4AF37]/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent transition-all text-white placeholder:text-gray-500"
           />
         </div>
         
@@ -278,10 +283,10 @@ const AdminPromoCodes = () => {
             <button
               key={filterOption.id}
               onClick={() => setFilter(filterOption.id)}
-              className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 ${
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-bold transition-all duration-300 min-h-[40px] ${
                 filter === filterOption.id
-                  ? 'bg-gray-900 text-white shadow-md'
-                  : 'bg-white/50 backdrop-blur-sm text-gray-700 hover:bg-gray-100 border border-gray-200'
+                  ? 'bg-gradient-to-r from-[#D4AF37] to-[#FFD700] text-black shadow-lg'
+                  : 'bg-black/40 backdrop-blur-md text-gray-300 hover:bg-[#D4AF37]/20 border border-[#D4AF37]/30'
               }`}
             >
               <i className={filterOption.icon}></i>
@@ -293,18 +298,18 @@ const AdminPromoCodes = () => {
 
       {/* Promo Codes Grid */}
       {filteredPromoCodes.length === 0 ? (
-        <div className="bg-white rounded-2xl shadow-lg p-12 text-center border border-gray-100">
-          <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <i className="bi bi-ticket-perforated text-3xl text-gray-400"></i>
+        <div className="bg-black/40 backdrop-blur-md rounded-2xl shadow-2xl p-12 text-center border border-[#D4AF37]/20">
+          <div className="w-20 h-20 bg-[#D4AF37]/10 rounded-full flex items-center justify-center mx-auto mb-4">
+            <i className="bi bi-ticket-perforated text-3xl text-[#D4AF37]/40"></i>
           </div>
-          <h3 className="text-lg font-semibold text-gray-900 mb-2">No promo codes found</h3>
-          <p className="text-gray-500">
-            {searchTerm ? `No codes matching "${searchTerm}"` : "Create your first promo code to get started"}
+          <h3 className="text-lg font-bold text-white mb-2">No royal codes found</h3>
+          <p className="text-gray-400">
+            {searchTerm ? `No codes matching "${searchTerm}"` : "Create your first royal promo code to get started"}
           </p>
           {searchTerm && (
             <button
               onClick={() => setSearchTerm('')}
-              className="mt-4 text-gray-600 hover:text-gray-900 text-sm font-medium"
+              className="mt-4 text-[#D4AF37] hover:text-[#FFD700] text-sm font-bold"
             >
               Clear search →
             </button>
@@ -322,27 +327,27 @@ const AdminPromoCodes = () => {
             return (
               <div
                 key={promo.id}
-                className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden animate-fade-in-up border border-gray-100"
+                className="group bg-black/40 backdrop-blur-md rounded-2xl shadow-2xl hover:shadow-2xl hover:shadow-[#D4AF37]/20 transition-all duration-500 overflow-hidden border border-[#D4AF37]/20 hover:border-[#D4AF37]/50 transform hover:-translate-y-1"
                 style={{ animationDelay: `${index * 50}ms` }}
               >
-                {/* Card Header */}
+                {/* Card Header - Royal Gradient */}
                 <div className={`bg-gradient-to-r ${discountColor} p-5 relative overflow-hidden`}>
-                  <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                   <div className="relative z-10">
                     <div className="flex items-center justify-between mb-3">
                       <div className="flex items-center gap-2">
-                        <i className="bi bi-ticket-perforated-fill text-white text-2xl"></i>
-                        <span className="text-white/90 text-xs font-mono">#{promo.id}</span>
+                        <i className="bi bi-crown-fill text-white/90 text-xl"></i>
+                        <span className="text-white/70 text-xs font-mono">#{promo.id}</span>
                       </div>
                       <button
                         onClick={() => handleDelete(promo.id, promo.code)}
-                        className="text-white/80 hover:text-white hover:bg-white/20 p-2 rounded-xl transition-all duration-200"
+                        className="text-white/70 hover:text-white hover:bg-white/20 p-2 rounded-lg transition-all duration-300"
                       >
                         <i className="bi bi-trash text-lg"></i>
                       </button>
                     </div>
                     <div className="text-center">
-                      <div className="bg-white/20 backdrop-blur-sm rounded-2xl px-4 py-2 inline-block mb-3">
+                      <div className="bg-white/20 backdrop-blur-sm rounded-xl px-4 py-2 inline-block mb-3">
                         <code className="text-white font-mono font-bold text-xl tracking-wider">
                           {promo.code}
                         </code>
@@ -360,17 +365,17 @@ const AdminPromoCodes = () => {
                   {/* Status Badge */}
                   <div className="mb-4">
                     {isActive ? (
-                      <div className="inline-flex items-center gap-1 px-3 py-1 rounded-xl bg-emerald-50 text-emerald-700 border border-emerald-200 text-sm">
+                      <div className="inline-flex items-center gap-1 px-3 py-1 rounded-lg bg-gradient-to-r from-emerald-500/20 to-green-500/20 text-emerald-400 border border-emerald-500/30 text-sm font-bold">
                         <i className="bi bi-check-circle-fill text-xs"></i>
-                        <span>Active</span>
+                        <span>Active Royal Code</span>
                       </div>
                     ) : expired ? (
-                      <div className="inline-flex items-center gap-1 px-3 py-1 rounded-xl bg-red-50 text-red-700 border border-red-200 text-sm">
+                      <div className="inline-flex items-center gap-1 px-3 py-1 rounded-lg bg-red-500/20 text-red-400 border border-red-500/30 text-sm font-bold">
                         <i className="bi bi-clock-history text-xs"></i>
                         <span>Expired</span>
                       </div>
                     ) : (
-                      <div className="inline-flex items-center gap-1 px-3 py-1 rounded-xl bg-amber-50 text-amber-700 border border-amber-200 text-sm">
+                      <div className="inline-flex items-center gap-1 px-3 py-1 rounded-lg bg-amber-500/20 text-amber-400 border border-amber-500/30 text-sm font-bold">
                         <i className="bi bi-exclamation-triangle-fill text-xs"></i>
                         <span>Max Usage Reached</span>
                       </div>
@@ -380,12 +385,12 @@ const AdminPromoCodes = () => {
                   {/* Usage Stats */}
                   <div className="space-y-3">
                     <div className="flex justify-between items-center">
-                      <div className="flex items-center gap-2 text-gray-600">
+                      <div className="flex items-center gap-2 text-gray-400">
                         <i className="bi bi-people"></i>
                         <span className="text-sm">Usage</span>
                       </div>
                       <div className="text-right">
-                        <span className="text-lg font-bold text-gray-900">{promo.used_count || 0}</span>
+                        <span className="text-lg font-bold text-[#D4AF37]">{promo.used_count || 0}</span>
                         {promo.max_usage && (
                           <span className="text-sm text-gray-500"> / {promo.max_usage}</span>
                         )}
@@ -394,7 +399,7 @@ const AdminPromoCodes = () => {
                     
                     {promo.max_usage && (
                       <div className="space-y-1">
-                        <div className="bg-gray-100 rounded-full h-2 overflow-hidden">
+                        <div className="bg-black/60 rounded-full h-2 overflow-hidden">
                           <div 
                             className={`bg-gradient-to-r ${discountColor} h-full rounded-full transition-all duration-500`}
                             style={{ width: `${Math.min(100, usagePercentage)}%` }}
@@ -407,14 +412,14 @@ const AdminPromoCodes = () => {
                     )}
                     
                     {/* Expiration */}
-                    <div className="flex items-center justify-between pt-2 border-t border-gray-100">
-                      <div className="flex items-center gap-2 text-gray-600">
+                    <div className="flex items-center justify-between pt-2 border-t border-[#D4AF37]/20">
+                      <div className="flex items-center gap-2 text-gray-400">
                         <i className="bi bi-calendar3"></i>
                         <span className="text-sm">Expires</span>
                       </div>
                       <div className="text-right">
                         {promo.expires_at ? (
-                          <span className={expired ? 'text-red-600' : 'text-gray-900'}>
+                          <span className={expired ? 'text-red-400' : 'text-[#D4AF37]'}>
                             {new Date(promo.expires_at).toLocaleDateString()}
                           </span>
                         ) : (
@@ -425,16 +430,16 @@ const AdminPromoCodes = () => {
                   </div>
                   
                   {/* Action Buttons */}
-                  <div className="mt-4 pt-3 flex gap-2">
+                  <div className="mt-4 pt-3">
                     <button
                       onClick={() => {
                         navigator.clipboard.writeText(promo.code);
-                        showNotification('Code copied to clipboard!', 'success');
+                        showNotification('Royal code copied to clipboard!', 'success');
                       }}
-                      className="flex-1 flex items-center justify-center gap-2 px-3 py-2 rounded-xl bg-gray-100 text-gray-700 hover:bg-gray-200 transition-all duration-200 text-sm font-medium"
+                      className="w-full flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg bg-gradient-to-r from-[#D4AF37]/20 to-[#FFD700]/20 text-[#D4AF37] hover:from-[#D4AF37]/30 hover:to-[#FFD700]/30 transition-all duration-300 text-sm font-bold border border-[#D4AF37]/30"
                     >
                       <i className="bi bi-clipboard"></i>
-                      <span>Copy Code</span>
+                      <span>Copy Royal Code</span>
                     </button>
                   </div>
                 </div>
@@ -446,12 +451,12 @@ const AdminPromoCodes = () => {
       
       {/* Summary Footer */}
       {filteredPromoCodes.length > 0 && (
-        <div className="bg-white/50 backdrop-blur-sm rounded-2xl p-4 border border-gray-100">
+        <div className="bg-black/40 backdrop-blur-md rounded-xl p-4 border border-[#D4AF37]/20">
           <div className="flex flex-col sm:flex-row justify-between items-center gap-3">
             <div className="flex items-center gap-2">
-              <i className="bi bi-ticket-perforated text-gray-600"></i>
-              <span className="text-sm text-gray-600">
-                Showing <span className="font-semibold text-gray-900">{filteredPromoCodes.length}</span> of <span className="font-semibold text-gray-900">{promoCodes.length}</span> codes
+              <i className="bi bi-ticket-perforated text-[#D4AF37]"></i>
+              <span className="text-sm text-gray-400">
+                Showing <span className="font-bold text-[#D4AF37]">{filteredPromoCodes.length}</span> of <span className="font-bold text-[#D4AF37]">{promoCodes.length}</span> royal codes
               </span>
             </div>
             <div className="flex gap-3 text-xs text-gray-500">

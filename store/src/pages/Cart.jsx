@@ -78,7 +78,6 @@ const Cart = () => {
   };
 
   const handleCheckout = async () => {
-    // Open the PayPal modal to force payment before creating the order.
     setShowPayPalModal(true);
   };
 
@@ -88,29 +87,29 @@ const Cart = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center">
+      <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-black via-[#0a0a0a] to-black">
         <div className="relative">
-          <div className="w-16 h-16 border-4 border-gray-200 border-t-gray-900 rounded-full animate-spin"></div>
+          <div className="w-20 h-20 border-4 border-[#D4AF37]/20 border-t-[#D4AF37] rounded-full animate-spin shadow-lg shadow-[#D4AF37]/30"></div>
           <div className="absolute inset-0 flex items-center justify-center">
-            <i className="bi bi-cart text-gray-900 text-xl animate-pulse"></i>
+            <i className="bi bi-crown-fill text-[#D4AF37] text-2xl animate-pulse"></i>
           </div>
         </div>
-        <p className="mt-4 text-gray-600">Loading your cart...</p>
+        <p className="mt-4 text-[#D4AF37] font-medium">Loading your royal cart...</p>
       </div>
     );
   }
 
   if (cart.items.length === 0) {
     return (
-      <div className="min-h-[70vh] flex flex-col items-center justify-center text-center">
-        <div className="bg-white/50 backdrop-blur-sm rounded-full p-8 mb-6">
-          <i className="bi bi-cart-x text-7xl text-gray-400"></i>
+      <div className="min-h-[70vh] flex flex-col items-center justify-center text-center bg-gradient-to-br from-black via-[#0a0a0a] to-black">
+        <div className="bg-black/60 backdrop-blur-md rounded-full p-8 mb-6 border border-[#D4AF37]/30">
+          <i className="bi bi-cart-x text-7xl text-[#D4AF37]/50"></i>
         </div>
-        <h2 className="text-3xl font-bold text-gray-800 mb-2">Your cart is empty</h2>
-        <p className="text-gray-500 mb-6">Looks like you haven't added any items yet</p>
+        <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#D4AF37] to-[#FFD700] mb-2">Your cart is empty</h2>
+        <p className="text-gray-400 mb-6">Looks like you haven't added any royal items yet</p>
         <button
           onClick={() => navigate('/products')}
-          className="bg-gray-900 text-white px-8 py-3 rounded-2xl font-medium hover:bg-gray-800 transform hover:scale-105 transition-all duration-200 shadow-lg"
+          className="bg-gradient-to-r from-[#D4AF37] to-[#FFD700] text-black px-8 py-3 rounded-2xl font-bold hover:shadow-2xl hover:shadow-[#D4AF37]/50 transform hover:scale-105 transition-all duration-300 shadow-lg min-h-[48px]"
         >
           Start Shopping
         </button>
@@ -119,39 +118,39 @@ const Cart = () => {
   }
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-gradient-to-br from-black via-[#0a0a0a] to-black">
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent mb-2">
-          Shopping Cart
+        <h1 className="text-3xl md:text-4xl font-bold mb-2">
+          <span className="bg-gradient-to-r from-[#D4AF37] to-[#FFD700] bg-clip-text text-transparent">Shopping Cart</span>
         </h1>
-        <p className="text-gray-500">
-          You have <span className="font-semibold text-gray-800">{cart.items.length}</span> items in your cart
+        <p className="text-gray-400">
+          You have <span className="font-semibold text-[#D4AF37]">{cart.items.length}</span> royal items in your cart
         </p>
       </div>
       
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Cart Items */}
         <div className="lg:col-span-2">
-          <div className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-xl overflow-hidden border border-gray-100">
+          <div className="bg-black/60 backdrop-blur-md rounded-2xl shadow-2xl overflow-hidden border border-[#D4AF37]/20">
             {/* Table Header - Desktop */}
-            <div className="hidden md:grid grid-cols-12 gap-4 bg-gray-50/80 px-6 py-4 border-b border-gray-100">
-              <div className="col-span-5 text-sm font-semibold text-gray-600 uppercase tracking-wide">Product</div>
-              <div className="col-span-3 text-center text-sm font-semibold text-gray-600 uppercase tracking-wide">Quantity</div>
-              <div className="col-span-2 text-right text-sm font-semibold text-gray-600 uppercase tracking-wide">Price</div>
-              <div className="col-span-2 text-right text-sm font-semibold text-gray-600 uppercase tracking-wide">Total</div>
+            <div className="hidden md:grid grid-cols-12 gap-4 bg-[#D4AF37]/5 px-6 py-4 border-b border-[#D4AF37]/20">
+              <div className="col-span-5 text-sm font-bold text-[#D4AF37] uppercase tracking-wide">Product</div>
+              <div className="col-span-3 text-center text-sm font-bold text-[#D4AF37] uppercase tracking-wide">Quantity</div>
+              <div className="col-span-2 text-right text-sm font-bold text-[#D4AF37] uppercase tracking-wide">Price</div>
+              <div className="col-span-2 text-right text-sm font-bold text-[#D4AF37] uppercase tracking-wide">Total</div>
             </div>
             
             {/* Cart Items List */}
-            <div className="divide-y divide-gray-100">
+            <div className="divide-y divide-[#D4AF37]/10">
               {cart.items.map((item) => (
-                <div key={item.id} className="p-6 hover:bg-gray-50/50 transition-colors duration-200">
+                <div key={item.id} className="p-6 hover:bg-white/5 transition-all duration-300">
                   <div className="flex flex-col md:grid md:grid-cols-12 gap-4 items-center">
                     {/* Product Info */}
                     <div className="col-span-5 w-full">
                       <div className="flex items-center gap-4">
                         {/* Product Image */}
-                        <div className="w-20 h-20 rounded-xl overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 flex-shrink-0 shadow-sm">
+                        <div className="w-20 h-20 rounded-xl overflow-hidden bg-gradient-to-br from-gray-800 to-black flex-shrink-0 shadow-lg border border-[#D4AF37]/20">
                           {item.product.images && item.product.images[0] ? (
                             <img 
                               src={item.product.images[0].image_url || item.product.images[0]} 
@@ -160,13 +159,13 @@ const Cart = () => {
                             />
                           ) : (
                             <div className="w-full h-full flex items-center justify-center">
-                              <i className="bi bi-image text-gray-400 text-2xl"></i>
+                              <i className="bi bi-gem text-[#D4AF37]/30 text-2xl"></i>
                             </div>
                           )}
                         </div>
                         <div className="flex-1 min-w-0">
-                          <h3 className="font-semibold text-gray-900 truncate">{item.product.title}</h3>
-                          <p className="text-sm text-gray-500 mt-1">SKU: {item.product.id}</p>
+                          <h3 className="font-bold text-white truncate">{item.product.title}</h3>
+                          <p className="text-sm text-[#D4AF37]/60 mt-1">SKU: {item.product.id}</p>
                         </div>
                       </div>
                     </div>
@@ -174,10 +173,10 @@ const Cart = () => {
                     {/* Quantity */}
                     <div className="col-span-3 w-full">
                       <div className="flex items-center justify-center">
-                        <div className="inline-flex items-center gap-2 bg-gray-100 rounded-xl p-1">
+                        <div className="inline-flex items-center gap-2 bg-black/60 rounded-xl p-1 border border-[#D4AF37]/30">
                           <button
                             onClick={() => handleUpdateQuantity(item.product_id, item.quantity - 1)}
-                            className="w-8 h-8 rounded-lg hover:bg-white transition-all duration-200 flex items-center justify-center text-gray-600"
+                            className="w-8 h-8 rounded-lg hover:bg-[#D4AF37]/10 transition-all duration-200 flex items-center justify-center text-[#D4AF37]"
                           >
                             <i className="bi bi-dash"></i>
                           </button>
@@ -186,11 +185,11 @@ const Cart = () => {
                             min="1"
                             value={item.quantity}
                             onChange={(e) => handleUpdateQuantity(item.product_id, parseInt(e.target.value))}
-                            className="w-16 text-center py-1 bg-transparent font-medium text-gray-800 focus:outline-none"
+                            className="w-16 text-center py-1 bg-transparent font-medium text-white focus:outline-none"
                           />
                           <button
                             onClick={() => handleUpdateQuantity(item.product_id, item.quantity + 1)}
-                            className="w-8 h-8 rounded-lg hover:bg-white transition-all duration-200 flex items-center justify-center text-gray-600"
+                            className="w-8 h-8 rounded-lg hover:bg-[#D4AF37]/10 transition-all duration-200 flex items-center justify-center text-[#D4AF37]"
                           >
                             <i className="bi bi-plus"></i>
                           </button>
@@ -200,20 +199,20 @@ const Cart = () => {
                     
                     {/* Unit Price */}
                     <div className="col-span-2 w-full text-right">
-                      <span className="text-gray-600 font-medium">
+                      <span className="text-[#D4AF37] font-medium">
                         {`MAD ${Number(item.product.final_price).toFixed(2)}`}
                       </span>
                     </div>
                     
                     {/* Total & Actions */}
                     <div className="col-span-2 w-full flex items-center justify-between md:justify-end gap-4">
-                      <span className="font-bold text-gray-900 text-lg">
+                      <span className="font-bold text-[#D4AF37] text-lg">
                         {`MAD ${(Number(item.product.final_price) * item.quantity).toFixed(2)}`}
                       </span>
                       <button
                         onClick={() => handleRemoveItem(item.product_id)}
                         disabled={removingItem === item.product_id}
-                        className="text-gray-400 hover:text-red-500 transition-all duration-200 disabled:opacity-50"
+                        className="text-gray-500 hover:text-red-500 transition-all duration-200 disabled:opacity-50 min-h-[44px] min-w-[44px]"
                       >
                         {removingItem === item.product_id ? (
                           <i className="bi bi-arrow-repeat animate-spin"></i>
@@ -228,17 +227,17 @@ const Cart = () => {
             </div>
             
             {/* Cart Actions */}
-            <div className="bg-gray-50/80 px-6 py-4 flex justify-between items-center">
+            <div className="bg-black/80 px-6 py-4 flex justify-between items-center border-t border-[#D4AF37]/20">
               <button
                 onClick={() => navigate('/products')}
-                className="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors duration-200"
+                className="flex items-center gap-2 text-gray-400 hover:text-[#D4AF37] transition-colors duration-300 min-h-[44px]"
               >
                 <i className="bi bi-arrow-left"></i>
                 Continue Shopping
               </button>
               <button
                 onClick={handleClearCart}
-                className="text-gray-500 hover:text-red-500 transition-colors duration-200 flex items-center gap-1"
+                className="text-gray-500 hover:text-red-500 transition-colors duration-300 flex items-center gap-1 min-h-[44px]"
               >
                 <i className="bi bi-trash3"></i>
                 Clear Cart
@@ -250,25 +249,25 @@ const Cart = () => {
         {/* Order Summary */}
         <div className="lg:col-span-1">
           <div className="sticky top-24">
-            <div className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-xl p-6 border border-gray-100">
-              <h2 className="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
-                <i className="bi bi-receipt"></i>
-                Order Summary
+            <div className="bg-black/60 backdrop-blur-md rounded-2xl shadow-2xl p-6 border border-[#D4AF37]/20">
+              <h2 className="text-xl font-bold mb-6 flex items-center gap-2">
+                <i className="bi bi-receipt text-[#D4AF37]"></i>
+                <span className="bg-gradient-to-r from-[#D4AF37] to-[#FFD700] bg-clip-text text-transparent">Order Summary</span>
               </h2>
               
               <div className="space-y-4 mb-6">
-                  <div className="flex justify-between text-gray-600">
+                <div className="flex justify-between text-gray-300">
                   <span>Subtotal</span>
                   <span className="font-medium">{`MAD ${Number(subtotal).toFixed(2)}`}</span>
                 </div>
                 
-                <div className="flex justify-between text-gray-600">
+                <div className="flex justify-between text-gray-300">
                   <span>Shipping</span>
-                  <span className="text-green-600">Free</span>
+                  <span className="text-[#D4AF37]">Free</span>
                 </div>
                 
                 {promoDiscount && (
-                  <div className="flex justify-between text-green-600 bg-green-50 p-3 rounded-xl">
+                  <div className="flex justify-between text-[#D4AF37] bg-[#D4AF37]/10 p-3 rounded-xl border border-[#D4AF37]/30">
                     <span className="flex items-center gap-1">
                       <i className="bi bi-gift"></i>
                       Discount ({promoDiscount.discount_percentage}%)
@@ -277,10 +276,10 @@ const Cart = () => {
                   </div>
                 )}
                 
-                <div className="border-t border-gray-200 pt-4">
-                    <div className="flex justify-between text-lg font-bold text-gray-900">
-                    <span>Total</span>
-                    <span className="text-2xl">{`MAD ${Number(total).toFixed(2)}`}</span>
+                <div className="border-t border-[#D4AF37]/20 pt-4">
+                  <div className="flex justify-between text-lg font-bold">
+                    <span className="text-white">Total</span>
+                    <span className="text-2xl text-[#D4AF37]">{`MAD ${Number(total).toFixed(2)}`}</span>
                   </div>
                   <p className="text-xs text-gray-500 mt-1">Including all taxes</p>
                 </div>
@@ -288,7 +287,7 @@ const Cart = () => {
               
               {/* Promo Code */}
               <div className="mb-6">
-                <label className="text-sm font-medium text-gray-700 mb-2 block">
+                <label className="text-sm font-medium text-[#D4AF37] mb-2 block">
                   <i className="bi bi-ticket-perforated mr-1"></i>
                   Promo Code
                 </label>
@@ -298,24 +297,24 @@ const Cart = () => {
                     placeholder="Enter code"
                     value={promoCode}
                     onChange={(e) => setPromoCode(e.target.value)}
-                    className="flex-1 px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-800 focus:border-transparent bg-white/60"
+                    className="flex-1 px-4 py-3 bg-black/60 border border-[#D4AF37]/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent text-white placeholder-gray-500"
                   />
                   <button
                     onClick={handleVerifyPromo}
                     disabled={!promoCode}
-                    className="bg-gray-900 text-white px-5 py-3 rounded-xl hover:bg-gray-800 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed font-medium"
+                    className="bg-gradient-to-r from-[#D4AF37] to-[#FFD700] text-black px-5 py-3 rounded-xl hover:shadow-lg hover:shadow-[#D4AF37]/30 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed font-bold min-h-[48px]"
                   >
                     Apply
                   </button>
                 </div>
                 {promoError && (
-                  <p className="text-red-500 text-sm mt-2 flex items-center gap-1">
+                  <p className="text-red-400 text-sm mt-2 flex items-center gap-1">
                     <i className="bi bi-exclamation-circle"></i>
                     {promoError}
                   </p>
                 )}
                 {promoDiscount && (
-                  <p className="text-green-600 text-sm mt-2 flex items-center gap-1">
+                  <p className="text-[#D4AF37] text-sm mt-2 flex items-center gap-1">
                     <i className="bi bi-check-circle"></i>
                     {promoDiscount.discount_percentage}% discount applied!
                   </p>
@@ -324,11 +323,10 @@ const Cart = () => {
               
               {/* Checkout Button */}
               <div className="space-y-4">
-                {/* The PayPal modal will render the PayPalButton when opened. */}
                 <button
                   onClick={() => setShowPayPalModal(true)}
                   disabled={checkoutLoading}
-                  className="w-full bg-gray-900 text-white py-4 rounded-2xl font-semibold hover:bg-gray-800 transform hover:scale-[1.02] transition-all duration-200 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                  className="w-full bg-gradient-to-r from-[#D4AF37] to-[#FFD700] text-black py-4 rounded-xl font-bold hover:shadow-2xl hover:shadow-[#D4AF37]/50 transform hover:scale-[1.02] transition-all duration-300 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 min-h-[52px]"
                 >
                   {checkoutLoading ? (
                     <>
@@ -337,98 +335,90 @@ const Cart = () => {
                     </>
                   ) : (
                     <>
-                      <i className="bi bi-lock"></i>
-                      Proceed to Checkout
+                      <i className="bi bi-crown-fill"></i>
+                      Proceed to Royal Checkout
                     </>
                   )}
                 </button>
               </div>
               
               {/* Payment Methods */}
-              <div className="mt-6 pt-6 border-t border-gray-100">
+              <div className="mt-6 pt-6 border-t border-[#D4AF37]/20">
                 <p className="text-xs text-gray-500 text-center mb-3">Secure payment methods</p>
                 <div className="flex flex-col items-center gap-3">
                   <div className="w-full flex flex-col items-center">
-                    <p className="text-sm text-gray-600 mb-2">Pay quickly with PayPal (sandbox)</p>
+                    <p className="text-sm text-gray-400 mb-2">Pay quickly with PayPal</p>
                     <div className="w-full flex justify-center">
                       <PayPalButton amount={Number(total).toFixed(2)} promoCode={promoCode || null} />
                     </div>
                   </div>
 
-                  <div className="text-gray-500 text-sm">Or use the classic checkout button below to place the order without online payment.</div>
+                  <div className="text-gray-500 text-sm text-center">Or use the classic checkout button below to place the order without online payment.</div>
                 </div>
               </div>
             </div>
-{showPayPalModal && (
-  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
-    <div className="bg-white rounded-2xl shadow-xl p-6 w-full max-w-lg">
-      <div className="flex justify-between items-center mb-4">
-        <h3 className="text-lg font-semibold">Complete Your Payment</h3>
-        <button 
-          onClick={() => setShowPayPalModal(false)} 
-          className="text-gray-400 hover:text-gray-600 transition-colors"
-        >
-          <i className="bi bi-x-lg"></i>
-        </button>
-      </div>
-      <div className="mb-4 pb-4 border-b border-gray-100">
-        <div className="flex justify-between text-gray-600 mb-2">
-          <span>Total Amount:</span>
-          <span className="font-bold text-gray-900 text-xl">{`MAD ${Number(total).toFixed(2)}`}</span>
-        </div>
-        {promoDiscount && (
-          <div className="text-sm text-green-600">
-            <i className="bi bi-gift-fill"></i> {promoDiscount.discount_percentage}% discount applied
-          </div>
-        )}
-      </div>
-      <div>
-        <PayPalButton
-          amount={Number(total).toFixed(2)}
-          promoCode={promoCode || null}
-          onSuccess={async (captureData) => {
-            try {
-              console.log('Payment successful:', captureData);
-              
-              // Create the order with 'pending' status (NOT completed)
-              const orderResponse = await ordersAPI.create(promoDiscount ? promoCode : null);
-              
-              if (orderResponse.data.success) {
-                // Clear the cart
-                await cartAPI.clearCart();
-                
-                // Close modal
-                setShowPayPalModal(false);
-                
-                // Show success message
-                alert('Payment successful! Your order has been placed and is pending admin approval.');
-                
-                // Navigate to orders page
-                navigate('/orders');
-              } else {
-                throw new Error(orderResponse.data.message || 'Failed to create order');
-              }
-            } catch (err) {
-              console.error('Error creating order after payment:', err);
-              const errorMsg = err.response?.data?.message || err.message || 'Payment succeeded but order creation failed. Please contact support.';
-              alert(errorMsg);
-              navigate('/orders');
-            }
-          }}
-          onError={(errMsg) => {
-            console.error('PayPal error:', errMsg);
-            const message = typeof errMsg === 'string' ? errMsg : 'Payment failed. Please try again.';
-            alert(message);
-            setShowPayPalModal(false);
-          }}
-        />
-      </div>
-      <div className="mt-4 pt-4 text-center text-xs text-gray-400">
-        <i className="bi bi-shield-check"></i> Secure payment powered by PayPal
-      </div>
-    </div>
-  </div>
-)}
+            {showPayPalModal && (
+              <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md">
+                <div className="bg-gradient-to-br from-black to-[#0a0a0a] rounded-2xl shadow-2xl p-6 w-full max-w-lg border-2 border-[#D4AF37]">
+                  <div className="flex justify-between items-center mb-4">
+                    <h3 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#D4AF37] to-[#FFD700]">Complete Your Royal Payment</h3>
+                    <button 
+                      onClick={() => setShowPayPalModal(false)} 
+                      className="text-gray-400 hover:text-[#D4AF37] transition-colors min-h-[44px] min-w-[44px]"
+                    >
+                      <i className="bi bi-x-lg text-xl"></i>
+                    </button>
+                  </div>
+                  <div className="mb-4 pb-4 border-b border-[#D4AF37]/20">
+                    <div className="flex justify-between text-gray-300 mb-2">
+                      <span>Total Amount:</span>
+                      <span className="font-bold text-[#D4AF37] text-2xl">{`MAD ${Number(total).toFixed(2)}`}</span>
+                    </div>
+                    {promoDiscount && (
+                      <div className="text-sm text-[#D4AF37]">
+                        <i className="bi bi-gift-fill"></i> {promoDiscount.discount_percentage}% discount applied
+                      </div>
+                    )}
+                  </div>
+                  <div>
+                    <PayPalButton
+                      amount={Number(total).toFixed(2)}
+                      promoCode={promoCode || null}
+                      onSuccess={async (captureData) => {
+                        try {
+                          console.log('Payment successful:', captureData);
+                          
+                          const orderResponse = await ordersAPI.create(promoDiscount ? promoCode : null);
+                          
+                          if (orderResponse.data.success) {
+                            await cartAPI.clearCart();
+                            setShowPayPalModal(false);
+                            alert('Payment successful! Your order has been placed and is pending admin approval.');
+                            navigate('/orders');
+                          } else {
+                            throw new Error(orderResponse.data.message || 'Failed to create order');
+                          }
+                        } catch (err) {
+                          console.error('Error creating order after payment:', err);
+                          const errorMsg = err.response?.data?.message || err.message || 'Payment succeeded but order creation failed. Please contact support.';
+                          alert(errorMsg);
+                          navigate('/orders');
+                        }
+                      }}
+                      onError={(errMsg) => {
+                        console.error('PayPal error:', errMsg);
+                        const message = typeof errMsg === 'string' ? errMsg : 'Payment failed. Please try again.';
+                        alert(message);
+                        setShowPayPalModal(false);
+                      }}
+                    />
+                  </div>
+                  <div className="mt-4 pt-4 text-center text-xs text-gray-500">
+                    <i className="bi bi-shield-check text-[#D4AF37]"></i> Secure payment powered by PayPal
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>

@@ -1,3 +1,4 @@
+// ProtectedRoute.jsx
 import { Navigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 
@@ -6,15 +7,15 @@ const ProtectedRoute = ({ children, requireAdmin = false }) => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100">
+      <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-black via-[#0a0a0a] to-black">
         <div className="relative">
-          {/* Animated loader */}
-          <div className="w-20 h-20 border-4 border-gray-200 border-t-gray-900 rounded-full animate-spin"></div>
+          {/* Luxury Gold Loader */}
+          <div className="w-20 h-20 border-4 border-[#D4AF37]/20 border-t-[#D4AF37] rounded-full animate-spin shadow-lg shadow-[#D4AF37]/30"></div>
           <div className="absolute inset-0 flex items-center justify-center">
-            <i className="bi bi-bag-fill text-gray-900 text-2xl animate-pulse"></i>
+            <i className="bi bi-crown-fill text-[#D4AF37] text-3xl animate-pulse"></i>
           </div>
         </div>
-        <p className="mt-6 text-gray-600 font-medium animate-pulse">Loading...</p>
+        <p className="mt-6 text-[#D4AF37] font-medium animate-pulse tracking-wide">Loading...</p>
       </div>
     );
   }

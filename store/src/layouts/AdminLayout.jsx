@@ -1,10 +1,22 @@
+// AdminLayout.jsx
 import { Outlet, Link, useLocation } from 'react-router-dom';
 import Navbar from '../components/Navbar';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const AdminLayout = () => {
   const location = useLocation();
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      const mobile = window.innerWidth < 1024;
+      setIsMobile(mobile);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const adminLinks = [
     { path: '/admin', label: 'Dashboard', icon: 'bi-speedometer2' },
@@ -16,38 +28,17 @@ const AdminLayout = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+    <div className="min-h-screen bg-gradient-to-br from-black via-[#0a0a0a] to-[#0a0a0a]">
       <Navbar />
       <div className="flex relative">
-        {/* Sidebar Toggle Button (Mobile) */}
-        <button
-          onClick={() => setSidebarOpen(!sidebarOpen)}
-          className="lg:hidden fixed bottom-6 right-6 z-50 bg-gray-900 text-white p-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-200"
-        >
-          <i className={`bi ${sidebarOpen ? 'bi-x-lg' : 'bi-list'} text-xl`}></i>
-        </button>
-
-        {/* Sidebar */}
+        {/* Desktop Sidebar - Hidden on mobile */}
         <aside
-          className={`fixed lg:relative z-40 w-72 bg-white/95 backdrop-blur-sm shadow-2xl min-h-screen transition-all duration-300 transform ${
-            sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0 lg:w-20'
-          }`}
+          className={`hidden lg:block z-40 w-72 bg-black/80 backdrop-blur-xl border-r border-[#D4AF37]/20 shadow-2xl min-h-screen transition-all duration-300`}
         >
-          <div className="flex flex-col h-screen ">
-            {/* Sidebar Header */}
-            <div className="p-4 border-b border-gray-100">
-              <div className={`flex items-center ${!sidebarOpen && 'lg:justify-center'}`}>
-                <i className="bi bi-shield-lock-fill text-2xl text-gray-900"></i>
-                {sidebarOpen && (
-                  <span className="ml-3 font-semibold text-gray-900 text-lg lg:inline hidden">
-                    Admin Panel
-                  </span>
-                )}
-              </div>
-            </div>
+          <div className="flex flex-col h-screen">
 
             {/* Navigation */}
-            <nav className="mt-2 px-3 space-y-1">
+            <nav className="mt-6 px-3 space-y-2">
               {adminLinks.map((link) => {
                 const isActive = location.pathname === link.path;
                 return (
@@ -55,33 +46,76 @@ const AdminLayout = () => {
                     key={link.path}
                     to={link.path}
                     className={`
-                      flex items-center px-4 py-3 rounded-2xl transition-all duration-200 group
+                      flex items-center px-4 py-3 rounded-xl transition-all duration-300 group
                       ${isActive 
-                        ? 'bg-gray-900 text-white shadow-lg' 
-                        : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900'
+                        ? 'bg-gradient-to-r from-[#D4AF37] to-[#FFD700] text-black shadow-lg shadow-[#D4AF37]/30' 
+                        : 'text-gray-300 hover:bg-white/5 hover:text-[#D4AF37]'
                       }
-                      ${!sidebarOpen && 'lg:justify-center'}
                     `}
-                    title={!sidebarOpen ? link.label : ''}
                   >
-                    <i className={`${link.icon} text-xl ${!sidebarOpen && 'lg:text-2xl'}`}></i>
-                    {sidebarOpen && (
-                      <span className="ml-3 font-medium lg:inline hidden">
-                        {link.label}
-                      </span>
-                    )}
+                    <i className={`${link.icon} text-xl ${isActive ? 'text-black' : ''}`}></i>
+                    <span className="ml-3 font-medium">
+                      {link.label}
+                    </span>
                   </Link>
                 );
               })}
             </nav>
-
-            {/* Sidebar Footer removed per request */}
           </div>
         </aside>
 
+        {/* Mobile Navigation - Bottom Left Button with Floating Menu */}
+        {isMobile && (
+          <div className="lg:hidden fixed z-50" style={{ bottom: '24px', left: '24px' }}>
+            {/* Floating Menu - Shows above the button when menuOpen is true */}
+            {menuOpen && (
+              <div className="absolute bottom-16 left-0 mb-2 bg-black/90 backdrop-blur-xl rounded-2xl border border-[#D4AF37]/20 shadow-2xl p-2 min-w-[200px] animate-fade-in-up">
+                <div className="flex flex-col space-y-1">
+                  {adminLinks.map((link) => {
+                    const isActive = location.pathname === link.path;
+                    return (
+                      <Link
+                        key={link.path}
+                        to={link.path}
+                        onClick={() => setMenuOpen(false)}
+                        className={`
+                          flex items-center px-4 py-3 rounded-xl transition-all duration-300
+                          ${isActive 
+                            ? 'bg-gradient-to-r from-[#D4AF37] to-[#FFD700] text-black' 
+                            : 'text-gray-300 hover:bg-white/5 hover:text-[#D4AF37]'
+                          }
+                        `}
+                      >
+                        <i className={`${link.icon} text-xl ${isActive ? 'text-black' : ''}`}></i>
+                        <span className="ml-3 font-medium">{link.label}</span>
+                      </Link>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
+            {/* Main Button - Left Bottom */}
+            <button
+              onClick={() => setMenuOpen(!menuOpen)}
+              className="bg-gradient-to-r from-[#D4AF37] to-[#FFD700] text-black p-4 rounded-full shadow-2xl hover:shadow-[0_0_20px_rgba(212,175,55,0.5)] transition-all duration-300 hover:scale-110 active:scale-95"
+            >
+              <i className={`bi ${menuOpen ? 'bi-x-lg' : 'bi-grid-3x3-gap-fill'} text-xl font-bold`}></i>
+            </button>
+          </div>
+        )}
+
+        {/* Overlay to close menu when clicking outside */}
+        {isMobile && menuOpen && (
+          <div 
+            className="fixed inset-0 z-40 bg-black/50"
+            onClick={() => setMenuOpen(false)}
+          ></div>
+        )}
+
         {/* Main Content */}
         <main className="flex-1 p-4 md:p-8 transition-all duration-300">
-          <div className="bg-white/50 backdrop-blur-sm rounded-3xl shadow-xl p-6 md:p-8 border border-gray-100">
+          <div className="bg-black/40 backdrop-blur-md rounded-2xl shadow-2xl p-5 md:p-8 border border-[#D4AF37]/20">
             <Outlet />
           </div>
         </main>

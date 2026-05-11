@@ -104,7 +104,6 @@ const AdminProductsList = () => {
       setImagePreviews(prev => [...prev, ...previews]);
     }
     
-    // Clear input value to allow re-uploading same file
     e.target.value = '';
   };
 
@@ -117,7 +116,6 @@ const AdminProductsList = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    // Validation
     const validationErrors = [];
     
     if (!formData.title?.trim()) validationErrors.push('Title is required');
@@ -174,7 +172,7 @@ const AdminProductsList = () => {
         fetchProducts();
         
         const successMsg = document.createElement('div');
-        successMsg.className = 'fixed top-4 right-4 bg-emerald-500 text-white px-4 py-2 rounded-xl shadow-lg z-50 animate-fade-in';
+        successMsg.className = 'fixed top-4 right-4 bg-gradient-to-r from-[#D4AF37] to-[#FFD700] text-black px-4 py-2 rounded-xl shadow-lg z-50 animate-fade-in font-bold';
         successMsg.innerHTML = `<i class="bi bi-check-circle mr-2"></i>${editingProduct ? 'Product updated' : 'Product created'} successfully!`;
         document.body.appendChild(successMsg);
         setTimeout(() => successMsg.remove(), 3000);
@@ -240,7 +238,7 @@ const AdminProductsList = () => {
         await adminAPI.deleteProduct(id);
         fetchProducts();
         const successMsg = document.createElement('div');
-        successMsg.className = 'fixed top-4 right-4 bg-emerald-500 text-white px-4 py-2 rounded-xl shadow-lg z-50 animate-fade-in';
+        successMsg.className = 'fixed top-4 right-4 bg-gradient-to-r from-[#D4AF37] to-[#FFD700] text-black px-4 py-2 rounded-xl shadow-lg z-50 animate-fade-in font-bold';
         successMsg.innerHTML = '<i class="bi bi-check-circle mr-2"></i>Product deleted successfully!';
         document.body.appendChild(successMsg);
         setTimeout(() => successMsg.remove(), 3000);
@@ -256,11 +254,11 @@ const AdminProductsList = () => {
   );
 
   const themeColors = {
-    black: 'bg-gray-800 text-white',
-    blue: 'bg-blue-600 text-white',
-    green: 'bg-green-600 text-white',
-    purple: 'bg-purple-600 text-white',
-    gold: 'bg-amber-600 text-white',
+    black: 'bg-gradient-to-r from-gray-700 to-gray-800 text-white',
+    blue: 'bg-gradient-to-r from-blue-600 to-blue-700 text-white',
+    green: 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white',
+    purple: 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white',
+    gold: 'bg-gradient-to-r from-[#D4AF37] to-[#FFD700] text-black',
   };
 
   const themeNames = {
@@ -275,12 +273,12 @@ const AdminProductsList = () => {
     return (
       <div className="flex flex-col items-center justify-center py-20">
         <div className="relative">
-          <div className="w-16 h-16 border-4 border-gray-200 border-t-gray-800 rounded-full animate-spin"></div>
+          <div className="w-16 h-16 border-4 border-[#D4AF37]/20 border-t-[#D4AF37] rounded-full animate-spin shadow-lg shadow-[#D4AF37]/30"></div>
           <div className="absolute inset-0 flex items-center justify-center">
-            <i className="bi bi-box-seam text-gray-600 text-xl animate-pulse"></i>
+            <i className="bi bi-crown-fill text-[#D4AF37] text-xl animate-pulse"></i>
           </div>
         </div>
-        <p className="mt-4 text-gray-500 font-medium">Loading products...</p>
+        <p className="mt-4 text-[#D4AF37] font-medium">Loading royal collection...</p>
       </div>
     );
   }
@@ -290,10 +288,15 @@ const AdminProductsList = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">
-            Products Management
-          </h1>
-          <p className="text-gray-500 mt-1">Manage your product catalog</p>
+          <div className="flex items-center gap-3 mb-1">
+            <div className="w-10 h-10 bg-gradient-to-br from-[#D4AF37] to-[#FFD700] rounded-xl flex items-center justify-center shadow-lg shadow-[#D4AF37]/30">
+              <i className="bi bi-box-seam-fill text-black text-lg"></i>
+            </div>
+            <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-[#D4AF37] to-[#FFD700] bg-clip-text text-transparent">
+              Royal Treasury
+            </h1>
+          </div>
+          <p className="text-gray-400 mt-1 ml-13">Manage your exclusive product catalog</p>
         </div>
         <button
           onClick={() => {
@@ -301,33 +304,33 @@ const AdminProductsList = () => {
             resetForm();
             setShowForm(true);
           }}
-          className="bg-gray-900 text-white px-6 py-3 rounded-2xl font-medium hover:bg-gray-800 transform hover:scale-105 transition-all duration-200 shadow-lg flex items-center gap-2"
+          className="bg-gradient-to-r from-[#D4AF37] to-[#FFD700] text-black px-6 py-3 rounded-xl font-bold hover:shadow-xl hover:shadow-[#D4AF37]/30 transform hover:scale-105 transition-all duration-300 flex items-center gap-2 min-h-[48px]"
         >
           <i className="bi bi-plus-lg"></i>
-          Add New Product
+          Add Royal Piece
         </button>
       </div>
 
       {/* Search Bar */}
       <div className="relative">
-        <i className="bi bi-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+        <i className="bi bi-search absolute left-4 top-1/2 transform -translate-y-1/2 text-[#D4AF37]/50"></i>
         <input
           type="text"
-          placeholder="Search products..."
+          placeholder="Search royal treasures..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full pl-12 pr-4 py-3 bg-white/50 backdrop-blur-sm rounded-2xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-800 focus:border-transparent transition-all duration-200"
+          className="w-full pl-12 pr-4 py-3 bg-black/40 backdrop-blur-md rounded-xl border-2 border-[#D4AF37]/20 focus:border-[#D4AF37] focus:outline-none focus:ring-2 focus:ring-[#D4AF37] transition-all duration-300 text-white placeholder:text-gray-500"
         />
       </div>
 
       {/* Image Errors Display */}
       {imageErrors.length > 0 && (
-        <div className="bg-red-50 border border-red-200 rounded-2xl p-4">
+        <div className="bg-red-500/10 border border-red-500/30 rounded-xl p-4 backdrop-blur-sm">
           <div className="flex items-start gap-2">
-            <i className="bi bi-exclamation-triangle-fill text-red-500 mt-0.5"></i>
+            <i className="bi bi-exclamation-triangle-fill text-red-400 mt-0.5"></i>
             <div>
-              <p className="text-sm font-semibold text-red-700 mb-1">Image validation errors:</p>
-              <ul className="text-sm text-red-600 list-disc list-inside">
+              <p className="text-sm font-semibold text-red-400 mb-1">Image validation errors:</p>
+              <ul className="text-sm text-red-300 list-disc list-inside">
                 {imageErrors.map((error, idx) => (
                   <li key={idx}>{error}</li>
                 ))}
@@ -337,25 +340,25 @@ const AdminProductsList = () => {
         </div>
       )}
 
-      {/* Product Form Modal */}
+      {/* Product Form Modal - Royal Gold */}
       {showForm && (
         <>
-          <div className="fixed inset-0 bg-black/50 z-40" onClick={() => setShowForm(false)}></div>
+          <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-40" onClick={() => setShowForm(false)}></div>
           <div className="fixed inset-0 z-50 overflow-y-auto">
             <div className="min-h-screen flex items-center justify-center p-4">
-              <div className="bg-white rounded-3xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-                <div className="sticky top-0 bg-white border-b border-gray-100 px-6 py-4 flex justify-between items-center">
-                  <h2 className="text-2xl font-bold text-gray-900">
-                    {editingProduct ? 'Edit Product' : 'Create New Product'}
+              <div className="bg-gradient-to-br from-black to-[#0a0a0a] rounded-2xl shadow-2xl border-2 border-[#D4AF37]/30 max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+                <div className="sticky top-0 bg-black/90 backdrop-blur-md border-b border-[#D4AF37]/20 px-6 py-4 flex justify-between items-center">
+                  <h2 className="text-2xl font-bold bg-gradient-to-r from-[#D4AF37] to-[#FFD700] bg-clip-text text-transparent">
+                    {editingProduct ? 'Edit Royal Piece' : 'Add New Royal Piece'}
                   </h2>
                   <button
                     onClick={() => {
                       setShowForm(false);
                       resetForm();
                     }}
-                    className="p-2 rounded-full hover:bg-gray-100 transition-colors"
+                    className="p-2 rounded-full hover:bg-white/5 transition-all duration-300"
                   >
-                    <i className="bi bi-x-lg text-gray-600"></i>
+                    <i className="bi bi-x-lg text-[#D4AF37] text-xl"></i>
                   </button>
                 </div>
                 
@@ -363,44 +366,44 @@ const AdminProductsList = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {/* Title */}
                     <div className="md:col-span-2">
-                      <label className="block text-sm font-semibold text-gray-700 mb-2">Product Title *</label>
+                      <label className="block text-sm font-bold text-[#D4AF37] mb-2">Product Title *</label>
                       <input
                         type="text"
                         name="title"
                         value={formData.title}
                         onChange={handleInputChange}
-                        className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-800 focus:border-transparent transition-all"
-                        placeholder="Enter product title"
+                        className="w-full px-4 py-3 bg-black/60 border-2 border-[#D4AF37]/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent transition-all text-white placeholder:text-gray-500"
+                        placeholder="Enter royal product title"
                         required
                       />
                     </div>
                     
                     {/* Description */}
                     <div className="md:col-span-2">
-                      <label className="block text-sm font-semibold text-gray-700 mb-2">Description *</label>
+                      <label className="block text-sm font-bold text-[#D4AF37] mb-2">Description *</label>
                       <textarea
                         name="description"
                         value={formData.description}
                         onChange={handleInputChange}
-                        className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-800 focus:border-transparent transition-all"
+                        className="w-full px-4 py-3 bg-black/60 border-2 border-[#D4AF37]/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent transition-all text-white placeholder:text-gray-500"
                         rows="4"
-                        placeholder="Product description"
+                        placeholder="Describe your royal product"
                         required
                       ></textarea>
                     </div>
                     
                     {/* Price */}
                     <div>
-                      <label className="block text-sm font-semibold text-gray-700 mb-2">Price (MAD) *</label>
+                      <label className="block text-sm font-bold text-[#D4AF37] mb-2">Price (MAD) *</label>
                       <div className="relative">
-                        <i className="bi bi-currency-dollar absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                        <i className="bi bi-currency-dollar absolute left-4 top-1/2 transform -translate-y-1/2 text-[#D4AF37]/50"></i>
                         <input
                           type="number"
                           step="0.01"
                           name="price"
                           value={formData.price}
                           onChange={handleInputChange}
-                          className="w-full pl-11 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-800 focus:border-transparent transition-all"
+                          className="w-full pl-11 pr-4 py-3 bg-black/60 border-2 border-[#D4AF37]/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent transition-all text-white placeholder:text-gray-500"
                           placeholder="0.00"
                           required
                         />
@@ -409,15 +412,15 @@ const AdminProductsList = () => {
                     
                     {/* Discount */}
                     <div>
-                      <label className="block text-sm font-semibold text-gray-700 mb-2">Discount (%)</label>
+                      <label className="block text-sm font-bold text-[#D4AF37] mb-2">Discount (%)</label>
                       <div className="relative">
-                        <i className="bi bi-percent absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                        <i className="bi bi-percent absolute left-4 top-1/2 transform -translate-y-1/2 text-[#D4AF37]/50"></i>
                         <input
                           type="number"
                           name="discount_percentage"
                           value={formData.discount_percentage}
                           onChange={handleInputChange}
-                          className="w-full pl-11 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-800 focus:border-transparent transition-all"
+                          className="w-full pl-11 pr-4 py-3 bg-black/60 border-2 border-[#D4AF37]/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent transition-all text-white placeholder:text-gray-500"
                           placeholder="0"
                           min="0"
                           max="100"
@@ -427,15 +430,15 @@ const AdminProductsList = () => {
                     
                     {/* Stock */}
                     <div>
-                      <label className="block text-sm font-semibold text-gray-700 mb-2">Stock Quantity *</label>
+                      <label className="block text-sm font-bold text-[#D4AF37] mb-2">Stock Quantity *</label>
                       <div className="relative">
-                        <i className="bi bi-box-seam absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                        <i className="bi bi-box-seam absolute left-4 top-1/2 transform -translate-y-1/2 text-[#D4AF37]/50"></i>
                         <input
                           type="number"
                           name="stock"
                           value={formData.stock}
                           onChange={handleInputChange}
-                          className="w-full pl-11 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-800 focus:border-transparent transition-all"
+                          className="w-full pl-11 pr-4 py-3 bg-black/60 border-2 border-[#D4AF37]/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent transition-all text-white placeholder:text-gray-500"
                           placeholder="0"
                           required
                           min="0"
@@ -445,17 +448,17 @@ const AdminProductsList = () => {
                     
                     {/* Theme */}
                     <div>
-                      <label className="block text-sm font-semibold text-gray-700 mb-2">Theme *</label>
+                      <label className="block text-sm font-bold text-[#D4AF37] mb-2">Theme *</label>
                       <div className="relative">
-                        <i className="bi bi-palette absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                        <i className="bi bi-palette absolute left-4 top-1/2 transform -translate-y-1/2 text-[#D4AF37]/50"></i>
                         <select
                           name="theme"
                           value={formData.theme}
                           onChange={handleInputChange}
-                          className="w-full pl-11 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-800 focus:border-transparent transition-all"
+                          className="w-full pl-11 pr-4 py-3 bg-black/60 border-2 border-[#D4AF37]/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent transition-all text-white"
                           required
                         >
-                          <option value="">Select Theme</option>
+                          <option value="" className="text-gray-500">Select Royal Theme</option>
                           <option value="black">Black Edition</option>
                           <option value="blue">Blue Edition</option>
                           <option value="green">Green Edition</option>
@@ -467,8 +470,8 @@ const AdminProductsList = () => {
                     
                     {/* Tags */}
                     <div className="md:col-span-2">
-                      <label className="block text-sm font-semibold text-gray-700 mb-2">Product Tags</label>
-                      <div className="flex flex-wrap gap-2 p-4 border border-gray-200 rounded-xl bg-gray-50/50 min-h-[80px]">
+                      <label className="block text-sm font-bold text-[#D4AF37] mb-2">Product Tags</label>
+                      <div className="flex flex-wrap gap-2 p-4 bg-black/40 border-2 border-[#D4AF37]/20 rounded-xl min-h-[80px]">
                         {availableTags.length === 0 ? (
                           <p className="text-gray-500 text-sm italic">No tags available. Create tags first.</p>
                         ) : (
@@ -477,10 +480,10 @@ const AdminProductsList = () => {
                               key={tag.id}
                               type="button"
                               onClick={() => handleTagToggle(tag.name)}
-                              className={`px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 ${
+                              className={`px-4 py-2 rounded-lg text-sm font-bold transition-all duration-300 ${
                                 formData.tags.includes(tag.name)
-                                  ? 'bg-gray-900 text-white shadow-md'
-                                  : 'bg-white text-gray-700 border border-gray-300 hover:border-gray-400 hover:shadow-sm'
+                                  ? 'bg-gradient-to-r from-[#D4AF37] to-[#FFD700] text-black shadow-lg'
+                                  : 'bg-black/60 text-gray-300 border border-[#D4AF37]/30 hover:border-[#D4AF37]'
                               }`}
                             >
                               #{tag.name}
@@ -494,16 +497,16 @@ const AdminProductsList = () => {
                     {/* Images - Only for new products */}
                     {!editingProduct && (
                       <div className="md:col-span-2">
-                        <label className="block text-sm font-semibold text-gray-700 mb-2">
+                        <label className="block text-sm font-bold text-[#D4AF37] mb-2">
                           Product Images * {images.length > 0 && `(${images.length} selected)`}
                         </label>
-                        <div className="border-2 border-dashed border-gray-300 rounded-xl p-6 hover:border-gray-400 transition-colors">
+                        <div className="border-2 border-dashed border-[#D4AF37]/30 rounded-xl p-6 hover:border-[#D4AF37] transition-all bg-black/20">
                           <input
                             type="file"
                             multiple
                             accept="image/jpeg,image/png,image/jpg,image/gif"
                             onChange={handleImageChange}
-                            className="w-full"
+                            className="w-full text-gray-400"
                           />
                           <p className="text-xs text-gray-500 mt-2">
                             <i className="bi bi-info-circle"></i>
@@ -516,7 +519,7 @@ const AdminProductsList = () => {
                                   <img 
                                     src={preview} 
                                     alt={`Preview ${idx + 1}`} 
-                                    className="w-20 h-20 object-cover rounded-lg shadow-md" 
+                                    className="w-20 h-20 object-cover rounded-lg shadow-lg border border-[#D4AF37]/30" 
                                   />
                                   <button
                                     type="button"
@@ -535,11 +538,11 @@ const AdminProductsList = () => {
                   </div>
                   
                   {/* Form Actions */}
-                  <div className="flex gap-3 pt-4 border-t border-gray-100">
+                  <div className="flex gap-3 pt-4 border-t border-[#D4AF37]/20">
                     <button
                       type="submit"
                       disabled={uploading}
-                      className="flex-1 bg-gray-900 text-white py-3 rounded-xl font-semibold hover:bg-gray-800 transition-all duration-200 shadow-md disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                      className="flex-1 bg-gradient-to-r from-[#D4AF37] to-[#FFD700] text-black py-3 rounded-xl font-bold hover:shadow-xl hover:shadow-[#D4AF37]/30 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 min-h-[48px]"
                     >
                       {uploading ? (
                         <>
@@ -547,7 +550,7 @@ const AdminProductsList = () => {
                           <span>{editingProduct ? 'Updating...' : 'Creating...'}</span>
                         </>
                       ) : (
-                        <span>{editingProduct ? 'Update Product' : 'Create Product'}</span>
+                        <span>{editingProduct ? 'Update Royal Piece' : 'Create Royal Piece'}</span>
                       )}
                     </button>
                     <button
@@ -556,7 +559,7 @@ const AdminProductsList = () => {
                         setShowForm(false);
                         resetForm();
                       }}
-                      className="px-6 py-3 rounded-xl border border-gray-300 text-gray-700 hover:bg-gray-50 transition-all duration-200"
+                      className="px-6 py-3 rounded-xl border-2 border-[#D4AF37]/30 text-[#D4AF37] hover:bg-[#D4AF37]/10 transition-all duration-300 min-h-[48px]"
                     >
                       Cancel
                     </button>
@@ -569,55 +572,55 @@ const AdminProductsList = () => {
       )}
 
       {/* Products Table */}
-      <div className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-xl overflow-hidden border border-gray-100">
+      <div className="bg-black/40 backdrop-blur-md rounded-2xl shadow-2xl overflow-hidden border border-[#D4AF37]/20">
         <div className="overflow-x-auto">
           <table className="w-full">
-            <thead className="bg-gray-50/80 border-b border-gray-100">
+            <thead className="bg-black/60 border-b border-[#D4AF37]/20">
               <tr>
-                <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">Image</th>
-                <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">Product</th>
-                <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">Theme</th>
-                <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">Price</th>
-                <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">Stock</th>
-                <th className="px-6 py-4 text-right text-sm font-semibold text-gray-600">Actions</th>
+                <th className="px-6 py-4 text-left text-sm font-bold text-[#D4AF37]">Image</th>
+                <th className="px-6 py-4 text-left text-sm font-bold text-[#D4AF37]">Product</th>
+                <th className="px-6 py-4 text-left text-sm font-bold text-[#D4AF37]">Theme</th>
+                <th className="px-6 py-4 text-left text-sm font-bold text-[#D4AF37]">Price</th>
+                <th className="px-6 py-4 text-left text-sm font-bold text-[#D4AF37]">Stock</th>
+                <th className="px-6 py-4 text-right text-sm font-bold text-[#D4AF37]">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-100">
+            <tbody className="divide-y divide-[#D4AF37]/10">
               {filteredProducts.length === 0 ? (
                 <tr>
                   <td colSpan="6" className="px-6 py-12 text-center">
-                    <i className="bi bi-inbox text-5xl text-gray-300 mb-3 block"></i>
-                    <p className="text-gray-500">No products found</p>
-                    </td>
+                    <i className="bi bi-inbox text-5xl text-[#D4AF37]/30 mb-3 block"></i>
+                    <p className="text-gray-400">No royal products found</p>
+                  </td>
                 </tr>
               ) : (
                 filteredProducts.map((product) => (
-                  <tr key={product.id} className="hover:bg-gray-50/50 transition-colors duration-200">
+                  <tr key={product.id} className="hover:bg-white/5 transition-all duration-300">
                     <td className="px-6 py-4">
                       {product.images && product.images[0] ? (
                         <img 
                           src={product.images[0].image_url || product.images[0]} 
                           alt={product.title}
-                          className="w-14 h-14 object-cover rounded-xl shadow-md"
+                          className="w-14 h-14 object-cover rounded-lg shadow-lg border border-[#D4AF37]/30"
                         />
                       ) : (
-                        <div className="w-14 h-14 bg-gray-100 rounded-xl flex items-center justify-center">
-                          <i className="bi bi-image text-gray-400 text-xl"></i>
+                        <div className="w-14 h-14 bg-black/60 rounded-lg flex items-center justify-center border border-[#D4AF37]/20">
+                          <i className="bi bi-gem text-[#D4AF37]/30 text-xl"></i>
                         </div>
                       )}
                     </td>
                     <td className="px-6 py-4">
                       <div>
-                        <p className="font-semibold text-gray-900">{product.title}</p>
+                        <p className="font-bold text-white">{product.title}</p>
                         {product.discount_percentage > 0 && (
-                          <span className="inline-block mt-1 text-xs bg-red-100 text-red-600 px-2 py-0.5 rounded-full">
-                            -{product.discount_percentage}%
+                          <span className="inline-block mt-1 text-xs bg-gradient-to-r from-red-600 to-red-800 text-white px-2 py-0.5 rounded-full">
+                            -{product.discount_percentage}% OFF
                           </span>
                         )}
                       </div>
                     </td>
                     <td className="px-6 py-4">
-                      <span className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${themeColors[product.theme] || 'bg-gray-100 text-gray-700'}`}>
+                      <span className={`inline-block px-3 py-1 rounded-lg text-xs font-bold shadow-md ${themeColors[product.theme] || 'bg-gray-700 text-white'}`}>
                         {themeNames[product.theme] || product.theme || 'Standard'}
                       </span>
                     </td>
@@ -625,23 +628,23 @@ const AdminProductsList = () => {
                       <div>
                         {product.discount_percentage > 0 ? (
                           <>
-                            <span className="font-bold text-gray-900">
+                            <span className="font-bold text-[#D4AF37]">
                               {`MAD ${(product.price - (product.price * product.discount_percentage / 100)).toFixed(2)}`}
                             </span>
-                            <span className="text-xs text-gray-400 line-through ml-2">
+                            <span className="text-xs text-gray-500 line-through ml-2">
                               {`MAD ${Number(product.price).toFixed(2)}`}
                             </span>
                           </>
                         ) : (
-                          <span className="font-bold text-gray-900">{`MAD ${Number(product.price).toFixed(2)}`}</span>
+                          <span className="font-bold text-[#D4AF37]">{`MAD ${Number(product.price).toFixed(2)}`}</span>
                         )}
                       </div>
                     </td>
                     <td className="px-6 py-4">
-                      <span className={`inline-flex items-center gap-1 px-2 py-1 rounded-lg text-sm font-medium ${
+                      <span className={`inline-flex items-center gap-1 px-2 py-1 rounded-lg text-sm font-bold ${
                         product.stock <= 5 
-                          ? 'bg-red-100 text-red-700' 
-                          : 'bg-green-100 text-green-700'
+                          ? 'bg-red-500/20 text-red-400 border border-red-500/30' 
+                          : 'bg-green-500/20 text-green-400 border border-green-500/30'
                       }`}>
                         <i className={`bi ${product.stock <= 5 ? 'bi-exclamation-triangle' : 'bi-check-circle'} text-xs`}></i>
                         {product.stock} left
@@ -651,7 +654,7 @@ const AdminProductsList = () => {
                       <div className="flex items-center justify-end gap-2">
                         <button
                           onClick={() => handleEdit(product)}
-                          className="p-2 rounded-lg text-gray-500 hover:text-blue-600 hover:bg-blue-50 transition-all duration-200"
+                          className="p-2 rounded-lg text-gray-400 hover:text-[#D4AF37] hover:bg-[#D4AF37]/10 transition-all duration-300"
                           title="Edit"
                         >
                           <i className="bi bi-pencil-square text-lg"></i>
@@ -659,7 +662,7 @@ const AdminProductsList = () => {
                         <button
                           onClick={() => handleDelete(product.id)}
                           disabled={deletingId === product.id}
-                          className="p-2 rounded-lg text-gray-500 hover:text-red-600 hover:bg-red-50 transition-all duration-200 disabled:opacity-50"
+                          className="p-2 rounded-lg text-gray-400 hover:text-red-400 hover:bg-red-500/10 transition-all duration-300 disabled:opacity-50"
                           title="Delete"
                         >
                           {deletingId === product.id ? (
@@ -678,31 +681,31 @@ const AdminProductsList = () => {
         </div>
       </div>
 
-      {/* Stats Summary */}
-      <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
-        <div className="bg-white/50 backdrop-blur-sm rounded-2xl p-4 text-center">
-          <i className="bi bi-box-seam text-2xl text-gray-600 mb-2 block"></i>
-          <p className="text-2xl font-bold text-gray-900">{products.length}</p>
-          <p className="text-sm text-gray-500">Total Products</p>
+      {/* Stats Summary - Royal Gold */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <div className="bg-black/40 backdrop-blur-md rounded-xl p-4 text-center border border-[#D4AF37]/20">
+          <i className="bi bi-box-seam text-2xl text-[#D4AF37] mb-2 block"></i>
+          <p className="text-2xl font-bold text-[#D4AF37]">{products.length}</p>
+          <p className="text-xs text-gray-400">Total Products</p>
         </div>
-        <div className="bg-white/50 backdrop-blur-sm rounded-2xl p-4 text-center">
-          <i className="bi bi-tags text-2xl text-gray-600 mb-2 block"></i>
-          <p className="text-2xl font-bold text-gray-900">{availableTags.length}</p>
-          <p className="text-sm text-gray-500">Total Tags</p>
+        <div className="bg-black/40 backdrop-blur-md rounded-xl p-4 text-center border border-[#D4AF37]/20">
+          <i className="bi bi-tags text-2xl text-[#D4AF37] mb-2 block"></i>
+          <p className="text-2xl font-bold text-[#D4AF37]">{availableTags.length}</p>
+          <p className="text-xs text-gray-400">Total Tags</p>
         </div>
-        <div className="bg-white/50 backdrop-blur-sm rounded-2xl p-4 text-center">
-          <i className="bi bi-arrow-down-short text-2xl text-red-600 mb-2 block"></i>
-          <p className="text-2xl font-bold text-gray-900">
+        <div className="bg-black/40 backdrop-blur-md rounded-xl p-4 text-center border border-[#D4AF37]/20">
+          <i className="bi bi-arrow-down-short text-2xl text-red-400 mb-2 block"></i>
+          <p className="text-2xl font-bold text-red-400">
             {products.filter(p => p.stock <= 5).length}
           </p>
-          <p className="text-sm text-gray-500">Low Stock Items</p>
+          <p className="text-xs text-gray-400">Low Stock</p>
         </div>
-        <div className="bg-white/50 backdrop-blur-sm rounded-2xl p-4 text-center">
-          <i className="bi bi-percent text-2xl text-green-600 mb-2 block"></i>
-          <p className="text-2xl font-bold text-gray-900">
+        <div className="bg-black/40 backdrop-blur-md rounded-xl p-4 text-center border border-[#D4AF37]/20">
+          <i className="bi bi-percent text-2xl text-[#D4AF37] mb-2 block"></i>
+          <p className="text-2xl font-bold text-[#D4AF37]">
             {products.filter(p => p.discount_percentage > 0).length}
           </p>
-          <p className="text-sm text-gray-500">On Sale</p>
+          <p className="text-xs text-gray-400">On Sale</p>
         </div>
       </div>
     </div>

@@ -46,13 +46,10 @@ const AdminOrdersList = () => {
   const formatWaNumber = (phone) => {
     if (!phone) return '';
     let digits = phone.toString().replace(/\D/g, '');
-    // remove leading international 00
     digits = digits.replace(/^00+/, '');
-    // if starts with 0 (local like 06xxxxxxx), remove it and prefix country code 212
     if (digits.startsWith('0')) {
       digits = '212' + digits.slice(1);
     } else if (!digits.startsWith('212') && digits.length === 9) {
-      // assume local 9-digit number without leading 0
       digits = '212' + digits;
     }
     return digits;
@@ -61,28 +58,28 @@ const AdminOrdersList = () => {
   const getStatusConfig = (status) => {
     const config = {
       pending: { 
-        color: 'bg-amber-100 text-amber-800 border-amber-200',
+        color: 'bg-[#D4AF37]/10 text-[#D4AF37] border-[#D4AF37]/30',
         icon: 'bi-hourglass-split',
         label: 'Pending'
       },
       processing: { 
-        color: 'bg-blue-100 text-blue-800 border-blue-200',
+        color: 'bg-blue-500/10 text-blue-400 border-blue-500/30',
         icon: 'bi-arrow-repeat',
         label: 'Processing'
       },
       completed: { 
-        color: 'bg-green-100 text-green-800 border-green-200',
+        color: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30',
         icon: 'bi-check-circle-fill',
         label: 'Completed'
       },
       cancelled: { 
-        color: 'bg-red-100 text-red-800 border-red-200',
+        color: 'bg-red-500/10 text-red-400 border-red-500/30',
         icon: 'bi-x-circle-fill',
         label: 'Cancelled'
       },
     };
     return config[status] || { 
-      color: 'bg-gray-100 text-gray-800 border-gray-200',
+      color: 'bg-gray-500/10 text-gray-400 border-gray-500/30',
       icon: 'bi-question-circle',
       label: status 
     };
@@ -111,88 +108,88 @@ const AdminOrdersList = () => {
 
   if (loading) {
     return (
-      <div className="flex flex-col items-center justify-center py-20">
+      <div className="flex flex-col items-center justify-center py-20 bg-gradient-to-br from-black via-[#0a0a0a] to-black">
         <div className="relative">
-          <div className="w-16 h-16 border-4 border-gray-200 border-t-gray-800 rounded-full animate-spin"></div>
+          <div className="w-20 h-20 border-4 border-[#D4AF37]/20 border-t-[#D4AF37] rounded-full animate-spin shadow-lg shadow-[#D4AF37]/30"></div>
           <div className="absolute inset-0 flex items-center justify-center">
-            <i className="bi bi-truck text-gray-600 text-xl animate-pulse"></i>
+            <i className="bi bi-crown-fill text-[#D4AF37] text-2xl animate-pulse"></i>
           </div>
         </div>
-        <p className="mt-4 text-gray-500 font-medium">Loading orders...</p>
+        <p className="mt-4 text-[#D4AF37] font-medium">Loading royal orders...</p>
       </div>
     );
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 bg-gradient-to-br from-black via-[#0a0a0a] to-black">
       {/* Header */}
       <div>
-        <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">
-          Order Management
+        <h1 className="text-3xl md:text-4xl font-bold">
+          <span className="bg-gradient-to-r from-[#D4AF37] to-[#FFD700] bg-clip-text text-transparent">Royal Order Management</span>
         </h1>
-        <p className="text-gray-500 mt-1">Track and manage customer orders</p>
+        <p className="text-gray-400 mt-1">Track and manage royal customer orders</p>
       </div>
 
-      {/* Stats Cards */}
+      {/* Stats Cards - Gold */}
       <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
         {statusTabs.map((tab) => (
           <div
             key={tab.value}
-            className={`bg-white/50 backdrop-blur-sm rounded-2xl p-4 text-center cursor-pointer transition-all duration-200 hover:shadow-lg ${
-              filterStatus === tab.value ? 'ring-2 ring-gray-800 shadow-lg' : ''
+            className={`bg-black/60 backdrop-blur-md rounded-xl p-4 text-center cursor-pointer transition-all duration-300 hover:shadow-xl hover:shadow-[#D4AF37]/20 ${
+              filterStatus === tab.value ? 'ring-2 ring-[#D4AF37] shadow-lg shadow-[#D4AF37]/30' : 'border border-[#D4AF37]/20'
             }`}
             onClick={() => setFilterStatus(tab.value)}
           >
-            <i className={`${tab.icon} text-2xl ${filterStatus === tab.value ? 'text-gray-800' : 'text-gray-500'} mb-2 block`}></i>
-            <p className="text-2xl font-bold text-gray-900">{getStatusCount(tab.value)}</p>
-            <p className="text-xs text-gray-500">{tab.label}</p>
+            <i className={`${tab.icon} text-2xl ${filterStatus === tab.value ? 'text-[#D4AF37]' : 'text-gray-500'} mb-2 block`}></i>
+            <p className="text-2xl font-bold text-[#D4AF37]">{getStatusCount(tab.value)}</p>
+            <p className="text-xs text-gray-400">{tab.label}</p>
           </div>
         ))}
       </div>
 
-      {/* Search Bar */}
+      {/* Search Bar - Gold */}
       <div className="relative">
-        <i className="bi bi-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+        <i className="bi bi-search absolute left-4 top-1/2 transform -translate-y-1/2 text-[#D4AF37]/50"></i>
         <input
           type="text"
           placeholder="Search by Order ID, Customer name or email..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full pl-12 pr-4 py-3 bg-white/50 backdrop-blur-sm rounded-2xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-800 focus:border-transparent transition-all duration-200"
+          className="w-full pl-12 pr-4 py-3 bg-black/60 backdrop-blur-md rounded-xl border border-[#D4AF37]/30 focus:outline-none focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent transition-all duration-300 text-white placeholder-gray-500"
         />
       </div>
 
       {/* Orders List */}
       <div className="space-y-4">
         {filteredOrders.length === 0 ? (
-          <div className="bg-white/50 backdrop-blur-sm rounded-3xl p-12 text-center">
-            <i className="bi bi-inbox text-6xl text-gray-300 mb-4 block"></i>
-            <h3 className="text-xl font-semibold text-gray-800 mb-2">No orders found</h3>
-            <p className="text-gray-500">Try adjusting your filters or search criteria</p>
+          <div className="bg-black/60 backdrop-blur-md rounded-2xl p-12 text-center border border-[#D4AF37]/20">
+            <i className="bi bi-inbox text-6xl text-[#D4AF37]/30 mb-4 block"></i>
+            <h3 className="text-xl font-semibold text-white mb-2">No orders found</h3>
+            <p className="text-gray-400">Try adjusting your filters or search criteria</p>
           </div>
         ) : (
           filteredOrders.map((order) => {
             const statusConfig = getStatusConfig(order.status);
             return (
-              <div key={order.id} className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-gray-100 overflow-hidden transition-all duration-300 hover:shadow-xl">
+              <div key={order.id} className="bg-black/60 backdrop-blur-md rounded-xl shadow-2xl border border-[#D4AF37]/20 overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-[#D4AF37]/10 hover:border-[#D4AF37]/40">
                 {/* Order Header */}
                 <div className="p-6 cursor-pointer" onClick={() => toggleDetails(order.id)}>
                   <div className="flex flex-wrap items-center justify-between gap-4">
                     {/* Order ID & Customer */}
                     <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 bg-gradient-to-br from-gray-800 to-gray-600 rounded-2xl flex items-center justify-center shadow-md">
-                        <i className="bi bi-receipt text-white text-xl"></i>
+                      <div className="w-12 h-12 bg-gradient-to-br from-[#D4AF37] to-[#FFD700] rounded-xl flex items-center justify-center shadow-lg shadow-[#D4AF37]/30">
+                        <i className="bi bi-crown-fill text-black text-xl"></i>
                       </div>
                       <div>
-                        <p className="text-sm text-gray-500">Order #{order.id}</p>
-                        <p className="font-semibold text-gray-900">{order.user?.username || 'Guest User'}</p>
+                        <p className="text-sm text-[#D4AF37]/70">Order #{order.id}</p>
+                        <p className="font-bold text-white">{order.user?.username || 'Guest User'}</p>
                         <p className="text-xs text-gray-400">{order.user?.email}</p>
                         {order.user?.phone && (
                           <p className="text-xs text-gray-500"><i className="bi bi-telephone mr-2"></i>{order.user.phone}</p>
                         )}
                         {((order.shipping_address || order.user?.address) || (order.shipping_city || order.user?.city)) && (
                           <p className="text-xs text-gray-500 truncate max-w-xs">
-                            <i className="bi bi-geo-alt mr-2"></i>
+                            <i className="bi bi-geo-alt mr-2 text-[#D4AF37]/50"></i>
                             {order.shipping_address || order.user?.address || ''}
                             {(order.shipping_city || order.user?.city) ? (', ' + (order.shipping_city || order.user?.city)) : ''}
                           </p>
@@ -202,23 +199,23 @@ const AdminOrdersList = () => {
 
                     {/* Amount */}
                     <div className="text-right">
-                      <p className="text-2xl font-bold text-gray-900">{`MAD ${Number(order.total).toFixed(2)}`}</p>
+                      <p className="text-2xl font-bold text-[#D4AF37]">{`MAD ${Number(order.total).toFixed(2)}`}</p>
                       <p className="text-xs text-gray-500">{new Date(order.created_at).toLocaleDateString()}</p>
                     </div>
 
                     {/* Status Badge */}
-                    <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl ${statusConfig.color} border`}>
+                    <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl ${statusConfig.color} border backdrop-blur-sm`}>
                       <i className={`${statusConfig.icon} text-sm`}></i>
-                      <span className="text-sm font-semibold">{statusConfig.label}</span>
+                      <span className="text-sm font-bold capitalize">{statusConfig.label}</span>
                     </div>
 
                     {/* Action Buttons */}
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 flex-wrap">
                       <select
                         value={order.status}
                         onChange={(e) => handleStatusUpdate(order.id, e.target.value)}
                         disabled={updatingStatus === order.id}
-                        className={`px-4 py-2 rounded-xl border text-sm font-medium focus:outline-none focus:ring-2 focus:ring-gray-800 transition-all ${statusConfig.color} cursor-pointer`}
+                        className={`px-4 py-2 rounded-xl border text-sm font-bold focus:outline-none focus:ring-2 focus:ring-[#D4AF37] transition-all duration-300 cursor-pointer bg-black/60 ${statusConfig.color} min-h-[44px]`}
                         onClick={(e) => e.stopPropagation()}
                       >
                         <option value="pending">Pending</option>
@@ -232,15 +229,15 @@ const AdminOrdersList = () => {
                           e.stopPropagation();
                           toggleDetails(order.id);
                         }}
-                        className={`p-2 rounded-xl transition-all duration-200 ${
+                        className={`p-2 rounded-xl transition-all duration-300 min-h-[44px] min-w-[44px] ${
                           expandedOrderId === order.id 
-                            ? 'bg-gray-900 text-white shadow-md' 
-                            : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                            ? 'bg-gradient-to-r from-[#D4AF37] to-[#FFD700] text-black shadow-lg shadow-[#D4AF37]/30' 
+                            : 'bg-white/5 text-gray-400 hover:bg-white/10 hover:text-[#D4AF37]'
                         }`}
                       >
                         <i className={`bi ${expandedOrderId === order.id ? 'bi-chevron-up' : 'bi-chevron-down'}`}></i>
                       </button>
-                      {/* Contact Buttons */}
+                      
                       {order.user?.phone && (() => {
                         const wa = formatWaNumber(order.user.phone);
                         return wa ? (
@@ -249,7 +246,7 @@ const AdminOrdersList = () => {
                             target="_blank"
                             rel="noreferrer"
                             onClick={(e) => e.stopPropagation()}
-                            className="p-2 rounded-xl bg-emerald-50 text-emerald-700 hover:bg-emerald-100 transition-all duration-200"
+                            className="p-2 rounded-xl bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20 transition-all duration-300 min-h-[44px] min-w-[44px] flex items-center justify-center"
                             title="Contact via WhatsApp"
                           >
                             <i className="bi bi-whatsapp"></i>
@@ -260,7 +257,7 @@ const AdminOrdersList = () => {
                         <a
                           href={`mailto:${order.user.email}?subject=${encodeURIComponent(`Order #${order.id} - Inquiry`)}&body=${encodeURIComponent('Hello,')}`}
                           onClick={(e) => e.stopPropagation()}
-                          className="p-2 rounded-xl bg-blue-50 text-blue-700 hover:bg-blue-100 transition-all duration-200"
+                          className="p-2 rounded-xl bg-blue-500/10 text-blue-400 hover:bg-blue-500/20 transition-all duration-300 min-h-[44px] min-w-[44px] flex items-center justify-center"
                           title="Send email"
                         >
                           <i className="bi bi-envelope"></i>
@@ -272,38 +269,40 @@ const AdminOrdersList = () => {
 
                 {/* Expanded Details */}
                 {expandedOrderId === order.id && (
-                  <div className="border-t border-gray-100 bg-gray-50/50 p-6 animate-fade-in-up">
+                  <div className="border-t border-[#D4AF37]/20 bg-black/40 p-6 animate-fade-in-up">
                     {/* Customer / Shipping Info */}
-                    <div className="mb-6 bg-white rounded-xl p-4 shadow-sm border border-gray-100">
-                      <h3 className="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2"><i className="bi bi-person-lines-fill"></i> Customer & Shipping</h3>
+                    <div className="mb-6 bg-black/60 rounded-xl p-4 shadow-lg border border-[#D4AF37]/20">
+                      <h3 className="text-sm font-bold text-[#D4AF37] mb-3 flex items-center gap-2">
+                        <i className="bi bi-person-lines-fill"></i> Customer & Shipping
+                      </h3>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                         <div>
                           <p className="text-xs text-gray-500">Name</p>
-                          <p className="font-medium text-gray-900">{order.user?.username || 'Guest'}</p>
+                          <p className="font-medium text-white">{order.user?.username || 'Guest'}</p>
                           <p className="text-xs text-gray-500 mt-2">Email</p>
-                          <p className="text-sm text-gray-700">{order.user?.email}</p>
+                          <p className="text-sm text-gray-300">{order.user?.email}</p>
                           {order.user?.phone && (
-                            <p className="text-xs text-gray-500 mt-2">Phone</p>
-                          )}
-                          {order.user?.phone && (
-                            <p className="text-sm text-gray-700"><i className="bi bi-telephone mr-2"></i>{order.user.phone}</p>
+                            <>
+                              <p className="text-xs text-gray-500 mt-2">Phone</p>
+                              <p className="text-sm text-gray-300"><i className="bi bi-telephone mr-2"></i>{order.user.phone}</p>
+                            </>
                           )}
                         </div>
                         <div>
                           <p className="text-xs text-gray-500">Shipping Address</p>
-                          <p className="text-sm text-gray-700">{order.shipping_address || order.user?.address || 'Not provided'}</p>
+                          <p className="text-sm text-gray-300">{order.shipping_address || order.user?.address || 'Not provided'}</p>
                           {(order.shipping_city || order.user?.city) && (
-                            <p className="text-sm text-gray-700 mt-1">{order.shipping_city || order.user?.city}</p>
+                            <p className="text-sm text-gray-300 mt-1">{order.shipping_city || order.user?.city}</p>
                           )}
-                          <div className="mt-3 flex items-center gap-2">
+                          <div className="mt-3 flex items-center gap-2 flex-wrap">
                             {order.user?.phone && (() => {
                               const wa = formatWaNumber(order.user.phone);
                               return wa ? (
-                                <a href={`https://wa.me/${wa}`} target="_blank" rel="noreferrer" className="px-3 py-2 bg-emerald-50 text-emerald-700 rounded-lg hover:bg-emerald-100 transition-all duration-200"> <i className="bi bi-whatsapp mr-2"></i>WhatsApp</a>
+                                <a href={`https://wa.me/${wa}`} target="_blank" rel="noreferrer" className="px-3 py-2 bg-emerald-500/10 text-emerald-400 rounded-lg hover:bg-emerald-500/20 transition-all duration-300 text-sm min-h-[40px] inline-flex items-center gap-2"> <i className="bi bi-whatsapp"></i>WhatsApp</a>
                               ) : null;
                             })()}
                             {order.user?.email && (
-                              <a href={`mailto:${order.user.email}?subject=${encodeURIComponent(`Order #${order.id} - Inquiry`)}`} className="px-3 py-2 bg-blue-50 text-blue-700 rounded-lg hover:bg-blue-100 transition-all duration-200"> <i className="bi bi-envelope mr-2"></i>Email</a>
+                              <a href={`mailto:${order.user.email}?subject=${encodeURIComponent(`Order #${order.id} - Inquiry`)}`} className="px-3 py-2 bg-blue-500/10 text-blue-400 rounded-lg hover:bg-blue-500/20 transition-all duration-300 text-sm min-h-[40px] inline-flex items-center gap-2"> <i className="bi bi-envelope"></i>Email</a>
                             )}
                           </div>
                         </div>
@@ -312,40 +311,40 @@ const AdminOrdersList = () => {
 
                     {/* Order Items */}
                     <div className="mb-6">
-                      <h3 className="text-sm font-semibold text-gray-700 mb-4 flex items-center gap-2">
+                      <h3 className="text-sm font-bold text-[#D4AF37] mb-4 flex items-center gap-2">
                         <i className="bi bi-box-seam"></i>
                         Order Items
                       </h3>
                       <div className="space-y-3">
                         {order.lignes?.map((item, idx) => (
-                          <div key={idx} className="bg-white rounded-xl p-4 shadow-sm hover:shadow-md transition-all duration-200">
+                          <div key={idx} className="bg-black/60 rounded-xl p-4 shadow-lg hover:shadow-xl hover:shadow-[#D4AF37]/10 transition-all duration-300 border border-[#D4AF37]/20">
                             <div className="flex flex-wrap items-center justify-between gap-4">
                               <div className="flex items-center gap-4">
                                 {item.product?.images && item.product.images[0] ? (
                                   <img 
                                     src={item.product.images[0].image_url || item.product.images[0]} 
                                     alt={item.product?.title}
-                                    className="w-16 h-16 object-cover rounded-xl shadow-md"
+                                    className="w-16 h-16 object-cover rounded-xl shadow-lg border border-[#D4AF37]/20"
                                   />
                                 ) : (
-                                  <div className="w-16 h-16 bg-gray-100 rounded-xl flex items-center justify-center">
-                                    <i className="bi bi-image text-gray-400 text-2xl"></i>
+                                  <div className="w-16 h-16 bg-gradient-to-br from-gray-800 to-black rounded-xl flex items-center justify-center border border-[#D4AF37]/20">
+                                    <i className="bi bi-gem text-[#D4AF37]/30 text-2xl"></i>
                                   </div>
                                 )}
                                 <div>
-                                  <p className="font-semibold text-gray-900">{item.product?.title}</p>
+                                  <p className="font-bold text-white">{item.product?.title}</p>
                                   {item.product?.theme && (
-                                    <span className="inline-block mt-1 px-2 py-0.5 bg-gray-100 rounded-lg text-xs text-gray-600">
+                                    <span className="inline-block mt-1 px-2 py-0.5 bg-[#D4AF37]/10 rounded-lg text-xs text-[#D4AF37]">
                                       {item.product.theme} edition
                                     </span>
                                   )}
                                 </div>
                               </div>
                               <div className="text-right">
-                                <p className="text-sm text-gray-500">
+                                <p className="text-sm text-gray-400">
                                   {`MAD ${Number(item.unit_price).toFixed(2)}`} × {item.quantity}
                                 </p>
-                                <p className="text-lg font-bold text-gray-900">
+                                <p className="text-lg font-bold text-[#D4AF37]">
                                   {`MAD ${(Number(item.unit_price) * item.quantity).toFixed(2)}`}
                                 </p>
                               </div>
@@ -355,41 +354,41 @@ const AdminOrdersList = () => {
                       </div>
                     </div>
 
-                    {/* Promo Code Info */}
+                    {/* Promo Code Info - Gold */}
                     {order.promo_code && (
-                      <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-4 border border-green-200">
+                      <div className="bg-gradient-to-r from-[#D4AF37]/10 to-transparent rounded-xl p-4 border border-[#D4AF37]/30 mb-4">
                         <div className="flex flex-wrap items-center justify-between gap-4">
                           <div className="flex items-center gap-3">
-                            <i className="bi bi-ticket-perforated text-green-600 text-2xl"></i>
+                            <i className="bi bi-ticket-perforated text-[#D4AF37] text-2xl"></i>
                             <div>
-                              <p className="text-sm font-semibold text-green-800">Promo Code Applied</p>
-                              <p className="text-xs text-green-600">Code: <span className="font-mono font-bold">{order.promo_code.code}</span></p>
+                              <p className="text-sm font-bold text-[#D4AF37]">Promo Code Applied</p>
+                              <p className="text-xs text-[#D4AF37]/70">Code: <span className="font-mono font-bold">{order.promo_code.code}</span></p>
                             </div>
                           </div>
                           <div className="text-right">
-                            <p className="text-2xl font-bold text-green-700">-{order.promo_code.discount_percentage}%</p>
-                            <p className="text-xs text-green-600">discount applied</p>
+                            <p className="text-2xl font-bold text-[#D4AF37]">-{order.promo_code.discount_percentage}%</p>
+                            <p className="text-xs text-[#D4AF37]/70">discount applied</p>
                           </div>
                         </div>
                       </div>
                     )}
 
                     {/* Order Summary */}
-                    <div className="mt-4 pt-4 border-t border-gray-200 flex justify-end">
-                      <div className="bg-white rounded-xl p-4 min-w-[200px] shadow-sm">
+                    <div className="mt-4 pt-4 border-t border-[#D4AF37]/20 flex justify-end">
+                      <div className="bg-black/60 rounded-xl p-4 min-w-[200px] shadow-lg border border-[#D4AF37]/20">
                         <div className="flex justify-between text-sm mb-2">
-                          <span className="text-gray-500">Subtotal:</span>
-                          <span className="text-gray-700">{`MAD ${Number(order.total).toFixed(2)}`}</span>
+                          <span className="text-gray-400">Subtotal:</span>
+                          <span className="text-white">{`MAD ${Number(order.total).toFixed(2)}`}</span>
                         </div>
                         {order.promo_code && (
                           <div className="flex justify-between text-sm mb-2">
-                            <span className="text-green-600">Discount:</span>
-                            <span className="text-green-600">-{order.promo_code.discount_percentage}%</span>
+                            <span className="text-[#D4AF37]">Discount:</span>
+                            <span className="text-[#D4AF37]">-{order.promo_code.discount_percentage}%</span>
                           </div>
                         )}
-                        <div className="flex justify-between text-lg font-bold pt-2 border-t border-gray-100">
-                          <span>Total:</span>
-                          <span className="text-gray-900">{`MAD ${Number(order.total).toFixed(2)}`}</span>
+                        <div className="flex justify-between text-lg font-bold pt-2 border-t border-[#D4AF37]/20">
+                          <span className="text-white">Total:</span>
+                          <span className="text-[#D4AF37]">{`MAD ${Number(order.total).toFixed(2)}`}</span>
                         </div>
                       </div>
                     </div>

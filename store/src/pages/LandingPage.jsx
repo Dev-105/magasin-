@@ -1,13 +1,34 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import '@google/model-viewer';
 
 const LandingPage = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const modelViewerRef = useRef(null);
+  const [orbitIndex, setOrbitIndex] = useState(0);
+
+  const cameraOrbits = [
+    "90deg 90deg 15m",
+    "90deg 100deg 15m",
+    "90deg 90deg 15m"
+  ];
 
   useEffect(() => {
     setIsVisible(true);
   }, []);
+
+  useEffect(() => {
+    // Start rotating the model every 3 seconds
+    const interval = setInterval(() => {
+      if (modelViewerRef.current) {
+        const nextIndex = (orbitIndex + 1) % cameraOrbits.length;
+        setOrbitIndex(nextIndex);
+        modelViewerRef.current.cameraOrbit = cameraOrbits[nextIndex];
+      }
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [orbitIndex]);
 
   const features = [
     { icon: 'bi-battery-full', title: 'Extended Range', desc: 'Up to 400 miles on a single charge' },
@@ -24,102 +45,120 @@ const LandingPage = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Main Hero Section - Zinc Gradient */}
-      <section className="relative min-h-screen overflow-hidden bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-800">
-        {/* Glass Background Effect */}
-        <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-black/20"></div>
+    <div className="min-h-screen bg-gradient-to-br from-black via-[#0a0a0a] to-black">
+      {/* Main Hero Section - Royal Dark Gold */}
+      <section className="relative min-h-screen overflow-hidden bg-gradient-to-br from-black via-[#0a0a0a] to-black">
+        {/* Gold Glow Background Effect */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[#D4AF37]/5 via-transparent to-black/40"></div>
+        <div className="absolute top-20 -right-20 w-64 sm:w-80 md:w-96 h-64 sm:h-80 md:h-96 bg-[#D4AF37]/10 rounded-full blur-3xl"></div>
+        <div className="absolute -bottom-40 -left-40 w-64 sm:w-80 md:w-96 h-64 sm:h-80 md:h-96 bg-[#D4AF37]/5 rounded-full blur-3xl"></div>
         
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col lg:flex-row items-center min-h-screen py-12 lg:py-0">
+          <div className="flex flex-col lg:flex-row items-center min-h-screen py-8 sm:py-12 lg:py-0">
             
             {/* Left Side - Text Content */}
-            <div className={`flex-1 lg:pr-12 text-center lg:text-left transition-all duration-1000 transform ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
-              {/* Logo / Brand */}
-              <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 mb-8 border border-white/20">
-                <i className="bi bi-car-front text-white text-sm"></i>
-                <span className="text-xs font-medium text-white tracking-wide">RFIFISA MOTORS</span>
+            <div className={`flex-1 lg:pr-8 xl:pr-12 text-center lg:text-left transition-all duration-1000 transform ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
+              {/* Logo / Brand - Gold */}
+              <div className="inline-flex items-center gap-2 bg-black/40 backdrop-blur-md rounded-full px-4 sm:px-5 py-1.5 sm:py-2 mb-5 sm:mb-6 md:mb-8 border border-[#D4AF37]/30 shadow-lg">
+                <i className="bi bi-crown-fill text-[#D4AF37] text-xs sm:text-sm"></i>
+                <span className="text-[10px] sm:text-xs font-bold text-[#D4AF37] tracking-wider">RFIFISA MOTORS</span>
               </div>
               
               {/* Main Title */}
-              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-white mb-4 tracking-tight">
-                Find Your
-                <span className="block text-gray-300">Perfect Ride</span>
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-3 sm:mb-4 tracking-tight">
+                <span className="text-white">Find Your</span>
+                <span className="block bg-gradient-to-r from-[#D4AF37] to-[#FFD700] bg-clip-text text-transparent">Perfect Ride</span>
               </h1>
               
               {/* Description */}
-              <p className="text-gray-300 text-lg max-w-lg mx-auto lg:mx-0 mb-8 leading-relaxed">
+              <p className="text-gray-300 text-sm sm:text-base md:text-lg max-w-lg mx-auto lg:mx-0 mb-6 sm:mb-8 leading-relaxed px-4 sm:px-0">
                 Discover luxury electric vehicles that redefine performance and style. 
                 Experience the future of automotive excellence today.
               </p>
               
-              {/* Specs Grid - Glass Effect */}
-              <div className="grid grid-cols-2 gap-4 max-w-md mx-auto lg:mx-0 mb-8">
+              {/* Specs Grid - Gold Glass Effect */}
+              <div className="grid grid-cols-2 gap-3 sm:gap-4 max-w-md mx-auto lg:mx-0 mb-6 sm:mb-8">
                 {specs.map((spec, index) => (
-                  <div key={index} className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-3 hover:bg-white/10 transition-all duration-200">
-                    <p className="text-xs text-gray-400 uppercase tracking-wide">{spec.label}</p>
-                    <p className="text-base font-semibold text-white">{spec.value}</p>
+                  <div key={index} className="bg-black/40 backdrop-blur-md border border-[#D4AF37]/20 rounded-xl p-2 sm:p-3 hover:border-[#D4AF37]/50 hover:bg-black/60 transition-all duration-300">
+                    <p className="text-[10px] sm:text-xs text-[#D4AF37]/70 uppercase tracking-wide">{spec.label}</p>
+                    <p className="text-sm sm:text-base font-bold text-white">{spec.value}</p>
                   </div>
                 ))}
               </div>
               
-              {/* CTA Buttons */}
-              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+              {/* CTA Buttons - Gold Royal */}
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start">
                 <Link
                   to="/products"
-                  className="px-8 py-3 bg-red-700 text-white rounded-full font-medium hover:bg-red-800 transition-all duration-200 inline-flex items-center justify-center gap-2 shadow-lg"
+                  className="px-6 sm:px-8 py-2.5 sm:py-3 bg-gradient-to-r from-[#D4AF37] to-[#FFD700] text-black rounded-full font-bold hover:shadow-2xl hover:shadow-[#D4AF37]/50 transition-all duration-300 inline-flex items-center justify-center gap-2 transform hover:scale-105 min-h-[44px] text-sm sm:text-base"
                 >
-                  <i className="bi bi-cart"></i>
+                  <i className="bi bi-crown-fill"></i>
                   Shop Now
                 </Link>
                 <button
                   onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })}
-                  className="px-8 py-3 bg-white/10 backdrop-blur-sm border border-white/20 text-white rounded-full font-medium hover:bg-white/20 transition-all duration-200 inline-flex items-center justify-center gap-2"
+                  className="px-6 sm:px-8 py-2.5 sm:py-3 bg-black/40 backdrop-blur-md border border-[#D4AF37]/40 text-[#D4AF37] rounded-full font-medium hover:bg-black/60 hover:border-[#D4AF37] transition-all duration-300 inline-flex items-center justify-center gap-2 min-h-[44px] text-sm sm:text-base"
                 >
                   <i className="bi bi-info-circle"></i>
                   Explore Models
                 </button>
               </div>
               
-              {/* Trust Badge */}
-              <div className="mt-8 flex items-center gap-4 justify-center lg:justify-start text-xs text-gray-400">
-                <span className="flex items-center gap-1"><i className="bi bi-truck"></i> Free Delivery</span>
-                <span className="w-1 h-1 bg-gray-600 rounded-full"></span>
-                <span className="flex items-center gap-1"><i className="bi bi-shield-check"></i> 2 Year Warranty</span>
-                <span className="w-1 h-1 bg-gray-600 rounded-full"></span>
-                <span className="flex items-center gap-1"><i className="bi bi-credit-card"></i> 0% Financing</span>
+              {/* Trust Badge - Gold */}
+              <div className="mt-6 sm:mt-8 flex flex-wrap items-center gap-3 sm:gap-4 justify-center lg:justify-start text-[10px] sm:text-xs text-[#D4AF37]/60">
+                <span className="flex items-center gap-1"><i className="bi bi-truck text-xs sm:text-sm"></i> Free Delivery</span>
+                <span className="w-0.5 h-0.5 sm:w-1 sm:h-1 bg-[#D4AF37]/30 rounded-full hidden xs:block"></span>
+                <span className="flex items-center gap-1"><i className="bi bi-shield-check text-xs sm:text-sm"></i> 2 Year Warranty</span>
+                <span className="w-0.5 h-0.5 sm:w-1 sm:h-1 bg-[#D4AF37]/30 rounded-full hidden sm:block"></span>
+                <span className="flex items-center gap-1"><i className="bi bi-credit-card text-xs sm:text-sm"></i> 0% Financing</span>
               </div>
             </div>
             
-            {/* Right Side - 3D Model */}
-            <div className={`flex-1 mt-12 lg:mt-0 transition-all duration-1000 delay-300 transform ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
-              <div className="relative w-full h-[400px] sm:h-[500px] lg:h-[600px]">
-                {/* Glass Glow Effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-white/5 via-transparent to-transparent rounded-full blur-3xl"></div>
-                <div className="absolute inset-0 bg-gradient-to-b from-white/5 via-transparent to-black/20 rounded-full blur-2xl"></div>
-                
-                {/* 3D Model Viewer */}
-                <model-viewer
-                  src="/car.glb"
-                  alt="RFIFISA Electric Car"
-                  camera-controls
-                  disable-zoom
-                  min-field-of-view="45deg"
-                  max-field-of-view="45deg"
-                  exposure="1.2"
-                  shadow-intensity="0.8"
-                  skybox-intensity="0.3"
-                  interaction-prompt="auto"
-                  camera-orbit="0deg 75deg auto"
-                  rotation-per-second="10deg"
-                  style={{ width: '100%', height: '100%' }}
-                  className="w-full h-full"
-                ></model-viewer>
-                
-                {/* Model Hint */}
-                <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-zinc-900/70 backdrop-blur-md rounded-full px-3 py-1 text-xs text-gray-300 flex items-center gap-1 border border-white/10">
-                  <i className="bi bi-hand-index-thumb"></i>
-                  <span>Rotate • Zoom • Inspect</span>
+            {/* Right Side - 3D Model - Visible on ALL devices with responsive sizing */}
+            <div className={`flex-1 w-full mt-8 sm:mt-10 md:mt-12 lg:mt-0 transition-all duration-1000 delay-300 transform ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
+              <div className="relative w-full">
+                {/* 3D Model Container - Fully Responsive Heights */}
+                <div className="relative w-full h-[280px] xs:h-[320px] sm:h-[400px] md:h-[450px] lg:h-[500px] xl:h-[600px]">
+                  {/* Gold Glow Effect */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-[#D4AF37]/10 via-transparent to-transparent rounded-full blur-2xl sm:blur-3xl"></div>
+                  <div className="absolute inset-0 bg-gradient-to-b from-[#D4AF37]/5 via-transparent to-black/40 rounded-full blur-xl sm:blur-2xl"></div>
+                  
+                  {/* 3D Model Viewer - Touch friendly for mobile */}
+                  <model-viewer
+                    ref={modelViewerRef}
+                    src="/car.glb"
+                    alt="RFIFISA Electric Car"
+                    camera-controls
+                    touch-action="pan-y"
+                    interaction-prompt="auto"
+                    interaction-prompt-threshold="0"
+                    exposure="1.2"
+                    shadow-intensity="0.8"
+                    skybox-intensity="0.3"
+                    disable-zoom
+                    camera-orbit="90deg 90deg 15m"
+                    rotation-per-second="0deg"
+                    style={{ width: '100%', height: '100%' }}
+                    className="w-full h-full"
+                  ></model-viewer>
+                  
+                  {/* Auto-Rotate Indicator - Gold */}
+                  <div className="absolute bottom-2 sm:bottom-3 md:bottom-4 left-2 sm:left-3 md:left-4 bg-black/60 backdrop-blur-md rounded-full px-2 sm:px-3 py-1 text-[8px] sm:text-[10px] text-[#D4AF37] flex items-center gap-1 border border-[#D4AF37]/30">
+                    <i className="bi bi-arrow-repeat text-[8px] sm:text-[10px] animate-spin-slow"></i>
+                    <span className="hidden xs:inline">Auto-rotate</span>
+                  </div>
+                  
+                  {/* Model Hint - Gold - Responsive positioning */}
+                  <div className="absolute bottom-2 sm:bottom-3 md:bottom-4 left-1/2 transform -translate-x-1/2 bg-black/70 backdrop-blur-md rounded-full px-2.5 sm:px-3 md:px-4 py-1 sm:py-1.5 md:py-2 text-[8px] sm:text-xs md:text-xs text-[#D4AF37] flex items-center gap-1 sm:gap-2 border border-[#D4AF37]/30 whitespace-nowrap">
+                    <i className="bi bi-hand-index-thumb text-[10px] sm:text-xs"></i>
+                    <span className="hidden xs:inline">Drag to rotate • Auto-rotating</span>
+                    <span className="xs:hidden">Touch • Rotate</span>
+                  </div>
+                  
+                  {/* 3D Badge */}
+                  <div className="absolute top-2 sm:top-3 right-2 sm:right-3 bg-black/50 backdrop-blur-sm rounded-full px-1.5 sm:px-2 py-0.5 sm:py-1 text-[6px] sm:text-[8px] text-[#D4AF37]/60 border border-[#D4AF37]/20">
+                    3D
+                  </div>
                 </div>
               </div>
             </div>
@@ -127,63 +166,63 @@ const LandingPage = () => {
         </div>
       </section>
 
-      {/* Features Section - White Cards */}
-      <section id="features" className="py-20 bg-white">
+      {/* Features Section - Dark Cards Gold */}
+      <section id="features" className="py-12 sm:py-16 md:py-20 bg-gradient-to-b from-black to-[#0a0a0a]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <div className="inline-flex items-center gap-2 bg-red-100 rounded-full px-4 py-1 mb-4">
-              <i className="bi bi-star-fill text-red-600 text-xs"></i>
-              <span className="text-xs font-medium text-red-700 tracking-wide">Why Buy From RFIFISA</span>
+          <div className="text-center mb-8 sm:mb-12">
+            <div className="inline-flex items-center gap-2 bg-[#D4AF37]/10 backdrop-blur-md rounded-full px-4 sm:px-5 py-1.5 sm:py-2 mb-3 sm:mb-4 border border-[#D4AF37]/30">
+              <i className="bi bi-star-fill text-[#D4AF37] text-[10px] sm:text-xs"></i>
+              <span className="text-[10px] sm:text-xs font-bold text-[#D4AF37] tracking-wide">Why Buy From RFIFISA</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-3">
-              Premium Electric Vehicles
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 sm:mb-3">
+              <span className="bg-gradient-to-r from-[#D4AF37] to-[#FFD700] bg-clip-text text-transparent">Premium Electric Vehicles</span>
             </h2>
-            <p className="text-gray-500 max-w-2xl mx-auto">
+            <p className="text-gray-400 text-sm sm:text-base max-w-2xl mx-auto px-4">
               Experience unmatched luxury, performance, and innovation
             </p>
           </div>
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             {features.map((feature, index) => (
               <div
                 key={index}
-                className="bg-gray-50 rounded-2xl p-6 text-center hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-gray-100"
+                className="bg-gradient-to-br from-black to-[#0a0a0a] rounded-xl sm:rounded-2xl p-4 sm:p-6 text-center hover:shadow-2xl hover:shadow-[#D4AF37]/10 transition-all duration-500 hover:-translate-y-2 border border-[#D4AF37]/20 hover:border-[#D4AF37]/50 group"
               >
-                <div className="w-12 h-12 rounded-full bg-red-700 flex items-center justify-center mx-auto mb-4">
-                  <i className={`${feature.icon} text-white text-xl`}></i>
+                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-gradient-to-br from-[#D4AF37]/20 to-[#FFD700]/20 flex items-center justify-center mx-auto mb-3 sm:mb-4 group-hover:scale-110 transition-transform duration-300">
+                  <i className={`${feature.icon} text-[#D4AF37] text-xl sm:text-2xl`}></i>
                 </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">{feature.title}</h3>
-                <p className="text-gray-500 text-sm">{feature.desc}</p>
+                <h3 className="text-base sm:text-lg font-bold text-white mb-1 sm:mb-2">{feature.title}</h3>
+                <p className="text-gray-400 text-xs sm:text-sm">{feature.desc}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Models Section - Available Cars */}
-      <section className="py-20 bg-gray-50">
+      {/* Models Section - Luxury Car Cards */}
+      <section className="py-12 sm:py-16 md:py-20 bg-gradient-to-b from-[#0a0a0a] to-black">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <div className="inline-flex items-center gap-2 bg-red-100 rounded-full px-4 py-1 mb-4">
-              <i className="bi bi-grid-3x3-gap-fill text-red-600 text-xs"></i>
-              <span className="text-xs font-medium text-red-700 tracking-wide">Available Models</span>
+          <div className="text-center mb-8 sm:mb-12">
+            <div className="inline-flex items-center gap-2 bg-[#D4AF37]/10 backdrop-blur-md rounded-full px-4 sm:px-5 py-1.5 sm:py-2 mb-3 sm:mb-4 border border-[#D4AF37]/30">
+              <i className="bi bi-grid-3x3-gap-fill text-[#D4AF37] text-[10px] sm:text-xs"></i>
+              <span className="text-[10px] sm:text-xs font-bold text-[#D4AF37] tracking-wide">Available Models</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-3">
-              Choose Your Dream Car
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 sm:mb-3">
+              <span className="bg-gradient-to-r from-[#D4AF37] to-[#FFD700] bg-clip-text text-transparent">Choose Your Dream Car</span>
             </h2>
-            <p className="text-gray-500 max-w-2xl mx-auto">
+            <p className="text-gray-400 text-sm sm:text-base max-w-2xl mx-auto px-4">
               Three exceptional models designed for every lifestyle
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
             {[
               { 
                 name: 'RFIFISA S', 
                 price: 'MAD 89,990', 
                 range: '405 mi', 
                 speed: '200 mph', 
-                icon: 'bi-car-front',
+                icon: 'bi-crown-fill',
                 badge: 'Luxury Sedan',
                 financing: 'MAD 1,299/mo'
               },
@@ -192,7 +231,7 @@ const LandingPage = () => {
                 price: 'MAD 99,990', 
                 range: '348 mi', 
                 speed: '155 mph', 
-                icon: 'bi-car-front',
+                icon: 'bi-crown-fill',
                 badge: 'Premium SUV',
                 financing: 'MAD 1,449/mo'
               },
@@ -201,28 +240,28 @@ const LandingPage = () => {
                 price: 'MAD 54,990', 
                 range: '358 mi', 
                 speed: '162 mph', 
-                icon: 'bi-car-front',
+                icon: 'bi-crown-fill',
                 badge: 'Sport Edition',
                 financing: 'MAD 799/mo'
               },
             ].map((model, index) => (
-              <div key={index} className="group bg-white rounded-2xl p-6 hover:shadow-xl transition-all duration-300 border border-gray-100 text-center">
-                <div className="inline-block px-3 py-1 rounded-full bg-red-100 text-red-700 text-xs font-medium mb-3">
+              <div key={index} className="group bg-gradient-to-br from-black to-[#0a0a0a] rounded-xl sm:rounded-2xl p-4 sm:p-6 hover:shadow-2xl hover:shadow-[#D4AF37]/20 transition-all duration-500 hover:-translate-y-2 border border-[#D4AF37]/20 hover:border-[#D4AF37]/50 text-center">
+                <div className="inline-block px-3 sm:px-4 py-1 sm:py-1.5 rounded-full bg-gradient-to-r from-[#D4AF37]/20 to-[#FFD700]/20 text-[#D4AF37] text-[10px] sm:text-xs font-bold mb-2 sm:mb-3">
                   {model.badge}
                 </div>
-                <div className="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-4 group-hover:bg-red-700 transition-colors duration-300">
-                  <i className={`${model.icon} text-3xl text-gray-600 group-hover:text-white transition-colors duration-300`}></i>
+                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-gradient-to-br from-[#D4AF37]/10 to-[#FFD700]/10 flex items-center justify-center mx-auto mb-3 sm:mb-4 group-hover:from-[#D4AF37]/20 group-hover:to-[#FFD700]/20 transition-all duration-300">
+                  <i className={`${model.icon} text-2xl sm:text-3xl text-[#D4AF37] group-hover:scale-110 transition-transform duration-300`}></i>
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-1">{model.name}</h3>
-                <p className="text-2xl font-bold text-gray-800 mb-2">{model.price}</p>
-                <p className="text-xs text-gray-500 mb-3">or {model.financing}</p>
-                <div className="flex justify-center gap-4 text-sm text-gray-500 mb-4">
-                  <span className="flex items-center gap-1"><i className="bi bi-battery-full"></i> {model.range}</span>
-                  <span className="flex items-center gap-1"><i className="bi bi-speedometer2"></i> {model.speed}</span>
+                <h3 className="text-lg sm:text-xl font-bold text-white mb-1">{model.name}</h3>
+                <p className="text-xl sm:text-2xl font-bold text-[#D4AF37] mb-1 sm:mb-2">{model.price}</p>
+                <p className="text-[10px] sm:text-xs text-gray-400 mb-2 sm:mb-3">or {model.financing}</p>
+                <div className="flex justify-center gap-3 sm:gap-4 text-[10px] sm:text-sm text-gray-400 mb-3 sm:mb-4">
+                  <span className="flex items-center gap-1"><i className="bi bi-battery-full text-[#D4AF37] text-xs sm:text-sm"></i> {model.range}</span>
+                  <span className="flex items-center gap-1"><i className="bi bi-speedometer2 text-[#D4AF37] text-xs sm:text-sm"></i> {model.speed}</span>
                 </div>
                 <Link
                   to="/products"
-                  className="inline-flex items-center gap-2 bg-red-700 hover:bg-red-800 text-white px-5 py-2 rounded-xl font-medium text-sm transition-all duration-200"
+                  className="inline-flex items-center gap-2 bg-gradient-to-r from-[#D4AF37] to-[#FFD700] text-black px-5 sm:px-6 py-2 sm:py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all duration-300 hover:shadow-lg hover:shadow-[#D4AF37]/30 transform hover:scale-105 min-h-[40px] sm:min-h-[44px]"
                 >
                   <i className="bi bi-eye"></i>
                   View Details
@@ -233,31 +272,31 @@ const LandingPage = () => {
         </div>
       </section>
 
-      {/* Financing Offer Section - White with Red Accents */}
-      <section className="py-20 bg-white">
+      {/* Financing Offer Section - Gold Glow */}
+      <section className="py-12 sm:py-16 md:py-20 bg-gradient-to-b from-black to-[#0a0a0a]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-gradient-to-r from-red-50 to-red-100 rounded-3xl p-12 text-center border border-red-200">
-            <div className="inline-flex items-center gap-2 bg-red-200 rounded-full px-4 py-1 mb-6">
-              <i className="bi bi-percent text-red-700 text-xs"></i>
-              <span className="text-xs font-medium text-red-800 tracking-wide">Limited Time Offer</span>
+          <div className="bg-gradient-to-r from-[#D4AF37]/10 via-[#D4AF37]/5 to-[#D4AF37]/10 rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-12 text-center border border-[#D4AF37]/30 shadow-2xl shadow-[#D4AF37]/10">
+            <div className="inline-flex items-center gap-2 bg-[#D4AF37]/20 backdrop-blur-md rounded-full px-4 sm:px-5 py-1.5 sm:py-2 mb-4 sm:mb-6 border border-[#D4AF37]/40">
+              <i className="bi bi-percent text-[#D4AF37] text-[10px] sm:text-xs"></i>
+              <span className="text-[10px] sm:text-xs font-bold text-[#D4AF37] tracking-wide">Limited Time Offer</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
-              Drive Your Dream Car Today
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4">
+              <span className="bg-gradient-to-r from-[#D4AF37] to-[#FFD700] bg-clip-text text-transparent">Drive Your Dream Car Today</span>
             </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto mb-6">
+            <p className="text-gray-300 text-sm sm:text-base max-w-2xl mx-auto mb-4 sm:mb-6 px-4">
               0% APR financing for 60 months + MAD 2,000 bonus trade-in credit
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
               <Link
                 to="/products"
-                className="px-8 py-3 bg-red-700 text-white rounded-full font-medium hover:bg-red-800 transition-all duration-200 inline-flex items-center justify-center gap-2 shadow-lg"
+                className="px-6 sm:px-8 py-2.5 sm:py-3 bg-gradient-to-r from-[#D4AF37] to-[#FFD700] text-black rounded-full font-bold hover:shadow-2xl hover:shadow-[#D4AF37]/50 transition-all duration-300 inline-flex items-center justify-center gap-2 transform hover:scale-105 min-h-[44px] text-sm sm:text-base"
               >
                 <i className="bi bi-calculator"></i>
                 Calculate Payment
               </Link>
               <Link
                 to="/register"
-                className="px-8 py-3 bg-white text-gray-700 rounded-full font-medium hover:bg-gray-50 transition-all duration-200 inline-flex items-center justify-center gap-2 border border-gray-300"
+                className="px-6 sm:px-8 py-2.5 sm:py-3 bg-black/60 backdrop-blur-md border border-[#D4AF37]/40 text-[#D4AF37] rounded-full font-medium hover:bg-black/80 hover:border-[#D4AF37] transition-all duration-300 inline-flex items-center justify-center gap-2 min-h-[44px] text-sm sm:text-base"
               >
                 <i className="bi bi-chat-dots"></i>
                 Chat With Specialist
@@ -267,21 +306,21 @@ const LandingPage = () => {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="py-8 bg-gray-900 text-white">
+      {/* Footer - Royal Dark */}
+      <footer className="py-6 sm:py-8 bg-black border-t border-[#D4AF37]/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-3 sm:gap-4">
             <div className="flex items-center gap-2">
-              <i className="bi bi-car-front text-gray-400"></i>
-              <span className="text-sm font-medium text-gray-400">RFIFISA MOTORS</span>
+              <i className="bi bi-crown-fill text-[#D4AF37] text-sm sm:text-base"></i>
+              <span className="text-xs sm:text-sm font-bold text-[#D4AF37] tracking-wide">RFIFISA MOTORS</span>
             </div>
-            <div className="flex gap-6 text-sm text-gray-400">
-              <a href="#" className="hover:text-white transition-colors">Contact Sales</a>
-              <a href="#" className="hover:text-white transition-colors">Find a Dealer</a>
-              <a href="#" className="hover:text-white transition-colors">Support</a>
-              <a href="#" className="hover:text-white transition-colors">Financing</a>
+            <div className="flex flex-wrap justify-center gap-4 sm:gap-6 text-xs sm:text-sm text-gray-400">
+              <a href="#" className="hover:text-[#D4AF37] transition-colors">Contact Sales</a>
+              <a href="#" className="hover:text-[#D4AF37] transition-colors">Find a Dealer</a>
+              <a href="#" className="hover:text-[#D4AF37] transition-colors">Support</a>
+              <a href="#" className="hover:text-[#D4AF37] transition-colors">Financing</a>
             </div>
-            <p className="text-xs text-gray-500">© 2025 RFIFISA MOTORS. All rights reserved.</p>
+            <p className="text-[10px] sm:text-xs text-gray-500">© 2025 RFIFISA MOTORS. All rights reserved.</p>
           </div>
         </div>
       </footer>
@@ -289,6 +328,26 @@ const LandingPage = () => {
       <style jsx>{`
         model-viewer {
           --poster-color: transparent;
+        }
+        
+        /* Improve touch interaction on mobile */
+        @media (max-width: 640px) {
+          model-viewer {
+            touch-action: pan-y pinch-zoom;
+          }
+        }
+        
+        @keyframes spin-slow {
+          from {
+            transform: rotate(0deg);
+          }
+          to {
+            transform: rotate(360deg);
+          }
+        }
+        
+        .animate-spin-slow {
+          animation: spin-slow 2s linear infinite;
         }
       `}</style>
     </div>

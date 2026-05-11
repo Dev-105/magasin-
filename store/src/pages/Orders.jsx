@@ -37,12 +37,12 @@ const Orders = () => {
 
   const getStatusColor = (status) => {
     const colors = {
-      pending: { bg: 'bg-amber-50', text: 'text-amber-700', border: 'border-amber-200', icon: 'bi-clock-history' },
-      processing: { bg: 'bg-blue-50', text: 'text-blue-700', border: 'border-blue-200', icon: 'bi-arrow-repeat' },
-      completed: { bg: 'bg-emerald-50', text: 'text-emerald-700', border: 'border-emerald-200', icon: 'bi-check-circle' },
-      cancelled: { bg: 'bg-red-50', text: 'text-red-700', border: 'border-red-200', icon: 'bi-x-circle' },
+      pending: { bg: 'bg-[#D4AF37]/10', text: 'text-[#D4AF37]', border: 'border-[#D4AF37]/30', icon: 'bi-clock-history' },
+      processing: { bg: 'bg-blue-500/10', text: 'text-blue-400', border: 'border-blue-500/30', icon: 'bi-arrow-repeat' },
+      completed: { bg: 'bg-emerald-500/10', text: 'text-emerald-400', border: 'border-emerald-500/30', icon: 'bi-check-circle' },
+      cancelled: { bg: 'bg-red-500/10', text: 'text-red-400', border: 'border-red-500/30', icon: 'bi-x-circle' },
     };
-    return colors[status] || { bg: 'bg-gray-50', text: 'text-gray-700', border: 'border-gray-200', icon: 'bi-question-circle' };
+    return colors[status] || { bg: 'bg-gray-500/10', text: 'text-gray-400', border: 'border-gray-500/30', icon: 'bi-question-circle' };
   };
 
   const getStatusSteps = (status) => {
@@ -69,32 +69,32 @@ const Orders = () => {
 
   if (loading) {
     return (
-      <div className="min-h-[60vh] flex flex-col items-center justify-center">
+      <div className="min-h-[60vh] flex flex-col items-center justify-center bg-gradient-to-br from-black via-[#0a0a0a] to-black">
         <div className="relative">
-          <div className="w-16 h-16 border-4 border-gray-200 border-t-gray-900 rounded-full animate-spin"></div>
+          <div className="w-20 h-20 border-4 border-[#D4AF37]/20 border-t-[#D4AF37] rounded-full animate-spin shadow-lg shadow-[#D4AF37]/30"></div>
           <div className="absolute inset-0 flex items-center justify-center">
-            <i className="bi bi-bag-fill text-gray-900 text-xl animate-pulse"></i>
+            <i className="bi bi-crown-fill text-[#D4AF37] text-2xl animate-pulse"></i>
           </div>
         </div>
-        <p className="mt-4 text-gray-600 font-medium">Loading your orders...</p>
+        <p className="mt-4 text-[#D4AF37] font-medium">Loading your royal orders...</p>
       </div>
     );
   }
 
   if (orders.length === 0) {
     return (
-      <div className="min-h-[60vh] flex flex-col items-center justify-center">
-        <div className="bg-white/50 backdrop-blur-sm rounded-3xl p-12 text-center max-w-md">
-          <div className="w-24 h-24 bg-gradient-to-br from-gray-100 to-gray-200 rounded-full flex items-center justify-center mx-auto mb-6">
-            <i className="bi bi-inbox text-5xl text-gray-400"></i>
+      <div className="min-h-[60vh] flex flex-col items-center justify-center bg-gradient-to-br from-black via-[#0a0a0a] to-black">
+        <div className="bg-black/60 backdrop-blur-md rounded-3xl p-12 text-center max-w-md border border-[#D4AF37]/30">
+          <div className="w-24 h-24 bg-gradient-to-br from-[#D4AF37]/20 to-[#FFD700]/20 rounded-full flex items-center justify-center mx-auto mb-6">
+            <i className="bi bi-inbox text-5xl text-[#D4AF37]"></i>
           </div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">No orders yet</h2>
-          <p className="text-gray-600 mb-6">Start shopping to place your first order!</p>
+          <h2 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#D4AF37] to-[#FFD700] mb-2">No orders yet</h2>
+          <p className="text-gray-400 mb-6">Start shopping to place your first royal order!</p>
           <a 
             href="/products" 
-            className="inline-flex items-center gap-2 bg-gray-900 text-white px-6 py-3 rounded-xl hover:bg-gray-800 transition-all duration-200 shadow-lg"
+            className="inline-flex items-center gap-2 bg-gradient-to-r from-[#D4AF37] to-[#FFD700] text-black px-6 py-3 rounded-xl font-bold hover:shadow-2xl hover:shadow-[#D4AF37]/50 transition-all duration-300 shadow-lg min-h-[48px]"
           >
-            <i className="bi bi-shop"></i>
+            <i className="bi bi-crown-fill"></i>
             <span>Start Shopping</span>
           </a>
         </div>
@@ -103,13 +103,13 @@ const Orders = () => {
   }
 
   return (
-    <div className="max-w-5xl mx-auto">
+    <div className="max-w-5xl mx-auto bg-gradient-to-br from-black via-[#0a0a0a] to-black">
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent mb-2">
-          My Orders
+        <h1 className="text-3xl md:text-4xl font-bold mb-2">
+          <span className="bg-gradient-to-r from-[#D4AF37] to-[#FFD700] bg-clip-text text-transparent">My Royal Orders</span>
         </h1>
-        <p className="text-gray-500">Track and manage your purchases</p>
+        <p className="text-gray-400">Track and manage your luxury purchases</p>
       </div>
 
       {/* Status Filters */}
@@ -125,10 +125,10 @@ const Orders = () => {
               key={filterOption.value}
               onClick={() => setFilter(filterOption.value)}
               className={`
-                flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200
+                flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 min-h-[44px]
                 ${isActive 
-                  ? 'bg-gray-900 text-white shadow-md' 
-                  : 'bg-white/50 backdrop-blur-sm text-gray-700 hover:bg-gray-100 border border-gray-200'
+                  ? 'bg-gradient-to-r from-[#D4AF37] to-[#FFD700] text-black shadow-lg shadow-[#D4AF37]/30' 
+                  : 'bg-black/60 backdrop-blur-sm text-gray-300 hover:bg-white/10 hover:text-[#D4AF37] border border-[#D4AF37]/20'
                 }
               `}
             >
@@ -137,7 +137,7 @@ const Orders = () => {
               {count > 0 && (
                 <span className={`
                   text-xs px-1.5 py-0.5 rounded-full
-                  ${isActive ? 'bg-white/20 text-white' : 'bg-gray-200 text-gray-700'}
+                  ${isActive ? 'bg-black/20 text-black' : 'bg-[#D4AF37]/20 text-[#D4AF37]'}
                 `}>
                   {count}
                 </span>
@@ -156,21 +156,21 @@ const Orders = () => {
           return (
             <div 
               key={order.id} 
-              className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden animate-fade-in-up"
+              className="group bg-black/60 backdrop-blur-md rounded-2xl shadow-2xl hover:shadow-2xl hover:shadow-[#D4AF37]/10 transition-all duration-500 overflow-hidden animate-fade-in-up border border-[#D4AF37]/20 hover:border-[#D4AF37]/40"
               style={{ animationDelay: `${index * 100}ms` }}
             >
               {/* Order Header */}
-              <div className="bg-gradient-to-r from-gray-50 to-white p-6 border-b border-gray-100">
+              <div className="bg-gradient-to-r from-[#D4AF37]/5 to-transparent p-6 border-b border-[#D4AF37]/20">
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                   <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-gray-900 rounded-xl flex items-center justify-center shadow-md">
-                      <i className="bi bi-receipt text-white text-xl"></i>
+                    <div className="w-12 h-12 bg-gradient-to-br from-[#D4AF37] to-[#FFD700] rounded-xl flex items-center justify-center shadow-lg shadow-[#D4AF37]/30">
+                      <i className="bi bi-crown-fill text-black text-xl"></i>
                     </div>
                     <div>
-                      <p className="text-sm text-gray-500">Order #{order.id}</p>
+                      <p className="text-sm text-[#D4AF37]/70">Order #{order.id}</p>
                       <div className="flex items-center gap-2 mt-1">
-                        <i className="bi bi-calendar3 text-gray-400 text-sm"></i>
-                        <p className="text-sm text-gray-600">
+                        <i className="bi bi-calendar3 text-[#D4AF37]/50 text-sm"></i>
+                        <p className="text-sm text-gray-400">
                           {new Date(order.created_at).toLocaleDateString('en-US', {
                             year: 'numeric',
                             month: 'long',
@@ -181,33 +181,33 @@ const Orders = () => {
                     </div>
                   </div>
                   
-                  <div className="flex items-center gap-4">
-                    <div className={`px-4 py-2 rounded-xl ${statusStyle.bg} ${statusStyle.text} border ${statusStyle.border} flex items-center gap-2`}>
+                  <div className="flex items-center gap-4 flex-wrap">
+                    <div className={`px-4 py-2 rounded-xl ${statusStyle.bg} ${statusStyle.text} border ${statusStyle.border} flex items-center gap-2 backdrop-blur-sm`}>
                       <i className={`${statusStyle.icon} text-sm`}></i>
-                      <span className="text-sm font-semibold capitalize">{order.status}</span>
+                      <span className="text-sm font-bold capitalize">{order.status}</span>
                     </div>
                     <div className="text-right">
-                      <p className="text-sm text-gray-500">Total Amount</p>
-                      <p className="text-2xl font-bold text-gray-900">{`MAD ${Number(order.total).toFixed(2)}`}</p>
+                      <p className="text-sm text-gray-400">Total Amount</p>
+                      <p className="text-2xl font-bold text-[#D4AF37]">{`MAD ${Number(order.total).toFixed(2)}`}</p>
                     </div>
                   </div>
                 </div>
 
                 {/* Order Progress Steps */}
                 {order.status !== 'cancelled' && (
-                  <div className="mt-6 pt-4 border-t border-gray-100">
+                  <div className="mt-6 pt-4 border-t border-[#D4AF37]/20">
                     <div className="flex items-center justify-between">
                       {statusSteps.map((step, idx) => (
                         <div key={step.name} className="flex-1 relative">
                           <div className="flex flex-col items-center">
                             <div className={`
-                              w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium
+                              w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold
                               transition-all duration-300
                               ${step.completed 
-                                ? 'bg-emerald-500 text-white shadow-md' 
-                                : 'bg-gray-200 text-gray-500'
+                                ? 'bg-gradient-to-r from-[#D4AF37] to-[#FFD700] text-black shadow-lg shadow-[#D4AF37]/30' 
+                                : 'bg-black/60 text-gray-500 border border-[#D4AF37]/30'
                               }
-                              ${step.active ? 'ring-4 ring-emerald-200' : ''}
+                              ${step.active ? 'ring-2 ring-[#D4AF37] ring-offset-2 ring-offset-black' : ''}
                             `}>
                               {step.completed ? (
                                 <i className="bi bi-check-lg text-sm"></i>
@@ -217,7 +217,7 @@ const Orders = () => {
                             </div>
                             <p className={`
                               text-xs font-medium mt-2 capitalize
-                              ${step.completed ? 'text-gray-900' : 'text-gray-400'}
+                              ${step.completed ? 'text-[#D4AF37]' : 'text-gray-500'}
                             `}>
                               {step.name}
                             </p>
@@ -226,7 +226,7 @@ const Orders = () => {
                             <div className={`
                               absolute top-4 left-1/2 w-full h-0.5
                               transition-all duration-300
-                              ${step.completed ? 'bg-emerald-500' : 'bg-gray-200'}
+                              ${step.completed ? 'bg-gradient-to-r from-[#D4AF37] to-[#FFD700]' : 'bg-gray-700'}
                             `}></div>
                           )}
                         </div>
@@ -242,31 +242,31 @@ const Orders = () => {
                   {order.lignes?.slice(0, 3).map((item, itemIdx) => (
                     <div 
                       key={item.id} 
-                      className="flex items-center justify-between p-3 rounded-xl hover:bg-gray-50 transition-colors duration-200"
+                      className="flex items-center justify-between p-3 rounded-xl hover:bg-white/5 transition-all duration-300"
                     >
                       <div className="flex items-center gap-4">
                         {item.product?.images && item.product.images[0] ? (
                           <img 
                             src={item.product.images[0].image_url || item.product.images[0]} 
                             alt={item.product.title}
-                            className="w-14 h-14 object-cover rounded-xl shadow-sm"
+                            className="w-14 h-14 object-cover rounded-xl shadow-lg border border-[#D4AF37]/20"
                           />
                         ) : (
-                          <div className="w-14 h-14 bg-gradient-to-br from-gray-100 to-gray-200 rounded-xl flex items-center justify-center">
-                            <i className="bi bi-image text-gray-400 text-xl"></i>
+                          <div className="w-14 h-14 bg-gradient-to-br from-gray-800 to-black rounded-xl flex items-center justify-center border border-[#D4AF37]/20">
+                            <i className="bi bi-gem text-[#D4AF37]/30 text-xl"></i>
                           </div>
                         )}
                         <div>
-                          <p className="font-semibold text-gray-900">{item.product?.title}</p>
+                          <p className="font-bold text-white">{item.product?.title}</p>
                           <div className="flex items-center gap-3 mt-1">
-                            <p className="text-sm text-gray-500">Qty: {item.quantity}</p>
+                            <p className="text-sm text-gray-400">Qty: {item.quantity}</p>
                             <p className="text-sm text-gray-500">×</p>
-                            <p className="text-sm font-medium text-gray-900">{`MAD ${Number(item.unit_price).toFixed(2)}`}</p>
+                            <p className="text-sm font-medium text-[#D4AF37]">{`MAD ${Number(item.unit_price).toFixed(2)}`}</p>
                           </div>
                         </div>
                       </div>
                       <div className="text-right">
-                        <p className="font-semibold text-gray-900">
+                        <p className="font-bold text-[#D4AF37]">
                           {`MAD ${(Number(item.unit_price) * item.quantity).toFixed(2)}`}
                         </p>
                       </div>
@@ -276,7 +276,7 @@ const Orders = () => {
                   {order.lignes?.length > 3 && (
                     <button
                       onClick={() => setSelectedOrder(order)}
-                      className="w-full text-center text-sm text-gray-500 hover:text-gray-700 py-2 transition-colors"
+                      className="w-full text-center text-sm text-[#D4AF37]/70 hover:text-[#D4AF37] py-2 transition-colors"
                     >
                       + {order.lignes.length - 3} more items • View full order details
                     </button>
@@ -284,14 +284,14 @@ const Orders = () => {
                 </div>
 
                 {/* Order Summary */}
-                <div className="mt-4 pt-4 border-t border-gray-100 flex justify-between items-center">
-                  <div className="flex items-center gap-4">
-                    <div className="text-sm text-gray-500">
+                <div className="mt-4 pt-4 border-t border-[#D4AF37]/20 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                  <div className="flex items-center gap-4 flex-wrap">
+                    <div className="text-sm text-[#D4AF37]/70">
                       <i className="bi bi-truck mr-1"></i> 
-                      Free Shipping
+                      Free Royal Shipping
                     </div>
                     {order.promo_code && (
-                      <div className="text-sm text-emerald-600">
+                      <div className="text-sm text-[#D4AF37]">
                         <i className="bi bi-ticket-perforated mr-1"></i>
                         Promo: {order.promo_code?.code ?? order.promo_code}
                       </div>
@@ -301,7 +301,7 @@ const Orders = () => {
                   {order.status === 'pending' && (
                     <button
                       onClick={() => handleCancelOrder(order.id)}
-                      className="flex items-center gap-2 px-4 py-2 rounded-xl text-red-600 hover:bg-red-50 transition-all duration-200 text-sm font-medium"
+                      className="flex items-center gap-2 px-4 py-2 rounded-xl text-red-400 hover:bg-red-500/10 hover:text-red-300 transition-all duration-300 text-sm font-medium min-h-[44px]"
                     >
                       <i className="bi bi-x-circle"></i>
                       <span>Cancel Order</span>
@@ -316,70 +316,72 @@ const Orders = () => {
 
       {/* Order Detail Modal */}
       {selectedOrder && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fade-in">
-          <div className="bg-white rounded-3xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="sticky top-0 bg-white border-b border-gray-100 p-6 flex justify-between items-center rounded-t-3xl">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-md animate-fade-in">
+          <div className="bg-gradient-to-br from-black to-[#0a0a0a] rounded-2xl shadow-2xl border-2 border-[#D4AF37] max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="sticky top-0 bg-black/90 backdrop-blur-md border-b border-[#D4AF37]/20 p-6 flex justify-between items-center rounded-t-2xl">
               <div>
-                <h2 className="text-xl font-bold text-gray-900">Order Details</h2>
-                <p className="text-sm text-gray-500">Order #{selectedOrder.id}</p>
+                <h2 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#D4AF37] to-[#FFD700]">Order Details</h2>
+                <p className="text-sm text-gray-400">Order #{selectedOrder.id}</p>
               </div>
               <button
                 onClick={() => setSelectedOrder(null)}
-                className="p-2 rounded-full hover:bg-gray-100 transition-colors"
+                className="p-2 rounded-full hover:bg-white/10 transition-colors min-h-[44px] min-w-[44px]"
               >
-                <i className="bi bi-x-lg text-gray-600"></i>
+                <i className="bi bi-x-lg text-[#D4AF37] text-xl"></i>
               </button>
             </div>
             
             <div className="p-6 space-y-6">
               {/* All Items */}
               <div>
-                <h3 className="font-semibold text-gray-900 mb-3">Items</h3>
+                <h3 className="font-bold text-[#D4AF37] mb-3">Luxury Items</h3>
                 <div className="space-y-3">
                   {selectedOrder.lignes?.map((item) => (
-                    <div key={item.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                    <div key={item.id} className="flex items-center justify-between p-3 bg-white/5 rounded-xl border border-[#D4AF37]/20">
                       <div className="flex items-center gap-3">
                         {item.product?.images && item.product.images[0] ? (
                           <img 
                             src={item.product.images[0].image_url || item.product.images[0]} 
                             alt={item.product.title}
-                            className="w-12 h-12 object-cover rounded-lg"
+                            className="w-12 h-12 object-cover rounded-lg border border-[#D4AF37]/20"
                           />
                         ) : (
-                          <div className="w-12 h-12 bg-gray-200 rounded-lg"></div>
+                          <div className="w-12 h-12 bg-gradient-to-br from-gray-800 to-black rounded-lg border border-[#D4AF37]/20 flex items-center justify-center">
+                            <i className="bi bi-gem text-[#D4AF37]/30"></i>
+                          </div>
                         )}
                         <div>
-                          <p className="font-medium text-gray-900">{item.product?.title}</p>
-                          <p className="text-sm text-gray-500">Qty: {item.quantity}</p>
+                          <p className="font-medium text-white">{item.product?.title}</p>
+                          <p className="text-sm text-gray-400">Qty: {item.quantity}</p>
                         </div>
                       </div>
-                      <p className="font-medium">{`MAD ${(Number(item.unit_price) * item.quantity).toFixed(2)}`}</p>
+                      <p className="font-medium text-[#D4AF37]">{`MAD ${(Number(item.unit_price) * item.quantity).toFixed(2)}`}</p>
                     </div>
                   ))}
                 </div>
               </div>
               
               {/* Order Summary */}
-              <div className="bg-gradient-to-r from-gray-50 to-white rounded-xl p-4">
+              <div className="bg-gradient-to-r from-[#D4AF37]/10 to-transparent rounded-xl p-4 border border-[#D4AF37]/20">
                 <div className="space-y-2">
                   <div className="flex justify-between text-sm">
-                    <span className="text-gray-600">Subtotal</span>
-                    <span className="text-gray-900">{`MAD ${Number(selectedOrder.total).toFixed(2)}`}</span>
+                    <span className="text-gray-400">Subtotal</span>
+                    <span className="text-white">{`MAD ${Number(selectedOrder.total).toFixed(2)}`}</span>
                   </div>
                   <div className="flex justify-between text-sm">
-                    <span className="text-gray-600">Shipping</span>
-                    <span className="text-emerald-600">Free</span>
+                    <span className="text-gray-400">Shipping</span>
+                    <span className="text-[#D4AF37]">Free Royal Delivery</span>
                   </div>
                   {selectedOrder.promo_code && (
                     <div className="flex justify-between text-sm">
-                      <span className="text-gray-600">Promo Code</span>
-                      <span className="text-emerald-600">{selectedOrder.promo_code?.code ?? selectedOrder.promo_code}</span>
+                      <span className="text-gray-400">Promo Code</span>
+                      <span className="text-[#D4AF37]">{selectedOrder.promo_code?.code ?? selectedOrder.promo_code}</span>
                     </div>
                   )}
-                  <div className="border-t border-gray-200 pt-2 mt-2">
-                    <div className="flex justify-between font-semibold">
-                      <span className="text-gray-900">Total</span>
-                      <span className="text-gray-900">{`MAD ${Number(selectedOrder.total).toFixed(2)}`}</span>
+                  <div className="border-t border-[#D4AF37]/20 pt-2 mt-2">
+                    <div className="flex justify-between font-bold">
+                      <span className="text-white">Total</span>
+                      <span className="text-[#D4AF37] text-xl">{`MAD ${Number(selectedOrder.total).toFixed(2)}`}</span>
                     </div>
                   </div>
                 </div>

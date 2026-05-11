@@ -1,3 +1,4 @@
+// PayPalButton.jsx
 import { useEffect, useRef } from "react";
 import api from "../api/axios";
 import { useNavigate } from "react-router-dom";
@@ -8,7 +9,7 @@ export default function PayPalButton({ amount, promoCode, onSuccess, onError }) 
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (rendered.current) return; // 🔥 prevent double render
+    if (rendered.current) return;
     rendered.current = true;
 
     const clientId = import.meta.env.VITE_PAYPAL_CLIENT_ID;
@@ -22,6 +23,12 @@ export default function PayPalButton({ amount, promoCode, onSuccess, onError }) 
       if (!window.paypal || !containerRef.current) return;
 
       window.paypal.Buttons({
+        style: {
+          color: 'gold',
+          shape: 'pill',
+          label: 'pay',
+          height: 44,
+        },
         createOrder: async () => {
           const payload = promoCode ? { promo_code: promoCode } : {};
           const res = await api.post("/paypal/create-order", payload);
@@ -51,12 +58,11 @@ export default function PayPalButton({ amount, promoCode, onSuccess, onError }) 
     document.body.appendChild(script);
 
     return () => {
-      // cleanup DOM safely
       if (containerRef.current) {
         containerRef.current.innerHTML = "";
       }
     };
-  }, []); // 🔥 IMPORTANT: EMPTY deps
+  }, []); 
 
-  return <div ref={containerRef}></div>;
+  return <div ref={containerRef} className="paypal-button-container"></div>;
 }

@@ -1,3 +1,4 @@
+// MusicControl.jsx
 import { useMusic } from '../contexts/MusicContext';
 import { useRef, useState } from 'react';
 
@@ -36,16 +37,12 @@ const MusicControl = () => {
       setShowChooser(false);
     } catch (err) {
       console.error(err);
-    //   alert('Failed to set custom music');
     }
     setLoading(false);
   };
 
   const handleSetYouTube = async () => {
-    if (!ytInput) {
-    //   alert('Paste a YouTube URL first');
-      return;
-    }
+    if (!ytInput) return;
     setLoading(true);
     try {
       await setYouTubeUrl(ytInput);
@@ -53,7 +50,6 @@ const MusicControl = () => {
       setYtInput('');
     } catch (e) {
       console.error(e);
-    //   alert('Failed to play YouTube. Make sure the URL is valid.');
     }
     setLoading(false);
   };
@@ -63,7 +59,6 @@ const MusicControl = () => {
     clearYouTubeUrl();
     setFileName('');
     setYtInput('');
-    // alert('Music reset to default track');
   };
 
   const getSourceLabel = () => {
@@ -76,52 +71,52 @@ const MusicControl = () => {
     <>
       <input ref={fileRef} type="file" accept="audio/*" className="hidden" onChange={handleFile} />
 
-      {/* Main Play/Pause Button */}
+      {/* Main Play/Pause Button - Gold Royal */}
       <button
         onClick={toggleMusic}
-        className="fixed bottom-6 right-6 z-50 w-12 h-12 rounded-full bg-zinc-900/90 backdrop-blur-md border border-white/20 shadow-lg flex items-center justify-center hover:scale-110 transition-all duration-200 group"
+        className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-gradient-to-br from-black to-[#0a0a0a] backdrop-blur-md border-2 border-[#D4AF37] shadow-2xl shadow-[#D4AF37]/30 flex items-center justify-center hover:scale-110 transition-all duration-300 group"
         title={isPlaying ? 'Pause Music' : 'Play Music'}
       >
-        <i className={`bi ${isPlaying ? 'bi-pause-fill' : 'bi-play-fill'} text-white text-xl group-hover:scale-110 transition-transform`}></i>
+        <i className={`bi ${isPlaying ? 'bi-pause-fill' : 'bi-play-fill'} text-[#D4AF37] text-2xl group-hover:scale-110 transition-transform`}></i>
         {isPlaying && (
-          <span className="absolute inset-0 rounded-full animate-ping-ring"></span>
+          <span className="absolute inset-0 rounded-full animate-ping bg-[#D4AF37]/20"></span>
         )}
       </button>
 
       {/* Music Source Button */}
       <button
         onClick={() => setShowChooser(!showChooser)}
-        className="fixed bottom-20 right-6 z-50 w-10 h-10 rounded-full bg-zinc-800/80 backdrop-blur-md border border-white/10 shadow-md flex items-center justify-center hover:scale-105 transition-all duration-200"
+        className="fixed bottom-28 right-6 z-50 w-11 h-11 rounded-full bg-black/80 backdrop-blur-md border border-[#D4AF37]/40 shadow-md flex items-center justify-center hover:scale-105 hover:border-[#D4AF37] transition-all duration-300"
         title="Change music source"
       >
-        <i className="bi bi-music-note text-white"></i>
+        <i className="bi bi-music-note text-[#D4AF37] text-lg"></i>
       </button>
 
       {/* Clear Source Button */}
       <button
         onClick={handleClearSource}
-        className="fixed bottom-20 right-20 z-50 w-10 h-10 rounded-full bg-zinc-800/80 backdrop-blur-md border border-white/10 shadow-md flex items-center justify-center hover:scale-105 transition-all duration-200"
+        className="fixed bottom-28 right-20 z-50 w-11 h-11 rounded-full bg-black/80 backdrop-blur-md border border-[#D4AF37]/40 shadow-md flex items-center justify-center hover:scale-105 hover:border-[#D4AF37] transition-all duration-300"
         title="Reset to default music"
       >
-        <i className="bi bi-arrow-repeat text-white"></i>
+        <i className="bi bi-arrow-repeat text-[#D4AF37] text-lg"></i>
       </button>
 
-      {/* Music Chooser Panel */}
+      {/* Music Chooser Panel - Glassmorphism Gold */}
       {showChooser && (
-        <div className="fixed bottom-36 right-6 z-50 w-80 p-4 rounded-2xl bg-zinc-900/95 backdrop-blur-md border border-white/10 shadow-xl">
-          <div className="text-white text-sm font-medium mb-3 flex items-center justify-between">
-            <span className="flex items-center gap-2">
+        <div className="fixed bottom-44 right-6 z-50 w-80 p-5 rounded-2xl bg-black/90 backdrop-blur-xl border border-[#D4AF37]/30 shadow-2xl shadow-[#D4AF37]/20">
+          <div className="text-white text-sm font-bold mb-3 flex items-center justify-between">
+            <span className="flex items-center gap-2 text-[#D4AF37]">
               <i className="bi bi-music-note-beamed"></i>
-              Music Source
+              Royal Sound
             </span>
-            <span className="text-xs text-gray-400">{getSourceLabel()}</span>
+            <span className="text-xs text-[#D4AF37]/70">{getSourceLabel()}</span>
           </div>
           
-          {/* File Upload */}
+          {/* File Upload - Gold Hover */}
           <button
             onClick={handlePick}
             disabled={loading}
-            className="w-full mb-2 px-3 py-2 rounded-xl bg-zinc-800 hover:bg-zinc-700 transition-colors text-white text-sm flex items-center justify-center gap-2 disabled:opacity-50"
+            className="w-full mb-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-[#D4AF37]/20 to-[#FFD700]/20 hover:from-[#D4AF37]/30 hover:to-[#FFD700]/30 border border-[#D4AF37]/40 transition-all duration-300 text-[#D4AF37] text-sm flex items-center justify-center gap-2 disabled:opacity-50 min-h-[44px]"
           >
             <i className="bi bi-upload"></i>
             Upload Local File (MP3)
@@ -133,20 +128,20 @@ const MusicControl = () => {
               value={ytInput}
               onChange={(e) => setYtInput(e.target.value)}
               placeholder="Paste YouTube URL"
-              className="flex-1 bg-zinc-800 rounded-xl px-3 py-2 text-white text-sm outline-none border border-white/10 focus:border-white/30"
+              className="flex-1 bg-black/60 rounded-xl px-3 py-2.5 text-white text-sm outline-none border border-[#D4AF37]/30 focus:border-[#D4AF37] focus:ring-1 focus:ring-[#D4AF37] transition-all"
             />
             <button
               onClick={handleSetYouTube}
               disabled={loading}
-              className="px-3 py-2 rounded-xl bg-red-700 hover:bg-red-600 transition-colors text-white text-sm disabled:opacity-50"
+              className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-[#D4AF37] to-[#FFD700] text-black font-bold transition-all duration-300 text-sm disabled:opacity-50 hover:shadow-lg hover:shadow-[#D4AF37]/30 min-h-[44px]"
             >
               {loading ? <i className="bi bi-arrow-repeat animate-spin"></i> : 'Play'}
             </button>
           </div>
           
           {/* Info Text */}
-          <div className="mt-3 pt-3 border-t border-white/10">
-            <p className="text-xs text-gray-400 flex items-center gap-1">
+          <div className="mt-3 pt-3 border-t border-[#D4AF37]/20">
+            <p className="text-xs text-[#D4AF37]/60 flex items-center gap-1">
               <i className="bi bi-info-circle"></i>
               {sourceType === 'youtube' && `Playing: ${youtubeUrl?.slice(0, 40)}...`}
               {sourceType === 'file' && `Playing: ${fileName}`}

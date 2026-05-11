@@ -67,21 +67,21 @@ const AdminUsersList = () => {
   };
 
   const roleTabs = [
-    { value: 'all', label: 'All Users', icon: 'bi-people', color: 'gray' },
-    { value: 'admin', label: 'Admins', icon: 'bi-shield-lock', color: 'purple' },
-    { value: 'user', label: 'Regular Users', icon: 'bi-person', color: 'blue' },
+    { value: 'all', label: 'All Royals', icon: 'bi-people', color: 'gold' },
+    { value: 'admin', label: 'Royal Council', icon: 'bi-shield-lock', color: 'purple' },
+    { value: 'user', label: 'Royal Subjects', icon: 'bi-person', color: 'blue' },
   ];
 
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center py-20">
         <div className="relative">
-          <div className="w-16 h-16 border-4 border-gray-200 border-t-gray-800 rounded-full animate-spin"></div>
+          <div className="w-16 h-16 border-4 border-[#D4AF37]/20 border-t-[#D4AF37] rounded-full animate-spin shadow-lg shadow-[#D4AF37]/30"></div>
           <div className="absolute inset-0 flex items-center justify-center">
-            <i className="bi bi-people text-gray-600 text-xl animate-pulse"></i>
+            <i className="bi bi-crown-fill text-[#D4AF37] text-xl animate-pulse"></i>
           </div>
         </div>
-        <p className="mt-4 text-gray-500 font-medium">Loading users...</p>
+        <p className="mt-4 text-[#D4AF37] font-medium">Loading royal subjects...</p>
       </div>
     );
   }
@@ -90,54 +90,59 @@ const AdminUsersList = () => {
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">
-          User Management
-        </h1>
-        <p className="text-gray-500 mt-1">Manage and monitor your customers</p>
+        <div className="flex items-center gap-3 mb-1">
+          <div className="w-10 h-10 bg-gradient-to-br from-[#D4AF37] to-[#FFD700] rounded-xl flex items-center justify-center shadow-lg shadow-[#D4AF37]/30">
+            <i className="bi bi-people-fill text-black text-lg"></i>
+          </div>
+          <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-[#D4AF37] to-[#FFD700] bg-clip-text text-transparent">
+            Royal Court Management
+          </h1>
+        </div>
+        <p className="text-gray-400 mt-1 ml-13">Manage and monitor your royal subjects</p>
       </div>
 
-      {/* Stats Cards */}
+      {/* Stats Cards - Royal Gold */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="bg-white/50 backdrop-blur-sm rounded-2xl p-5 text-center border border-gray-100 shadow-sm">
-          <i className="bi bi-people text-3xl text-gray-600 mb-2 block"></i>
-          <p className="text-3xl font-bold text-gray-900">{stats.total}</p>
-          <p className="text-sm text-gray-500">Total Users</p>
+        <div className="bg-black/40 backdrop-blur-md rounded-xl p-5 text-center border border-[#D4AF37]/20 shadow-lg">
+          <i className="bi bi-people text-3xl text-[#D4AF37] mb-2 block"></i>
+          <p className="text-3xl font-bold text-[#D4AF37]">{stats.total}</p>
+          <p className="text-sm text-gray-400">Total Royals</p>
         </div>
-        <div className="bg-white/50 backdrop-blur-sm rounded-2xl p-5 text-center border border-gray-100 shadow-sm">
-          <i className="bi bi-shield-lock text-3xl text-purple-600 mb-2 block"></i>
-          <p className="text-3xl font-bold text-gray-900">{stats.admins}</p>
-          <p className="text-sm text-gray-500">Administrators</p>
+        <div className="bg-black/40 backdrop-blur-md rounded-xl p-5 text-center border border-[#D4AF37]/20 shadow-lg">
+          <i className="bi bi-shield-lock text-3xl text-purple-400 mb-2 block"></i>
+          <p className="text-3xl font-bold text-purple-400">{stats.admins}</p>
+          <p className="text-sm text-gray-400">Royal Council</p>
         </div>
-        <div className="bg-white/50 backdrop-blur-sm rounded-2xl p-5 text-center border border-gray-100 shadow-sm">
-          <i className="bi bi-person text-3xl text-blue-600 mb-2 block"></i>
-          <p className="text-3xl font-bold text-gray-900">{stats.users}</p>
-          <p className="text-sm text-gray-500">Regular Users</p>
+        <div className="bg-black/40 backdrop-blur-md rounded-xl p-5 text-center border border-[#D4AF37]/20 shadow-lg">
+          <i className="bi bi-person text-3xl text-blue-400 mb-2 block"></i>
+          <p className="text-3xl font-bold text-blue-400">{stats.users}</p>
+          <p className="text-sm text-gray-400">Royal Subjects</p>
         </div>
-        <div className="bg-white/50 backdrop-blur-sm rounded-2xl p-5 text-center border border-gray-100 shadow-sm">
-          <i className="bi bi-gem text-3xl text-amber-600 mb-2 block"></i>
-          <p className="text-3xl font-bold text-gray-900">{stats.totalPoints.toLocaleString()}</p>
-          <p className="text-sm text-gray-500">Total Fidelity Points</p>
+        <div className="bg-black/40 backdrop-blur-md rounded-xl p-5 text-center border border-[#D4AF37]/20 shadow-lg">
+          <i className="bi bi-gem text-3xl text-[#D4AF37] mb-2 block"></i>
+          <p className="text-3xl font-bold text-[#D4AF37]">{stats.totalPoints.toLocaleString()}</p>
+          <p className="text-sm text-gray-400">Total Fidelity Gems</p>
         </div>
       </div>
 
-      {/* Role Filter Tabs */}
+      {/* Role Filter Tabs - Royal Gold */}
       <div className="flex flex-wrap gap-3">
         {roleTabs.map((tab) => (
           <button
             key={tab.value}
             onClick={() => setFilterRole(tab.value)}
-            className={`px-5 py-2.5 rounded-xl font-medium transition-all duration-200 flex items-center gap-2 ${
+            className={`px-5 py-2.5 rounded-xl font-bold transition-all duration-300 flex items-center gap-2 min-h-[44px] ${
               filterRole === tab.value
-                ? 'bg-gray-900 text-white shadow-md'
-                : 'bg-white/50 text-gray-700 hover:bg-gray-100 border border-gray-200'
+                ? 'bg-gradient-to-r from-[#D4AF37] to-[#FFD700] text-black shadow-lg'
+                : 'bg-black/40 text-gray-400 hover:text-[#D4AF37] hover:bg-white/5 border border-[#D4AF37]/20'
             }`}
           >
             <i className={tab.icon}></i>
             {tab.label}
-            <span className={`ml-1 px-2 py-0.5 rounded-full text-xs ${
+            <span className={`ml-1 px-2 py-0.5 rounded-full text-xs font-bold ${
               filterRole === tab.value
-                ? 'bg-white/20 text-white'
-                : 'bg-gray-200 text-gray-700'
+                ? 'bg-black/20 text-black'
+                : 'bg-[#D4AF37]/20 text-[#D4AF37]'
             }`}>
               {tab.value === 'all' ? stats.total : stats[tab.value + 's']}
             </span>
@@ -145,54 +150,54 @@ const AdminUsersList = () => {
         ))}
       </div>
 
-      {/* Search Bar */}
+      {/* Search Bar - Royal Gold */}
       <div className="relative">
-        <i className="bi bi-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+        <i className="bi bi-search absolute left-4 top-1/2 transform -translate-y-1/2 text-[#D4AF37]/50"></i>
         <input
           type="text"
-          placeholder="Search by username or email..."
+          placeholder="Search by royal name or email..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full pl-12 pr-4 py-3 bg-white/50 backdrop-blur-sm rounded-2xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-800 focus:border-transparent transition-all duration-200"
+          className="w-full pl-12 pr-4 py-3 bg-black/40 backdrop-blur-md rounded-xl border-2 border-[#D4AF37]/20 focus:border-[#D4AF37] focus:outline-none focus:ring-2 focus:ring-[#D4AF37] transition-all duration-300 text-white placeholder:text-gray-500"
         />
       </div>
 
       {/* Users Table/Card Hybrid */}
-      <div className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-xl overflow-hidden border border-gray-100">
+      <div className="bg-black/40 backdrop-blur-md rounded-xl shadow-xl overflow-hidden border border-[#D4AF37]/20">
         {/* Desktop Table View */}
         <div className="hidden md:block overflow-x-auto">
           <table className="w-full">
-            <thead className="bg-gray-50/80 border-b border-gray-100">
+            <thead className="bg-black/60 border-b border-[#D4AF37]/20">
               <tr>
-                <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">User</th>
-                <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">Role</th>
-                <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">Fidelity Points</th>
-                <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">Joined</th>
-                <th className="px-6 py-4 text-right text-sm font-semibold text-gray-600">Actions</th>
+                <th className="px-6 py-4 text-left text-sm font-bold text-[#D4AF37]">Royal Subject</th>
+                <th className="px-6 py-4 text-left text-sm font-bold text-[#D4AF37]">Rank</th>
+                <th className="px-6 py-4 text-left text-sm font-bold text-[#D4AF37]">Fidelity Gems</th>
+                <th className="px-6 py-4 text-left text-sm font-bold text-[#D4AF37]">Enlisted</th>
+                <th className="px-6 py-4 text-right text-sm font-bold text-[#D4AF37]">Royal Decrees</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-100">
+            <tbody className="divide-y divide-[#D4AF37]/10">
               {filteredUsers.length === 0 ? (
                 <tr>
                   <td colSpan="5" className="px-6 py-12 text-center">
-                    <i className="bi bi-people text-5xl text-gray-300 mb-3 block"></i>
-                    <p className="text-gray-500">No users found</p>
+                    <i className="bi bi-people text-5xl text-[#D4AF37]/30 mb-3 block"></i>
+                    <p className="text-gray-400">No royal subjects found</p>
                   </td>
                 </tr>
               ) : (
                 filteredUsers.map((user) => (
-                  <tr key={user.id} className="hover:bg-gray-50/50 transition-colors duration-200 group">
+                  <tr key={user.id} className="hover:bg-white/5 transition-all duration-300 group">
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-3">
-                        <div className={`w-10 h-10 rounded-xl flex items-center justify-center font-bold text-white shadow-md ${
+                        <div className={`w-10 h-10 rounded-xl flex items-center justify-center font-bold text-black shadow-lg ${
                           user.role === 'admin' 
-                            ? 'bg-gradient-to-br from-purple-600 to-purple-500' 
-                            : 'bg-gradient-to-br from-gray-700 to-gray-600'
+                            ? 'bg-gradient-to-br from-purple-500 to-purple-600' 
+                            : 'bg-gradient-to-br from-[#D4AF37] to-[#FFD700]'
                         }`}>
                           {user.username.charAt(0).toUpperCase()}
                         </div>
                         <div>
-                          <p className="font-semibold text-gray-900">{user.username}</p>
+                          <p className="font-bold text-white group-hover:text-[#D4AF37] transition-colors">{user.username}</p>
                           <p className="text-xs text-gray-500">{user.email}</p>
                         </div>
                       </div>
@@ -202,36 +207,36 @@ const AdminUsersList = () => {
                         value={user.role}
                         onChange={(e) => handleRoleChange(user.id, e.target.value)}
                         disabled={updatingRole === user.id}
-                        className={`px-3 py-1.5 rounded-xl text-sm font-medium border focus:outline-none focus:ring-2 focus:ring-gray-800 transition-all cursor-pointer ${
+                        className={`px-3 py-1.5 rounded-lg text-sm font-bold border focus:outline-none focus:ring-2 focus:ring-[#D4AF37] transition-all cursor-pointer ${
                           user.role === 'admin'
-                            ? 'bg-purple-50 text-purple-700 border-purple-200'
-                            : 'bg-blue-50 text-blue-700 border-blue-200'
+                            ? 'bg-purple-500/20 text-purple-400 border-purple-500/30'
+                            : 'bg-blue-500/20 text-blue-400 border-blue-500/30'
                         }`}
                       >
-                        <option value="user">👤 Regular User</option>
-                        <option value="admin">🛡️ Administrator</option>
+                        <option value="user">👑 Royal Subject</option>
+                        <option value="admin">🛡️ Royal Council Member</option>
                       </select>
                       {updatingRole === user.id && (
-                        <span className="ml-2 inline-block animate-spin text-xs">
+                        <span className="ml-2 inline-block animate-spin text-xs text-[#D4AF37]">
                           <i className="bi bi-arrow-repeat"></i>
                         </span>
                       )}
                     </td>
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-2">
-                        <i className="bi bi-gem text-amber-500"></i>
-                        <span className="font-semibold text-gray-900">{user.fidelity_points || 0}</span>
+                        <i className="bi bi-gem text-[#D4AF37]"></i>
+                        <span className="font-bold text-[#D4AF37]">{user.fidelity_points || 0}</span>
                       </div>
                     </td>
-                    <td className="px-6 py-4 text-sm text-gray-500">
+                    <td className="px-6 py-4 text-sm text-gray-400">
                       {new Date(user.created_at).toLocaleDateString()}
                     </td>
                     <td className="px-6 py-4 text-right">
                       <button
                         onClick={() => handleDeleteUser(user.id)}
                         disabled={deletingUser === user.id}
-                        className="p-2 rounded-lg text-gray-400 hover:text-red-600 hover:bg-red-50 transition-all duration-200 disabled:opacity-50"
-                        title="Delete User"
+                        className="p-2 rounded-lg text-gray-500 hover:text-red-400 hover:bg-red-500/10 transition-all duration-300 disabled:opacity-50"
+                        title="Remove Royal Status"
                       >
                         {deletingUser === user.id ? (
                           <i className="bi bi-arrow-repeat animate-spin"></i>
@@ -247,34 +252,34 @@ const AdminUsersList = () => {
           </table>
         </div>
 
-        {/* Mobile Card View */}
-        <div className="md:hidden divide-y divide-gray-100">
+        {/* Mobile Card View - Royal Gold */}
+        <div className="md:hidden divide-y divide-[#D4AF37]/10">
           {filteredUsers.length === 0 ? (
             <div className="p-8 text-center">
-              <i className="bi bi-people text-5xl text-gray-300 mb-3 block"></i>
-              <p className="text-gray-500">No users found</p>
+              <i className="bi bi-people text-5xl text-[#D4AF37]/30 mb-3 block"></i>
+              <p className="text-gray-400">No royal subjects found</p>
             </div>
           ) : (
             filteredUsers.map((user) => (
-              <div key={user.id} className="p-5 hover:bg-gray-50/50 transition-colors duration-200">
+              <div key={user.id} className="p-5 hover:bg-white/5 transition-all duration-300">
                 <div className="flex items-start justify-between mb-3">
                   <div className="flex items-center gap-3">
-                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center font-bold text-white shadow-md ${
+                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center font-bold text-black shadow-lg ${
                       user.role === 'admin' 
-                        ? 'bg-gradient-to-br from-purple-600 to-purple-500' 
-                        : 'bg-gradient-to-br from-gray-700 to-gray-600'
+                        ? 'bg-gradient-to-br from-purple-500 to-purple-600' 
+                        : 'bg-gradient-to-br from-[#D4AF37] to-[#FFD700]'
                     }`}>
                       {user.username.charAt(0).toUpperCase()}
                     </div>
                     <div>
-                      <p className="font-semibold text-gray-900">{user.username}</p>
+                      <p className="font-bold text-white">{user.username}</p>
                       <p className="text-xs text-gray-500">{user.email}</p>
                     </div>
                   </div>
                   <button
                     onClick={() => handleDeleteUser(user.id)}
                     disabled={deletingUser === user.id}
-                    className="p-2 rounded-lg text-gray-400 hover:text-red-600"
+                    className="p-2 rounded-lg text-gray-500 hover:text-red-400"
                   >
                     {deletingUser === user.id ? (
                       <i className="bi bi-arrow-repeat animate-spin"></i>
@@ -284,33 +289,33 @@ const AdminUsersList = () => {
                   </button>
                 </div>
                 
-                <div className="grid grid-cols-2 gap-3 mt-4 pt-3 border-t border-gray-100">
+                <div className="grid grid-cols-2 gap-3 mt-4 pt-3 border-t border-[#D4AF37]/20">
                   <div>
-                    <p className="text-xs text-gray-500 mb-1">Role</p>
+                    <p className="text-xs text-gray-500 mb-1">Royal Rank</p>
                     <select
                       value={user.role}
                       onChange={(e) => handleRoleChange(user.id, e.target.value)}
                       disabled={updatingRole === user.id}
-                      className={`w-full px-3 py-1.5 rounded-xl text-sm font-medium border focus:outline-none focus:ring-2 focus:ring-gray-800 ${
+                      className={`w-full px-3 py-1.5 rounded-lg text-sm font-bold border focus:outline-none focus:ring-2 focus:ring-[#D4AF37] ${
                         user.role === 'admin'
-                          ? 'bg-purple-50 text-purple-700 border-purple-200'
-                          : 'bg-blue-50 text-blue-700 border-blue-200'
+                          ? 'bg-purple-500/20 text-purple-400 border-purple-500/30'
+                          : 'bg-blue-500/20 text-blue-400 border-blue-500/30'
                       }`}
                     >
-                      <option value="user">Regular User</option>
-                      <option value="admin">Administrator</option>
+                      <option value="user">Royal Subject</option>
+                      <option value="admin">Royal Council</option>
                     </select>
                   </div>
                   <div>
-                    <p className="text-xs text-gray-500 mb-1">Fidelity Points</p>
+                    <p className="text-xs text-gray-500 mb-1">Fidelity Gems</p>
                     <div className="flex items-center gap-2">
-                      <i className="bi bi-gem text-amber-500"></i>
-                      <span className="font-semibold text-gray-900">{user.fidelity_points || 0}</span>
+                      <i className="bi bi-gem text-[#D4AF37]"></i>
+                      <span className="font-bold text-[#D4AF37]">{user.fidelity_points || 0}</span>
                     </div>
                   </div>
                 </div>
                 <div className="mt-2">
-                  <p className="text-xs text-gray-400">Joined: {new Date(user.created_at).toLocaleDateString()}</p>
+                  <p className="text-xs text-gray-500">Enlisted: {new Date(user.created_at).toLocaleDateString()}</p>
                 </div>
               </div>
             ))
@@ -318,7 +323,7 @@ const AdminUsersList = () => {
         </div>
       </div>
 
-      {/* Export Section */}
+      {/* Export Section - Royal Gold */}
       <div className="flex justify-end">
         <button
           onClick={() => {
@@ -327,14 +332,14 @@ const AdminUsersList = () => {
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = 'users_export.csv';
+            a.download = 'royal_subjects_export.csv';
             a.click();
             URL.revokeObjectURL(url);
           }}
-          className="flex items-center gap-2 px-5 py-2.5 bg-white/50 backdrop-blur-sm rounded-xl text-gray-700 hover:bg-gray-100 transition-all duration-200 border border-gray-200"
+          className="flex items-center gap-2 px-5 py-2.5 bg-black/40 backdrop-blur-md rounded-xl text-[#D4AF37] hover:bg-white/5 transition-all duration-300 border border-[#D4AF37]/30 font-bold min-h-[44px]"
         >
           <i className="bi bi-download"></i>
-          Export to CSV
+          Export Royal Registry
         </button>
       </div>
     </div>

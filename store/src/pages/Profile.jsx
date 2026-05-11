@@ -135,42 +135,42 @@ const Profile = () => {
 
   if (loading) {
     return (
-      <div className="min-h-[60vh] flex flex-col items-center justify-center">
+      <div className="min-h-[60vh] flex flex-col items-center justify-center bg-gradient-to-br from-black via-[#0a0a0a] to-black">
         <div className="relative">
-          <div className="w-16 h-16 border-4 border-gray-200 border-t-gray-900 rounded-full animate-spin"></div>
+          <div className="w-20 h-20 border-4 border-[#D4AF37]/20 border-t-[#D4AF37] rounded-full animate-spin shadow-lg shadow-[#D4AF37]/30"></div>
           <div className="absolute inset-0 flex items-center justify-center">
-            <i className="bi bi-person-fill text-gray-900 text-xl animate-pulse"></i>
+            <i className="bi bi-crown-fill text-[#D4AF37] text-2xl animate-pulse"></i>
           </div>
         </div>
-        <p className="mt-4 text-gray-600 font-medium">Loading profile...</p>
+        <p className="mt-4 text-[#D4AF37] font-medium">Loading royal profile...</p>
       </div>
     );
   }
 
   return (
-    <div className="max-w-6xl mx-auto px-4">
+    <div className="max-w-6xl mx-auto px-4 bg-gradient-to-br from-black via-[#0a0a0a] to-black">
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent mb-2">
-          My Profile
+        <h1 className="text-3xl md:text-4xl font-bold mb-2">
+          <span className="bg-gradient-to-r from-[#D4AF37] to-[#FFD700] bg-clip-text text-transparent">My Royal Profile</span>
         </h1>
-        <p className="text-gray-500">Manage your account and preferences</p>
+        <p className="text-gray-400">Manage your account and preferences</p>
       </div>
 
       {/* Messages */}
       {message && (
-        <div className="mb-6 p-4 rounded-2xl bg-emerald-50 border border-emerald-200 animate-fade-in">
+        <div className="mb-6 p-4 rounded-2xl bg-[#D4AF37]/10 border border-[#D4AF37]/30 animate-fade-in">
           <div className="flex items-center gap-2">
-            <i className="bi bi-check-circle-fill text-emerald-600"></i>
-            <p className="text-emerald-700">{message}</p>
+            <i className="bi bi-check-circle-fill text-[#D4AF37]"></i>
+            <p className="text-[#D4AF37]">{message}</p>
           </div>
         </div>
       )}
       {error && (
-        <div className="mb-6 p-4 rounded-2xl bg-red-50 border border-red-200 animate-fade-in">
+        <div className="mb-6 p-4 rounded-2xl bg-red-500/10 border border-red-500/30 animate-fade-in">
           <div className="flex items-center gap-2">
-            <i className="bi bi-exclamation-triangle-fill text-red-600"></i>
-            <p className="text-red-700">{error}</p>
+            <i className="bi bi-exclamation-triangle-fill text-red-400"></i>
+            <p className="text-red-400">{error}</p>
           </div>
         </div>
       )}
@@ -179,18 +179,18 @@ const Profile = () => {
         {/* Sidebar - Profile Card */}
         <div className="lg:w-80">
           <div className="sticky top-24 space-y-6">
-            {/* Profile Image Card */}
-            <div className="bg-white rounded-3xl shadow-xl p-6 text-center border border-gray-100">
+            {/* Profile Image Card - Gold */}
+            <div className="bg-black/60 backdrop-blur-md rounded-2xl shadow-2xl p-6 text-center border border-[#D4AF37]/20">
               <div className="relative inline-block">
                 {profile?.profile_image ? (
                   <img 
                     src={profile.profile_image} 
                     alt={profile.username}
-                    className="w-32 h-32 rounded-full mx-auto object-cover border-4 border-white shadow-xl"
+                    className="w-32 h-32 rounded-full mx-auto object-cover border-2 border-[#D4AF37] shadow-xl shadow-[#D4AF37]/30"
                   />
                 ) : (
-                  <div className="w-32 h-32 rounded-full bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center mx-auto shadow-xl">
-                    <i className="bi bi-person text-5xl text-gray-500"></i>
+                  <div className="w-32 h-32 rounded-full bg-gradient-to-br from-[#D4AF37]/20 to-[#FFD700]/20 flex items-center justify-center mx-auto shadow-xl border border-[#D4AF37]">
+                    <i className="bi bi-crown-fill text-5xl text-[#D4AF37]"></i>
                   </div>
                 )}
                 <label className="absolute bottom-0 right-0 cursor-pointer">
@@ -201,41 +201,41 @@ const Profile = () => {
                     className="hidden"
                     disabled={uploadingImage}
                   />
-                  <div className="bg-gray-900 text-white p-2 rounded-full shadow-lg hover:bg-gray-800 transition-all duration-200 cursor-pointer">
+                  <div className="bg-gradient-to-r from-[#D4AF37] to-[#FFD700] text-black p-2 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer">
                     <i className="bi bi-camera-fill text-sm"></i>
                   </div>
                 </label>
               </div>
               
-              <h2 className="mt-4 text-xl font-bold text-gray-900">{profile?.username}</h2>
-              <p className="text-gray-500 text-sm">{profile?.email}</p>
+              <h2 className="mt-4 text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#D4AF37] to-[#FFD700]">{profile?.username}</h2>
+              <p className="text-gray-400 text-sm">{profile?.email}</p>
               
               {uploadingImage && (
-                <p className="mt-2 text-xs text-gray-500 animate-pulse">Uploading...</p>
+                <p className="mt-2 text-xs text-[#D4AF37] animate-pulse">Uploading...</p>
               )}
               
-              <div className="mt-4 pt-4 border-t border-gray-100">
+              <div className="mt-4 pt-4 border-t border-[#D4AF37]/20">
                 <div className="flex justify-between items-center">
-                  <span className="text-sm text-gray-600">Fidelity Points</span>
+                  <span className="text-sm text-gray-400">Royal Points</span>
                   <div className="flex items-center gap-1">
-                    <i className="bi bi-star-fill text-amber-500 text-sm"></i>
-                    <span className="text-xl font-bold text-gray-900">{profile?.fidelity_points || 0}</span>
+                    <i className="bi bi-crown-fill text-[#D4AF37] text-sm"></i>
+                    <span className="text-xl font-bold text-[#D4AF37]">{profile?.fidelity_points || 0}</span>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Stats Mini Cards */}
+            {/* Stats Mini Cards - Gold */}
             <div className="grid grid-cols-2 gap-3">
-              <div className="bg-white rounded-2xl shadow-md p-3 text-center border border-gray-100">
-                <i className="bi bi-bag-check text-2xl text-gray-700 mb-1 block"></i>
-                <p className="text-xl font-bold text-gray-900">{profile?.total_orders || 0}</p>
-                <p className="text-xs text-gray-500">Orders</p>
+              <div className="bg-black/60 backdrop-blur-md rounded-xl shadow-lg p-3 text-center border border-[#D4AF37]/20 hover:border-[#D4AF37]/40 transition-all duration-300">
+                <i className="bi bi-bag-check text-2xl text-[#D4AF37] mb-1 block"></i>
+                <p className="text-xl font-bold text-[#D4AF37]">{profile?.total_orders || 0}</p>
+                <p className="text-xs text-gray-400">Orders</p>
               </div>
-              <div className="bg-white rounded-2xl shadow-md p-3 text-center border border-gray-100">
-                <i className="bi bi-heart-fill text-2xl text-rose-500 mb-1 block"></i>
-                <p className="text-xl font-bold text-gray-900">{profile?.likes_count || 0}</p>
-                <p className="text-xs text-gray-500">Likes</p>
+              <div className="bg-black/60 backdrop-blur-md rounded-xl shadow-lg p-3 text-center border border-[#D4AF37]/20 hover:border-[#D4AF37]/40 transition-all duration-300">
+                <i className="bi bi-heart-fill text-2xl text-[#D4AF37] mb-1 block"></i>
+                <p className="text-xl font-bold text-[#D4AF37]">{profile?.likes_count || 0}</p>
+                <p className="text-xs text-gray-400">Likes</p>
               </div>
             </div>
           </div>
@@ -243,18 +243,18 @@ const Profile = () => {
 
         {/* Main Content */}
         <div className="flex-1">
-          {/* Tab Navigation */}
-          <div className="bg-white/50 backdrop-blur-sm rounded-2xl p-2 mb-6 shadow-sm border border-gray-100">
+          {/* Tab Navigation - Gold */}
+          <div className="bg-black/60 backdrop-blur-md rounded-xl p-2 mb-6 shadow-xl border border-[#D4AF37]/20">
             <div className="flex gap-1">
               {tabs.map((tab) => (
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
                   className={`
-                    flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200
+                    flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-300 min-h-[48px]
                     ${activeTab === tab.id 
-                      ? 'bg-gray-900 text-white shadow-md' 
-                      : 'text-gray-700 hover:bg-gray-100'
+                      ? 'bg-gradient-to-r from-[#D4AF37] to-[#FFD700] text-black shadow-lg shadow-[#D4AF37]/30' 
+                      : 'text-gray-300 hover:bg-white/5 hover:text-[#D4AF37]'
                     }
                   `}
                 >
@@ -266,19 +266,19 @@ const Profile = () => {
           </div>
 
           {/* Tab Content */}
-          <div className="bg-white rounded-3xl shadow-xl p-6 md:p-8 border border-gray-100">
+          <div className="bg-black/60 backdrop-blur-md rounded-2xl shadow-2xl p-6 md:p-8 border border-[#D4AF37]/20">
             {/* Personal Info Tab */}
             {activeTab === 'info' && (
               <div className="animate-fade-in">
                 <div className="flex justify-between items-center mb-6">
                   <div>
-                    <h2 className="text-xl font-bold text-gray-900">Personal Information</h2>
-                    <p className="text-sm text-gray-500 mt-1">Update your personal details</p>
+                    <h2 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#D4AF37] to-[#FFD700]">Personal Information</h2>
+                    <p className="text-sm text-gray-400 mt-1">Update your royal details</p>
                   </div>
                   {!editing && (
                     <button
                       onClick={() => setEditing(true)}
-                      className="flex items-center gap-2 px-4 py-2 rounded-xl bg-gray-100 text-gray-700 hover:bg-gray-200 transition-all duration-200 text-sm font-medium"
+                      className="flex items-center gap-2 px-4 py-2 rounded-xl bg-[#D4AF37]/10 text-[#D4AF37] hover:bg-[#D4AF37]/20 transition-all duration-300 text-sm font-medium min-h-[44px]"
                     >
                       <i className="bi bi-pencil"></i>
                       <span>Edit Profile</span>
@@ -290,68 +290,68 @@ const Profile = () => {
                   <form onSubmit={handleUpdateProfile} className="space-y-5">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">Username *</label>
+                        <label className="block text-sm font-medium text-[#D4AF37] mb-2">Username *</label>
                         <input
                           type="text"
                           value={formData.username}
                           onChange={(e) => setFormData({ ...formData, username: e.target.value })}
-                          className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-800 focus:border-transparent transition-all duration-200"
+                          className="w-full px-4 py-3 bg-black/60 border border-[#D4AF37]/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent transition-all duration-300 text-white"
                           required
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">Email *</label>
+                        <label className="block text-sm font-medium text-[#D4AF37] mb-2">Email *</label>
                         <input
                           type="email"
                           value={formData.email}
                           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                          className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-800 focus:border-transparent transition-all duration-200"
+                          className="w-full px-4 py-3 bg-black/60 border border-[#D4AF37]/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent transition-all duration-300 text-white"
                           required
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">Phone</label>
+                        <label className="block text-sm font-medium text-[#D4AF37] mb-2">Phone</label>
                         <input
                           type="text"
                           value={formData.phone}
                           onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                          className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-800 focus:border-transparent transition-all duration-200"
+                          className="w-full px-4 py-3 bg-black/60 border border-[#D4AF37]/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent transition-all duration-300 text-white"
                           placeholder="+1 234 567 890"
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">City</label>
+                        <label className="block text-sm font-medium text-[#D4AF37] mb-2">City</label>
                         <input
                           type="text"
                           value={formData.city}
                           onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-                          className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-800 focus:border-transparent transition-all duration-200"
-                          placeholder="New York"
+                          className="w-full px-4 py-3 bg-black/60 border border-[#D4AF37]/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent transition-all duration-300 text-white"
+                          placeholder="Casablanca"
                         />
                       </div>
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Address</label>
+                      <label className="block text-sm font-medium text-[#D4AF37] mb-2">Address</label>
                       <textarea
                         value={formData.address}
                         onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-                        className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-800 focus:border-transparent transition-all duration-200"
+                        className="w-full px-4 py-3 bg-black/60 border border-[#D4AF37]/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent transition-all duration-300 text-white"
                         rows="3"
-                        placeholder="123 Main St, Apt 4B"
+                        placeholder="123 Royal Avenue, Suite 4B"
                       />
                     </div>
                     <div className="flex gap-3 pt-3">
                       <button
                         type="submit"
                         disabled={updating}
-                        className="bg-gray-900 text-white px-6 py-3 rounded-xl font-medium hover:bg-gray-800 transform hover:scale-105 transition-all duration-200 shadow-md disabled:opacity-50"
+                        className="bg-gradient-to-r from-[#D4AF37] to-[#FFD700] text-black px-6 py-3 rounded-xl font-bold hover:shadow-2xl hover:shadow-[#D4AF37]/50 transform hover:scale-105 transition-all duration-300 shadow-md disabled:opacity-50 min-h-[48px]"
                       >
                         {updating ? 'Saving...' : 'Save Changes'}
                       </button>
                       <button
                         type="button"
                         onClick={() => setEditing(false)}
-                        className="bg-gray-100 text-gray-700 px-6 py-3 rounded-xl font-medium hover:bg-gray-200 transition-all duration-200"
+                        className="bg-black/60 text-[#D4AF37] px-6 py-3 rounded-xl font-medium hover:bg-white/5 transition-all duration-300 border border-[#D4AF37]/30 min-h-[48px]"
                       >
                         Cancel
                       </button>
@@ -360,30 +360,30 @@ const Profile = () => {
                 ) : (
                   <div className="space-y-4">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div className="p-4 bg-gray-50 rounded-xl">
-                        <p className="text-xs text-gray-500 uppercase tracking-wide mb-1">Username</p>
-                        <p className="text-gray-900 font-medium">{profile?.username}</p>
+                      <div className="p-4 bg-white/5 rounded-xl border border-[#D4AF37]/20">
+                        <p className="text-xs text-[#D4AF37]/70 uppercase tracking-wide mb-1">Username</p>
+                        <p className="text-white font-medium">{profile?.username}</p>
                       </div>
-                      <div className="p-4 bg-gray-50 rounded-xl">
-                        <p className="text-xs text-gray-500 uppercase tracking-wide mb-1">Email</p>
-                        <p className="text-gray-900 font-medium">{profile?.email}</p>
+                      <div className="p-4 bg-white/5 rounded-xl border border-[#D4AF37]/20">
+                        <p className="text-xs text-[#D4AF37]/70 uppercase tracking-wide mb-1">Email</p>
+                        <p className="text-white font-medium">{profile?.email}</p>
                       </div>
-                      <div className="p-4 bg-gray-50 rounded-xl">
-                        <p className="text-xs text-gray-500 uppercase tracking-wide mb-1">Phone</p>
-                        <p className="text-gray-900 font-medium">{profile?.phone || 'Not set'}</p>
+                      <div className="p-4 bg-white/5 rounded-xl border border-[#D4AF37]/20">
+                        <p className="text-xs text-[#D4AF37]/70 uppercase tracking-wide mb-1">Phone</p>
+                        <p className="text-white font-medium">{profile?.phone || 'Not set'}</p>
                       </div>
-                      <div className="p-4 bg-gray-50 rounded-xl">
-                        <p className="text-xs text-gray-500 uppercase tracking-wide mb-1">City</p>
-                        <p className="text-gray-900 font-medium">{profile?.city || 'Not set'}</p>
+                      <div className="p-4 bg-white/5 rounded-xl border border-[#D4AF37]/20">
+                        <p className="text-xs text-[#D4AF37]/70 uppercase tracking-wide mb-1">City</p>
+                        <p className="text-white font-medium">{profile?.city || 'Not set'}</p>
                       </div>
                     </div>
-                    <div className="p-4 bg-gray-50 rounded-xl">
-                      <p className="text-xs text-gray-500 uppercase tracking-wide mb-1">Address</p>
-                      <p className="text-gray-900 font-medium">{profile?.address || 'Not set'}</p>
+                    <div className="p-4 bg-white/5 rounded-xl border border-[#D4AF37]/20">
+                      <p className="text-xs text-[#D4AF37]/70 uppercase tracking-wide mb-1">Address</p>
+                      <p className="text-white font-medium">{profile?.address || 'Not set'}</p>
                     </div>
-                    <div className="p-4 bg-gray-50 rounded-xl">
-                      <p className="text-xs text-gray-500 uppercase tracking-wide mb-1">Member Since</p>
-                      <p className="text-gray-900 font-medium">
+                    <div className="p-4 bg-white/5 rounded-xl border border-[#D4AF37]/20">
+                      <p className="text-xs text-[#D4AF37]/70 uppercase tracking-wide mb-1">Royal Member Since</p>
+                      <p className="text-white font-medium">
                         {new Date(profile?.created_at).toLocaleDateString('en-US', {
                           year: 'numeric',
                           month: 'long',
@@ -400,40 +400,40 @@ const Profile = () => {
             {activeTab === 'password' && (
               <div className="animate-fade-in">
                 <div className="mb-6">
-                  <h2 className="text-xl font-bold text-gray-900">Security Settings</h2>
-                  <p className="text-sm text-gray-500 mt-1">Update your password</p>
+                  <h2 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#D4AF37] to-[#FFD700]">Security Settings</h2>
+                  <p className="text-sm text-gray-400 mt-1">Update your royal password</p>
                 </div>
                 
                 <form onSubmit={handleUpdatePassword} className="space-y-5 max-w-md">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Current Password</label>
+                    <label className="block text-sm font-medium text-[#D4AF37] mb-2">Current Password</label>
                     <input
                       type="password"
                       value={passwordData.current_password}
                       onChange={(e) => setPasswordData({ ...passwordData, current_password: e.target.value })}
-                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-800 focus:border-transparent transition-all duration-200"
+                      className="w-full px-4 py-3 bg-black/60 border border-[#D4AF37]/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent transition-all duration-300 text-white"
                       required
                       placeholder="Enter current password"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">New Password</label>
+                    <label className="block text-sm font-medium text-[#D4AF37] mb-2">New Password</label>
                     <input
                       type="password"
                       value={passwordData.new_password}
                       onChange={(e) => setPasswordData({ ...passwordData, new_password: e.target.value })}
-                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-800 focus:border-transparent transition-all duration-200"
+                      className="w-full px-4 py-3 bg-black/60 border border-[#D4AF37]/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent transition-all duration-300 text-white"
                       required
                       placeholder="Enter new password"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Confirm New Password</label>
+                    <label className="block text-sm font-medium text-[#D4AF37] mb-2">Confirm New Password</label>
                     <input
                       type="password"
                       value={passwordData.new_password_confirmation}
                       onChange={(e) => setPasswordData({ ...passwordData, new_password_confirmation: e.target.value })}
-                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-800 focus:border-transparent transition-all duration-200"
+                      className="w-full px-4 py-3 bg-black/60 border border-[#D4AF37]/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent transition-all duration-300 text-white"
                       required
                       placeholder="Confirm new password"
                     />
@@ -441,7 +441,7 @@ const Profile = () => {
                   <button
                     type="submit"
                     disabled={updatingPassword}
-                    className="bg-gray-900 text-white px-6 py-3 rounded-xl font-medium hover:bg-gray-800 transform hover:scale-105 transition-all duration-200 shadow-md disabled:opacity-50"
+                    className="bg-gradient-to-r from-[#D4AF37] to-[#FFD700] text-black px-6 py-3 rounded-xl font-bold hover:shadow-2xl hover:shadow-[#D4AF37]/50 transform hover:scale-105 transition-all duration-300 shadow-md disabled:opacity-50 min-h-[48px]"
                   >
                     {updatingPassword ? 'Updating...' : 'Update Password'}
                   </button>
@@ -453,40 +453,40 @@ const Profile = () => {
             {activeTab === 'activity' && (
               <div className="animate-fade-in">
                 <div className="mb-6">
-                  <h2 className="text-xl font-bold text-gray-900">Your Activity</h2>
-                  <p className="text-sm text-gray-500 mt-1">Overview of your store activity</p>
+                  <h2 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#D4AF37] to-[#FFD700]">Your Royal Activity</h2>
+                  <p className="text-sm text-gray-400 mt-1">Overview of your store activity</p>
                 </div>
                 
                 {/* Stats Grid */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-                  <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-4 text-center">
-                    <i className="bi bi-bag-check text-3xl text-blue-600 mb-2 block"></i>
-                    <p className="text-2xl font-bold text-gray-900">{profile?.total_orders || 0}</p>
-                    <p className="text-sm text-gray-600">Total Orders</p>
+                  <div className="bg-gradient-to-br from-[#D4AF37]/10 to-transparent rounded-xl p-4 text-center border border-[#D4AF37]/20">
+                    <i className="bi bi-bag-check text-3xl text-[#D4AF37] mb-2 block"></i>
+                    <p className="text-2xl font-bold text-[#D4AF37]">{profile?.total_orders || 0}</p>
+                    <p className="text-sm text-gray-400">Total Orders</p>
                   </div>
-                  <div className="bg-gradient-to-br from-emerald-50 to-emerald-100 rounded-2xl p-4 text-center">
-                    <i className="bi bi-currency-dollar text-3xl text-emerald-600 mb-2 block"></i>
-                    <p className="text-2xl font-bold text-gray-900">{`MAD ${profile?.total_spent || 0}`}</p>
-                    <p className="text-sm text-gray-600">Total Spent</p>
+                  <div className="bg-gradient-to-br from-[#D4AF37]/10 to-transparent rounded-xl p-4 text-center border border-[#D4AF37]/20">
+                    <i className="bi bi-currency-dollar text-3xl text-[#D4AF37] mb-2 block"></i>
+                    <p className="text-2xl font-bold text-[#D4AF37]">{`MAD ${profile?.total_spent || 0}`}</p>
+                    <p className="text-sm text-gray-400">Total Spent</p>
                   </div>
-                  <div className="bg-gradient-to-br from-rose-50 to-rose-100 rounded-2xl p-4 text-center">
-                    <i className="bi bi-heart-fill text-3xl text-rose-600 mb-2 block"></i>
-                    <p className="text-2xl font-bold text-gray-900">{profile?.likes_count || 0}</p>
-                    <p className="text-sm text-gray-600">Liked Products</p>
+                  <div className="bg-gradient-to-br from-[#D4AF37]/10 to-transparent rounded-xl p-4 text-center border border-[#D4AF37]/20">
+                    <i className="bi bi-heart-fill text-3xl text-[#D4AF37] mb-2 block"></i>
+                    <p className="text-2xl font-bold text-[#D4AF37]">{profile?.likes_count || 0}</p>
+                    <p className="text-sm text-gray-400">Liked Products</p>
                   </div>
-                  <div className="bg-gradient-to-br from-amber-50 to-amber-100 rounded-2xl p-4 text-center">
-                    <i className="bi bi-star-fill text-3xl text-amber-600 mb-2 block"></i>
-                    <p className="text-2xl font-bold text-gray-900">{profile?.reviews?.length || 0}</p>
-                    <p className="text-sm text-gray-600">Reviews</p>
+                  <div className="bg-gradient-to-br from-[#D4AF37]/10 to-transparent rounded-xl p-4 text-center border border-[#D4AF37]/20">
+                    <i className="bi bi-star-fill text-3xl text-[#D4AF37] mb-2 block"></i>
+                    <p className="text-2xl font-bold text-[#D4AF37]">{profile?.reviews?.length || 0}</p>
+                    <p className="text-sm text-gray-400">Reviews</p>
                   </div>
                 </div>
 
                 {/* Liked Products */}
                 {profile?.likes && profile.likes.length > 0 && (
                   <div>
-                    <h3 className="font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                      <i className="bi bi-heart-fill text-rose-500"></i>
-                      <span>Liked Products</span>
+                    <h3 className="font-bold text-[#D4AF37] mb-4 flex items-center gap-2">
+                      <i className="bi bi-heart-fill"></i>
+                      <span>Liked Royal Products</span>
                     </h3>
                     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
                       {profile.likes.slice(0, 8).map((like) => (
@@ -499,14 +499,14 @@ const Profile = () => {
                             <img 
                               src={like.product.images[0].image_url || like.product.images[0]} 
                               alt={like.product.title}
-                              className="w-full h-32 object-cover rounded-xl shadow-sm group-hover:shadow-xl transition-all duration-300 group-hover:scale-105"
+                              className="w-full h-32 object-cover rounded-xl shadow-sm group-hover:shadow-xl group-hover:shadow-[#D4AF37]/20 transition-all duration-300 group-hover:scale-105 border border-[#D4AF37]/20"
                             />
                           ) : (
-                            <div className="w-full h-32 bg-gradient-to-br from-gray-100 to-gray-200 rounded-xl flex items-center justify-center">
-                              <i className="bi bi-image text-gray-400 text-3xl"></i>
+                            <div className="w-full h-32 bg-gradient-to-br from-gray-800 to-black rounded-xl flex items-center justify-center border border-[#D4AF37]/20">
+                              <i className="bi bi-gem text-[#D4AF37]/30 text-3xl"></i>
                             </div>
                           )}
-                          <p className="mt-2 text-xs font-medium text-gray-800 truncate text-center group-hover:text-gray-900 transition-colors">
+                          <p className="mt-2 text-xs font-medium text-gray-300 truncate text-center group-hover:text-[#D4AF37] transition-colors">
                             {like.product?.title}
                           </p>
                         </div>
