@@ -286,10 +286,10 @@ const Orders = () => {
                 {/* Order Summary */}
                 <div className="mt-4 pt-4 border-t border-[#D4AF37]/20 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
                   <div className="flex items-center gap-4 flex-wrap">
-                    <div className="text-sm text-[#D4AF37]/70">
+                    {/* <div className="text-sm text-[#D4AF37]/70">
                       <i className="bi bi-truck mr-1"></i> 
                       Free Royal Shipping
-                    </div>
+                    </div> */}
                     {order.promo_code && (
                       <div className="text-sm text-[#D4AF37]">
                         <i className="bi bi-ticket-perforated mr-1"></i>

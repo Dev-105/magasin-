@@ -13,6 +13,8 @@ const Cart = () => {
   const [checkoutLoading, setCheckoutLoading] = useState(false);
   const [removingItem, setRemovingItem] = useState(null);
   const [showPayPalModal, setShowPayPalModal] = useState(false);
+  const [showReceiptModal, setShowReceiptModal] = useState(false);
+  const [orderDetails, setOrderDetails] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -77,13 +79,13 @@ const Cart = () => {
     }
   };
 
-  const handleCheckout = async () => {
-    setShowPayPalModal(true);
-  };
-
   const subtotal = cart.total;
   const discountAmount = promoDiscount ? (subtotal * promoDiscount.discount_percentage / 100) : 0;
   const total = subtotal - discountAmount;
+
+  const handlePrintReceipt = () => {
+    window.print();
+  };
 
   if (loading) {
     return (
@@ -357,8 +359,104 @@ const Cart = () => {
                 </div>
               </div>
             </div>
+            
+            {/* Receipt Modal */}
+            {showReceiptModal && orderDetails && (
+              <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md p-4">
+                <div className="bg-gradient-to-br from-black to-[#0a0a0a] rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto border-2 border-[#D4AF37] animate-fade-in-up">
+                  {/* Receipt Header */}
+                  <div className="text-center p-6 border-b border-[#D4AF37]/20">
+                    <div className="w-16 h-16 bg-gradient-to-br from-[#D4AF37] to-[#FFD700] rounded-full flex items-center justify-center mx-auto mb-4 shadow-xl">
+                      <i className="bi bi-crown-fill text-black text-2xl"></i>
+                    </div>
+                    <h2 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#D4AF37] to-[#FFD700] mb-2">
+                      Royal Receipt
+                    </h2>
+                    <p className="text-gray-400 text-sm">Thank you for your royal purchase!</p>
+                    <div className="mt-4 pt-4 border-t border-[#D4AF37]/20">
+                      <p className="text-xs text-gray-500">Order ID: <span className="text-[#D4AF37] font-mono">#{orderDetails.order_id || 'ROR-' + Date.now()}</span></p>
+                      <p className="text-xs text-gray-500 mt-1">Date: {new Date().toLocaleString()}</p>
+                      <p className="text-xs text-gray-500 mt-1">Payment Method: PayPal</p>
+                    </div>
+                  </div>
+                  
+                  {/* Receipt Items */}
+                  <div className="p-6">
+                    <h3 className="font-bold text-[#D4AF37] mb-4 flex items-center gap-2">
+                      <i className="bi bi-box-seam"></i>
+                      Order Items
+                    </h3>
+                    <div className="space-y-3 mb-6">
+                      {cart.items.map((item, idx) => (
+                        <div key={idx} className="flex justify-between items-center py-2 border-b border-[#D4AF37]/10">
+                          <div className="flex-1">
+                            <p className="text-white font-medium">{item.product.title}</p>
+                            <p className="text-xs text-gray-500">Qty: {item.quantity} × MAD {Number(item.product.final_price).toFixed(2)}</p>
+                          </div>
+                          <p className="text-[#D4AF37] font-bold">MAD {(Number(item.product.final_price) * item.quantity).toFixed(2)}</p>
+                        </div>
+                      ))}
+                    </div>
+                    
+                    {/* Totals */}
+                    <div className="bg-black/60 rounded-xl p-4 mb-6 border border-[#D4AF37]/20">
+                      <div className="space-y-2">
+                        <div className="flex justify-between text-gray-300 text-sm">
+                          <span>Subtotal:</span>
+                          <span>MAD {Number(subtotal).toFixed(2)}</span>
+                        </div>
+                        <div className="flex justify-between text-gray-300 text-sm">
+                          <span>Shipping:</span>
+                          <span className="text-[#D4AF37]">Free</span>
+                        </div>
+                        {promoDiscount && (
+                          <div className="flex justify-between text-[#D4AF37] text-sm">
+                            <span>Discount ({promoDiscount.discount_percentage}%):</span>
+                            <span>-MAD {Number(discountAmount).toFixed(2)}</span>
+                          </div>
+                        )}
+                        <div className="flex justify-between text-lg font-bold pt-2 border-t border-[#D4AF37]/20">
+                          <span className="text-white">Total Paid:</span>
+                          <span className="text-[#D4AF37] text-2xl">MAD {Number(total).toFixed(2)}</span>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    {/* Royal Message */}
+                    <div className="text-center p-4 bg-gradient-to-r from-[#D4AF37]/10 to-[#FFD700]/10 rounded-xl border border-[#D4AF37]/30 mb-6">
+                      <i className="bi bi-gem text-[#D4AF37] text-2xl block mb-2"></i>
+                      <p className="text-sm text-gray-300">Your order has been confirmed and is being prepared for shipping.</p>
+                      <p className="text-xs text-[#D4AF37] mt-2">A confirmation email has been sent to your registered email address.</p>
+                    </div>
+                    
+                    {/* Action Buttons */}
+                    <div className="flex flex-col sm:flex-row gap-3">
+                      <button
+                        onClick={handlePrintReceipt}
+                        className="flex-1 bg-gradient-to-r from-[#D4AF37] to-[#FFD700] text-black py-3 rounded-xl font-bold hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2 min-h-[44px]"
+                      >
+                        <i className="bi bi-printer"></i>
+                        Print Receipt
+                      </button>
+                      <button
+                        onClick={() => {
+                          setShowReceiptModal(false);
+                          navigate('/orders');
+                        }}
+                        className="flex-1 bg-black/60 border border-[#D4AF37]/40 text-[#D4AF37] py-3 rounded-xl font-bold hover:bg-white/5 transition-all duration-300 flex items-center justify-center gap-2 min-h-[44px]"
+                      >
+                        <i className="bi bi-eye"></i>
+                        View My Orders
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+            
+            {/* PayPal Modal */}
             {showPayPalModal && (
-              <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md">
+              <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md p-4">
                 <div className="bg-gradient-to-br from-black to-[#0a0a0a] rounded-2xl shadow-2xl p-6 w-full max-w-lg border-2 border-[#D4AF37]">
                   <div className="flex justify-between items-center mb-4">
                     <h3 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#D4AF37] to-[#FFD700]">Complete Your Royal Payment</h3>
@@ -393,8 +491,19 @@ const Cart = () => {
                           if (orderResponse.data.success) {
                             await cartAPI.clearCart();
                             setShowPayPalModal(false);
-                            // alert('Payment successful! Your order has been placed and is pending admin approval.');
-                            navigate('/orders');
+                            
+                            // Set order details for receipt
+                            setOrderDetails({
+                              order_id: orderResponse.data.data?.id,
+                              total: total,
+                              items: cart.items,
+                              subtotal: subtotal,
+                              discountAmount: discountAmount,
+                              promoDiscount: promoDiscount
+                            });
+                            
+                            // Show receipt modal
+                            setShowReceiptModal(true);
                           } else {
                             throw new Error(orderResponse.data.message || 'Failed to create order');
                           }

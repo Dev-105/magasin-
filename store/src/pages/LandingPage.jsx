@@ -143,10 +143,10 @@ const LandingPage = () => {
                   ></model-viewer>
                   
                   {/* Auto-Rotate Indicator - Gold */}
-                  <div className="absolute bottom-2 sm:bottom-3 md:bottom-4 left-2 sm:left-3 md:left-4 bg-black/60 backdrop-blur-md rounded-full px-2 sm:px-3 py-1 text-[8px] sm:text-[10px] text-[#D4AF37] flex items-center gap-1 border border-[#D4AF37]/30">
+                  {/* <div className="absolute bottom-2 sm:bottom-3 md:bottom-4 left-2 sm:left-3 md:left-4 bg-black/60 backdrop-blur-md rounded-full px-2 sm:px-3 py-1 text-[8px] sm:text-[10px] text-[#D4AF37] flex items-center gap-1 border border-[#D4AF37]/30">
                     <i className="bi bi-arrow-repeat text-[8px] sm:text-[10px] animate-spin-slow"></i>
                     <span className="hidden xs:inline">Auto-rotate</span>
-                  </div>
+                  </div> */}
                   
                   {/* Model Hint - Gold - Responsive positioning */}
                   <div className="absolute bottom-2 sm:bottom-3 md:bottom-4 left-1/2 transform -translate-x-1/2 bg-black/70 backdrop-blur-md rounded-full px-2.5 sm:px-3 md:px-4 py-1 sm:py-1.5 md:py-2 text-[8px] sm:text-xs md:text-xs text-[#D4AF37] flex items-center gap-1 sm:gap-2 border border-[#D4AF37]/30 whitespace-nowrap">
@@ -156,9 +156,9 @@ const LandingPage = () => {
                   </div>
                   
                   {/* 3D Badge */}
-                  <div className="absolute top-2 sm:top-3 right-2 sm:right-3 bg-black/50 backdrop-blur-sm rounded-full px-1.5 sm:px-2 py-0.5 sm:py-1 text-[6px] sm:text-[8px] text-[#D4AF37]/60 border border-[#D4AF37]/20">
+                  {/* <div className="absolute top-2 sm:top-3 right-2 sm:right-3 bg-black/50 backdrop-blur-sm rounded-full px-1.5 sm:px-2 py-0.5 sm:py-1 text-[6px] sm:text-[8px] text-[#D4AF37]/60 border border-[#D4AF37]/20">
                     3D
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>
